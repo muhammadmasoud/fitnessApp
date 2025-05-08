@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.app {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  will-change: transform, opacity;
+}
+
+/* Optimize performance for animations */
+.app, .main-content, .page-transition {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Ensure no Bootstrap margins affect our layout */
+.container,
+.container-fluid,
+.row {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Reset any potential Bootstrap spacing */
+.no-gutters {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.no-gutters > .col,
+.no-gutters > [class*="col-"] {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Header Container */
+.header-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* Override any Bootstrap navbar background */
+.navbar, .navbar-custom, .navbar-collapse {
+  background-color: transparent !important;
+}
+
+/* Announcement Bar */
+.announcement-bar {
+  background-color: #000;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  font-size: 0.9rem;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.announcement-email {
+  display: flex;
+  align-items: center;
+}
+
+.announcement-promotion {
+  flex: 1;
+  text-align: center;
+}
+
+/* Rainbow text animation for the 20% discount */
+.rainbow-text {
+  display: inline-block;
+  font-weight: bold;
+  animation: rainbow-color 3s linear infinite, pulse 2s ease-in-out infinite;
+}
+
+@keyframes rainbow-color {
+  0% { color: #ff0000; }
+  14% { color: #ff7f00; }
+  28% { color: #ffff00; }
+  42% { color: #00ff00; }
+  57% { color: #0000ff; }
+  71% { color: #4b0082; }
+  85% { color: #9400d3; }
+  100% { color: #ff0000; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icon {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.social-icon:hover {
+  color: var(--primary-color);
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Override Bootstrap container for full-width sections */
+.container {
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+/* Utility Classes */
+.text-white {
+  color: white;
+}
+
+.bg-dark {
+  background-color: var(--dark-bg);
+}
+
+.hero-section {
+  height: 100vh;
+  background-color: var(--dark-bg);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-content {
+  z-index: 2;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.cta-button {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .announcement-bar {
+    flex-direction: column;
+    padding: 10px;
+    gap: 5px;
+    height: auto;
+  }
+
+  /* Ensure navbar has no background on mobile */
+  .navbar, .navbar-custom, .navbar-collapse {
+    background-color: transparent !important;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .cta-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}

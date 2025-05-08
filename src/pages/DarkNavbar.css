@@ -1,0 +1,116 @@
+/* Dark color styles for navbar on light background pages */
+/* Add a semi-transparent dark background to the navbar to ensure brand text visibility */
+.pricing-navbar {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* White color for nav links to match home page */
+.pricing-navbar .nav-link {
+  color: white !important;
+}
+
+/* Change the underline color to match the nav link color */
+.pricing-navbar .nav-link::after {
+  background-color: white !important;
+}
+
+/* Active link styling */
+.pricing-navbar .nav-link.active {
+  color: #0088ff !important;
+  text-shadow: 0 0 8px rgba(0, 136, 255, 0.5) !important;
+}
+
+.pricing-navbar .nav-link.active::after {
+  background-color: #0088ff !important;
+}
+
+/* Brand text color - using the same styling as home page */
+.pricing-navbar .brand-text {
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 3rem !important;
+  text-transform: uppercase !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  letter-spacing: 2px !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 116, 217, 0.3) !important;
+  position: relative !important;
+  animation: glow 2s ease-in-out infinite alternate !important;
+  background: linear-gradient(90deg, #ffffff, #0074D9, #ffffff) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Define the glow animation for the brand text */
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 116, 217, 0.3) !important;
+    background-position: 0% center !important;
+  }
+  100% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(0, 116, 217, 0.5) !important;
+    background-position: 100% center !important;
+  }
+}
+
+/* Hover effect for brand text */
+.pricing-navbar .brand-logo:hover .brand-text {
+  transform: scale(1.05) !important;
+  letter-spacing: 2.5px !important;
+}
+
+/* Dropdown styling for dark navbar - matching home page */
+.pricing-navbar .custom-dropdown .dropdown-toggle {
+  color: white !important;
+}
+
+.pricing-navbar .custom-dropdown .dropdown-toggle::before {
+  background-color: white !important;
+}
+
+.pricing-navbar .custom-dropdown .dropdown-toggle:hover {
+  color: #ffffff !important;
+  transform: translateY(-3px) !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
+}
+
+.pricing-navbar .custom-dropdown.active .dropdown-toggle {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
+}
+
+.pricing-navbar .custom-dropdown .dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  margin-top: 10px !important;
+  padding: 0.5rem 0 !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+  animation: fadeIn 0.3s ease !important;
+}
+
+.pricing-navbar .custom-dropdown .dropdown-item {
+  color: white !important;
+  padding: 0.5rem 1.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.pricing-navbar .custom-dropdown .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  transform: translateX(5px) !important;
+}
+
+/* Define fadeIn animation for dropdown menu */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
