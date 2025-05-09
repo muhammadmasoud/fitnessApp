@@ -211,7 +211,7 @@ const About = () => {
             </div>
             <div className="expertise-content" data-aos="fade-left">
               <div className="expertise-subtitle">INFORMATION ABOUT US</div>
-              <h2 className="expertise-title">H-FITNESS <span>WORKOUT</span><br />TRAINING CENTER</h2>
+              <h2 className="expertise-title"><span>H-FITNESS</span> WORKOUT<br />TRAINING CENTER</h2>
               <p className="expertise-description">
                 At H-FITNESS, we bring a decade of specialized experience in fitness training and wellness coaching. 
                 Our team of certified professionals is dedicated to providing personalized fitness solutions that 
@@ -323,6 +323,7 @@ const About = () => {
 };
 
 export default About; 
+
 
 
 
