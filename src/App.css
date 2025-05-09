@@ -135,6 +135,13 @@ main {
   color: var(--primary-color);
 }
 
+/* Custom X (Twitter) icon */
+.fa-brands.fa-x-twitter:before {
+  content: "𝕏";
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
 .main-content {
   flex: 1;
   padding: 0;

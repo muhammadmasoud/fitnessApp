@@ -29,6 +29,15 @@ const HoverDropdown = ({ title, items, isActive }) => {
     }
   };
 
+  const handleItemClick = (path) => {
+    // Immediately hide dropdown
+    setIsHovered(false);
+    setIsMobileOpen(false);
+
+    // Navigate to the selected page
+    navigate(path);
+  };
+
   return (
     <div
       className={`hover-dropdown ${isActive ? 'active' : ''}`}
@@ -54,7 +63,10 @@ const HoverDropdown = ({ title, items, isActive }) => {
               key={index}
               to={item.path}
               className="dropdown-item"
-              onClick={() => setIsMobileOpen(false)}
+              onClick={(e) => {
+                e.preventDefault(); // Prevent default link behavior
+                handleItemClick(item.path);
+              }}
             >
               {item.label}
             </Link>

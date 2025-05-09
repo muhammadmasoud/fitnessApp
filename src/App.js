@@ -67,13 +67,13 @@ function App() {
           <div className="app" style={appStyle}>
           <header style={headerStyle}>
             <div className="announcement-bar">
-              <span className="announcement-email">📧 contact@hfitness.com</span>
+              <span className="announcement-email">📧 contact@fitness.com</span>
               <span className="announcement-promotion">🔥 <span className="rainbow-text">20%</span> OFF all membership plans this MONTH — Sign up today and transform your fitness journey! 🔥</span>
               <div className="social-icons">
                 <a href="#" className="social-icon"><i className="fas fa-light fa-bell"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-instagram"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-facebook"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/" className="social-icon"><i className="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/" className="social-icon"><i className="fab fa-facebook"></i></a>
+                <a href="https://www.x.com/" className="social-icon"><i className="fa-brands fa-x-twitter"></i></a>
               </div>
             </div>
             <Navigation />

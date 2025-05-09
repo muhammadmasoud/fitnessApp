@@ -1,4 +1,4 @@
-# H-FITNESS - Fitness Tracker Web Application
+# FITNESS - Fitness Tracker Web Application
 
 A modern fitness tracking web application built with React.js that helps users track their workouts, set goals, and monitor their progress.
 
@@ -94,4 +94,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - React.js documentation
 - React Bootstrap documentation
 - Chart.js documentation
-- Font Awesome icons 
+- Font Awesome icons

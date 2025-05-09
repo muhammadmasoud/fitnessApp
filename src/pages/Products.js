@@ -392,16 +392,25 @@ const Products = () => {
     navigate('/cart');
   };
 
+  // State to control dropdown visibility
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+
   // Filter products by category
   const filterByCategory = (category) => {
     setActiveCategory(category);
     setCurrentPage(1); // Reset to first page when changing category
+    setShowCategoryDropdown(false); // Hide dropdown after selection
   };
 
   // Reset filters to show all products
   const showAllProducts = () => {
     setActiveCategory(null);
     setCurrentPage(1); // Reset to first page when showing all
+  };
+
+  // Toggle category dropdown
+  const toggleCategoryDropdown = () => {
+    setShowCategoryDropdown(!showCategoryDropdown);
   };
 
   // Pagination functions

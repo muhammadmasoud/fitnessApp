@@ -1,6 +1,6 @@
 {
-  "short_name": "H-FITNESS",
-  "name": "H-FITNESS - Fitness Tracker",
+  "short_name": "FITNESS",
+  "name": "FITNESS - Fitness Tracker",
   "icons": [
     {
       "src": "favicon.ico",
@@ -22,4 +22,4 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
-} 
+}
