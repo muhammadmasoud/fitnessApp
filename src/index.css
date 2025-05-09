@@ -13,7 +13,7 @@ html, body {
 }
 
 body {
-  font-family: 'Roboto', 'Times New Roman', Times, serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f4f4f4;

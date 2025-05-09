@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './About.css';
+import fitness from '../assets/images/fitness.jpg';
 
 const About = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -10,10 +11,10 @@ const About = () => {
   const [trainersCount, setTrainersCount] = useState(0);
   const [branchesCount, setBranchesCount] = useState(0);
   const [clientsCount, setClientsCount] = useState(0);
-  
+
   const statsRef = useRef(null);
   const statsObserved = useRef(false);
-  
+
   const testimonials = [
     {
       id: 1,
@@ -87,12 +88,12 @@ const About = () => {
       mirror: true,
       easing: 'ease-in-out'
     });
-    
+
     // Auto-rotate testimonials
     const interval = setInterval(() => {
       setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
     }, 5000);
-    
+
     // Stats counter observer
     const observer = new IntersectionObserver((entries) => {
       const [entry] = entries;
@@ -101,11 +102,11 @@ const About = () => {
         statsObserved.current = true;
       }
     }, { threshold: 0.1 });
-    
+
     if (statsRef.current) {
       observer.observe(statsRef.current);
     }
-    
+
     return () => {
       clearInterval(interval);
       if (statsRef.current) {
@@ -113,7 +114,7 @@ const About = () => {
       }
     };
   }, [testimonials.length]);
-  
+
   const startCounters = () => {
     // Years counter (0 to 10)
     const yearsDuration = 2000; // 2 seconds
@@ -129,7 +130,7 @@ const About = () => {
         setYearsCount(yearsCurrent);
       }
     }, yearsDuration / yearsTarget);
-    
+
     // Trainers counter (0 to 45)
     const trainersDuration = 2000;
     const trainersIncrement = 1;
@@ -144,7 +145,7 @@ const About = () => {
         setTrainersCount(trainersCurrent);
       }
     }, trainersDuration / trainersTarget);
-    
+
     // Branches counter (0 to 12)
     const branchesDuration = 2000;
     const branchesIncrement = 1;
@@ -159,7 +160,7 @@ const About = () => {
         setBranchesCount(branchesCurrent);
       }
     }, branchesDuration / branchesTarget);
-    
+
     // Clients counter (0 to 20000)
     const clientsDuration = 2000;
     const clientsIncrement = 500;
@@ -175,18 +176,29 @@ const About = () => {
       }
     }, clientsDuration / (clientsTarget / clientsIncrement));
   };
-  
+
   const nextTestimonial = () => {
     setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
   };
-  
+
   const prevTestimonial = () => {
     setCurrentTestimonial(prev => (prev - 1 + testimonials.length) % testimonials.length);
   };
-  
+
   const goToTestimonial = (index) => {
     setCurrentTestimonial(index);
   };
+
+  // Add animation reset when testimonial changes
+  useEffect(() => {
+    const testimonialCard = document.querySelector('.testimonial-card');
+    if (testimonialCard) {
+      testimonialCard.style.animation = 'none';
+      setTimeout(() => {
+        testimonialCard.style.animation = 'fadeIn 0.5s ease-in-out';
+      }, 10);
+    }
+  }, [currentTestimonial]);
 
   return (
     <div className="about-page">
@@ -201,20 +213,20 @@ const About = () => {
           </p>
         </div>
       </section>
-      
+
       {/* Expertise Section */}
       <section className="expertise-section">
         <div className="expertise-container">
           <div className="expertise-main">
             <div className="expertise-image" data-aos="fade-right">
-              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Fitness trainer" />
+              <img src={fitness} alt="Fitness trainer" />
             </div>
             <div className="expertise-content" data-aos="fade-left">
               <div className="expertise-subtitle">INFORMATION ABOUT US</div>
-              <h2 className="expertise-title"><span>H-FITNESS</span> WORKOUT<br />TRAINING CENTER</h2>
+              <h2 className="expertise-title"><span>FITNESS</span> WORKOUT<br />TRAINING CENTER</h2>
               <p className="expertise-description">
-                At H-FITNESS, we bring a decade of specialized experience in fitness training and wellness coaching. 
-                Our team of certified professionals is dedicated to providing personalized fitness solutions that 
+                At FITNESS, we bring a decade of specialized experience in fitness training and wellness coaching.
+                Our team of certified professionals is dedicated to providing personalized fitness solutions that
                 address your unique needs and goals.
               </p>
               <ul className="expertise-list">
@@ -234,7 +246,7 @@ const About = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Full-width Stats Ribbon */}
         <div className="stats-ribbon">
           <div className="stats-ribbon-content">
@@ -242,17 +254,17 @@ const About = () => {
               <div className="stats-number">10+</div>
               <div className="stats-label">YEARS OF EXPERIENCE</div>
             </div>
-            
+
             <div className="stats-ribbon-item">
               <div className="stats-number">45+</div>
               <div className="stats-label">FITNESS TRAINERS</div>
             </div>
-            
+
             <div className="stats-ribbon-item">
               <div className="stats-number">310+</div>
               <div className="stats-label">BEST EQUIPMENTS</div>
             </div>
-            
+
             <div className="stats-ribbon-item">
               <div className="stats-number">20k+</div>
               <div className="stats-label">SATISFIED CLIENTS</div>
@@ -260,21 +272,21 @@ const About = () => {
           </div>
         </div>
       </section>
-      
+
       <section className="testimonials-section">
+        <div className="section-header" data-aos="fade-up">
+          <h2 className="section-title">WHAT OUR COMMUNITY SAYS</h2>
+          <div className="section-divider"></div>
+        </div>
+
         <Container>
-          <div className="section-header" data-aos="fade-up">
-            <h2 className="section-title">What Our Community Says</h2>
-            <div className="section-divider"></div>
-          </div>
-          
           <div className="testimonials-container" data-aos="fade-up" data-aos-delay="200">
             <div className="testimonial-card">
               <div className="testimonial-image-container">
-                <img 
-                  src={testimonials[currentTestimonial].image} 
-                  alt={testimonials[currentTestimonial].name} 
-                  className="testimonial-image" 
+                <img
+                  src={testimonials[currentTestimonial].image}
+                  alt={testimonials[currentTestimonial].name}
+                  className="testimonial-image"
                 />
               </div>
               <div className="testimonial-content">
@@ -286,19 +298,19 @@ const About = () => {
                 <p className="testimonial-role">{testimonials[currentTestimonial].role}</p>
               </div>
             </div>
-            
+
             <div className="testimonial-controls">
-              <button 
-                className="testimonial-control-btn prev-btn" 
+              <button
+                className="testimonial-control-btn prev-btn"
                 onClick={prevTestimonial}
                 aria-label="Previous testimonial"
               >
                 <i className="fas fa-chevron-left"></i>
               </button>
-              
+
               <div className="testimonial-indicators">
                 {testimonials.map((_, index) => (
-                  <button 
+                  <button
                     key={index}
                     className={`testimonial-indicator ${index === currentTestimonial ? 'active' : ''}`}
                     onClick={() => goToTestimonial(index)}
@@ -306,9 +318,9 @@ const About = () => {
                   ></button>
                 ))}
               </div>
-              
-              <button 
-                className="testimonial-control-btn next-btn" 
+
+              <button
+                className="testimonial-control-btn next-btn"
                 onClick={nextTestimonial}
                 aria-label="Next testimonial"
               >
@@ -322,34 +334,4 @@ const About = () => {
   );
 };
 
-export default About; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default About;
