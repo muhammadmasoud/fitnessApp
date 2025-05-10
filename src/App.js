@@ -4,6 +4,8 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import PageTransition from './components/PageTransition';
+import Layout from './components/Layout';
+import ScrollHandler from './components/ScrollHandler';
 import Home from './pages/Home';
 import AuthenticatedHome from './pages/AuthenticatedHome';
 import About from './pages/About';
@@ -22,6 +24,8 @@ import Programs from './pages/Programs';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import OrderTracking from './pages/OrderTracking';
+import TrackOrderPublic from './pages/TrackOrderPublic';
 import Wishlist from './pages/Wishlist';
 import ToastTest from './components/ToastTest';
 import { AuthProvider } from './context/AuthContext';
@@ -46,18 +50,27 @@ function App() {
     margin: 0,
     padding: 0,
     width: '100%',
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 1000
+    zIndex: 1000,
+    transition: 'transform 0.3s ease'
   };
 
   const mainStyle = {
     flex: 1,
     margin: 0,
-    padding: 0,
-    position: 'relative'
+    padding: '100px 0 0 0', // Add padding to account for fixed header
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
+  const footerStyle = {
+    width: '100%',
+    position: 'relative',
+    zIndex: 10
   };
 
   return (
@@ -65,83 +78,94 @@ function App() {
       <CartProvider>
         <WishlistProvider>
           <div className="app" style={appStyle}>
-          <header style={headerStyle}>
-            <div className="announcement-bar">
-              <span className="announcement-email">📧 contact@fitness.com</span>
-              <span className="announcement-promotion">🔥 <span className="rainbow-text">20%</span> OFF all membership plans this MONTH — Sign up today and transform your fitness journey! 🔥</span>
-              <div className="social-icons">
-                <a href="#" className="social-icon"><i className="fas fa-light fa-bell"></i></a>
-                <a href="https://www.instagram.com/" className="social-icon"><i className="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/" className="social-icon"><i className="fab fa-facebook"></i></a>
-                <a href="https://www.x.com/" className="social-icon"><i className="fa-brands fa-x-twitter"></i></a>
+            <ScrollHandler />
+            <header style={headerStyle}>
+              <div className="announcement-bar">
+                <span className="announcement-email">📧 contact@fitness.com</span>
+                <span className="announcement-promotion">🔥 <span className="rainbow-text">20%</span> OFF all membership plans this MONTH — Sign up today and transform your fitness journey! 🔥</span>
+                <div className="announcement-social-icons">
+                  <a href="https://www.facebook.com/" className="announcement-social-icon"><i className="fab fa-facebook-f"></i></a>
+                  <a href="https://www.instagram.com/" className="announcement-social-icon"><i className="fab fa-instagram"></i></a>
+                  <a href="https://www.youtube.com/" className="announcement-social-icon"><i className="fab fa-youtube"></i></a>
+                  <a href="https://www.x.com/" className="announcement-social-icon"><i className="fa-brands fa-x-twitter"></i></a>
+                </div>
               </div>
-            </div>
-            <Navigation />
-          </header>
-        <main className="main-content" style={mainStyle}>
-          <PageTransition>
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<Home />} />
-              <Route path="/authenticated-home" element={
-                <ProtectedRoute>
-                  <AuthenticatedHome />
-                </ProtectedRoute>
-              } />
-              <Route path="/about" element={<About />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/offers" element={<Offers />} />
-              <Route path="/programs" element={<Programs />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/cart" element={
-                <ProtectedRoute>
-                  <Cart />
-                </ProtectedRoute>
-              } />
-              <Route path="/checkout" element={
-                <ProtectedRoute>
-                  <Checkout />
-                </ProtectedRoute>
-              } />
-              <Route path="/wishlist" element={
-                <ProtectedRoute>
-                  <Wishlist />
-                </ProtectedRoute>
-              } />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/exercises" element={
-                <ProtectedRoute>
-                  <Exercises />
-                </ProtectedRoute>
-              } />
-              <Route path="/goals" element={
-                <ProtectedRoute>
-                  <Goals />
-                </ProtectedRoute>
-              } />
-              <Route path="/progress" element={
-                <ProtectedRoute>
-                  <Progress />
-                </ProtectedRoute>
-              } />
-              <Route path="/profile" element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } />
-              <Route path="/toast-test" element={<ToastTest />} />
-            </Routes>
-          </PageTransition>
-        </main>
-        <Footer />
-      </div>
+              <Navigation />
+            </header>
+            <main className="main-content" style={mainStyle}>
+              <Layout>
+                <PageTransition>
+                  <Routes location={location} key={location.pathname}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/authenticated-home" element={
+                      <ProtectedRoute>
+                        <AuthenticatedHome />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/gallery" element={<Gallery />} />
+                    <Route path="/offers" element={<Offers />} />
+                    <Route path="/programs" element={<Programs />} />
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/cart" element={
+                      <ProtectedRoute>
+                        <Cart />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/checkout" element={
+                      <ProtectedRoute>
+                        <Checkout />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/order-tracking" element={
+                      <ProtectedRoute>
+                        <OrderTracking />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/track-order" element={<TrackOrderPublic />} />
+                    <Route path="/wishlist" element={
+                      <ProtectedRoute>
+                        <Wishlist />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/dashboard" element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/exercises" element={
+                      <ProtectedRoute>
+                        <Exercises />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/goals" element={
+                      <ProtectedRoute>
+                        <Goals />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/progress" element={
+                      <ProtectedRoute>
+                        <Progress />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/profile" element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/toast-test" element={<ToastTest />} />
+                  </Routes>
+                </PageTransition>
+              </Layout>
+            </main>
+            <footer style={footerStyle}>
+              <Footer />
+            </footer>
+          </div>
         </WishlistProvider>
       </CartProvider>
     </AuthProvider>

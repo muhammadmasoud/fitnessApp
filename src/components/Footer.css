@@ -5,6 +5,7 @@
   width: 100%;
   position: relative;
   z-index: 10;
+  margin-top: 0; /* Ensures no gap between content and footer */
 }
 
 .footer-content {
@@ -196,7 +197,7 @@
   .footer-content {
     flex-direction: column;
   }
-  
+
   .footer-section {
     margin-bottom: 40px;
     min-width: 100%;
@@ -207,11 +208,11 @@
   .site-footer {
     padding: 40px 0 20px;
   }
-  
+
   .footer-section h3 {
     font-size: 1.1rem;
   }
-  
+
   .footer-logo {
     font-size: 2.5rem;
   }

@@ -57,10 +57,17 @@ const Cart = () => {
 
   // Handle checkout
   const handleCheckout = () => {
+    // Only proceed if there are items in the cart
+    if (cartItems.length === 0) {
+      CustomToast.error('Your cart is empty');
+      return;
+    }
+
     setIsCheckingOut(true);
     setTimeout(() => {
       CustomToast.success('Proceeding to checkout...');
       setTimeout(() => {
+        // Use window.location to ensure the browser records this as the referrer
         window.location.href = '/checkout';
       }, 2000);
     }, 500);

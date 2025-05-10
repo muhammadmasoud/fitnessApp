@@ -77,7 +77,6 @@ const Navigation = () => {
                 items={[
                   { label: 'Products', path: '/products' },
                   { label: 'Cart', path: '/cart' },
-                  { label: 'Checkout', path: '/checkout' },
                   { label: 'Wishlist', path: '/wishlist' }
                 ]}
               />
@@ -118,15 +117,18 @@ const Navigation = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/authenticated-home">Home</Dropdown.Item>
                   <Dropdown.Item as={Link} to="/dashboard">Dashboard</Dropdown.Item>
                   <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/order-tracking">Track Your Order</Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
               <>
+                <Link to="/track-order" className="track-order-link">
+                  <i className="fas fa-truck me-1"></i> Track Order
+                </Link>
                 <Button as={Link} to="/login" className="login-btn">Log in</Button>
                 <Button as={Link} to="/signup" className="sign-up-btn">Sign up</Button>
               </>

@@ -314,117 +314,8 @@
   font-size: 0.7rem;
 }
 
-/* Vision & Mission Section */
-.vision-section {
-  padding: 100px 20px;
-  position: relative;
-  overflow: hidden;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.vision-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0, 116, 217, 0.03) 0%, transparent 70%);
-  animation: rotate-bg 30s linear infinite;
-  z-index: 0;
-}
-
-.vision-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  gap: 60px;
-  position: relative;
-  z-index: 1;
-}
-
-.vision-left {
-  flex: 1;
-  position: relative;
-}
-
-.vision-left::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -30px;
-  width: 2px;
-  height: 0;
-  background: linear-gradient(to bottom, transparent, #0074D9, transparent);
-  animation: line-grow 1.5s ease forwards;
-  animation-delay: 0.5s;
-}
-
-@keyframes line-grow {
-  0% { height: 0; }
-  100% { height: 100%; }
-}
-
-.vision-right {
-  flex: 2;
-  opacity: 0;
-  transform: translateX(30px);
-  animation: slide-in 1s ease forwards;
-  animation-delay: 1s;
-}
-
-@keyframes slide-in {
-  0% { opacity: 0; transform: translateX(30px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-
-.vision-subtitle {
-  font-size: 2rem;
-  font-weight: 600;
-  color: white;
-  position: relative;
-  display: inline-block;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  transform: translateY(20px);
-  opacity: 0;
-  animation: fade-up 0.8s ease forwards;
-}
-
-.vision-subtitle::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #0074D9;
-  animation: width-grow 1.2s ease forwards;
-  animation-delay: 1.2s;
-}
-
-@keyframes width-grow {
-  0% { width: 0; }
-  100% { width: 80px; }
-}
-
-@keyframes fade-up {
-  0% { transform: translateY(20px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-.vision-text {
-  font-size: 1.5rem;
-  line-height: 1.6;
-  font-weight: 300;
-  color: #e0e0e0;
-  position: relative;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-
-/* Stats Section */
-.stats-section {
+/* Expert Trainers Section */
+.trainers-section {
   padding: 100px 20px;
   position: relative;
   overflow: hidden;
@@ -432,7 +323,7 @@
   background: rgba(0, 0, 0, 0.6);
 }
 
-.stats-section::before {
+.trainers-section::before {
   content: '';
   position: absolute;
   top: 0;
@@ -444,131 +335,166 @@
   z-index: 0;
 }
 
-.stats-container {
+.trainers-title {
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 60px;
+  font-family: 'Teko', sans-serif;
+  letter-spacing: 4px;
+  position: relative;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 116, 217, 0.5);
+}
+
+.trainers-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #0074D9, transparent);
+}
+
+.trainers-container {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
   position: relative;
   z-index: 1;
+  padding: 0 20px;
 }
 
-.stat-item {
-  text-align: center;
-  padding: 40px;
+.trainer-card {
+  width: 240px;
+  height: 380px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 15px;
+  overflow: hidden;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
-  overflow: hidden;
   transform-style: preserve-3d;
   perspective: 1000px;
   backdrop-filter: blur(5px);
 }
 
-.stat-glow {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0, 116, 217, 0.2) 0%, transparent 70%);
-  transform: rotate(0deg);
-  transition: all 1s ease;
-  z-index: -1;
-  opacity: 0;
-}
+/* Removed featured-trainer special styling */
 
-.stat-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 116, 217, 0.1), transparent);
-  z-index: -1;
-  transition: all 0.6s ease;
-}
-
-.stat-item::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: linear-gradient(90deg, transparent, rgba(0, 116, 217, 0.8), transparent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s ease;
-}
-
-.stat-item:hover {
-  transform: translateY(-15px) translateZ(20px) scale(1.05);
+.trainer-card:hover {
+  transform: translateY(-15px) scale(1.05);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 116, 217, 0.3);
   border-color: rgba(0, 116, 217, 0.3);
 }
 
-.stat-item:hover .stat-glow {
+/* Removed featured-trainer hover special styling */
+
+.trainer-image-container {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.trainer-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.6s ease;
+}
+
+.trainer-card:hover .trainer-image {
+  transform: scale(1.1);
+}
+
+.trainer-social {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s ease;
+}
+
+.trainer-card:hover .trainer-social {
   opacity: 1;
-  animation: stat-glow-rotate 8s linear infinite;
+  transform: translateX(0);
 }
 
-.stat-item:hover::before {
-  background: linear-gradient(135deg, rgba(0, 116, 217, 0.2), transparent);
+.social-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  text-decoration: none !important;
 }
 
-.stat-item:hover::after {
-  transform: scaleX(1);
+.social-icon:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.1);
 }
 
-@keyframes stat-glow-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Custom X (Twitter) icon styling for trainer cards */
+.trainer-social .fa-brands.fa-x-twitter:before {
+  content: "𝕏";
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-decoration: none !important;
 }
 
-.stat-number {
-  font-size: 4.8rem;
-  font-weight: 800;
-  margin-bottom: 15px;
-  font-family: 'Teko', sans-serif;
-  background: linear-gradient(45deg, #0074D9, #80c4ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-  display: inline-block;
-  transform: translateZ(30px);
-  text-shadow: 0 0 20px rgba(0, 116, 217, 0.5);
-  letter-spacing: 2px;
-  transition: all 0.4s ease;
+.trainer-social .fa-brands.fa-x-twitter {
+  text-decoration: none !important;
 }
 
-.stat-item:hover .stat-number {
-  transform: translateZ(40px) scale(1.1);
-  background: linear-gradient(45deg, #0074D9, #00a0ff);
-  -webkit-background-clip: text;
-  letter-spacing: 3px;
+/* Remove any potential underlines from social icons */
+.trainer-social a {
+  text-decoration: none;
 }
 
-.stat-label {
+.trainer-info {
+  padding: 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.trainer-name {
   font-size: 1.4rem;
-  color: #e0e0e0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  transform: translateZ(20px);
-  transition: all 0.4s ease;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  color: white;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
 }
 
-.stat-item:hover .stat-label {
-  transform: translateZ(30px);
+.trainer-role {
+  font-size: 1rem;
+  color: #0074D9;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.trainer-card:hover .trainer-name {
   color: #ffffff;
-  letter-spacing: 3px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 116, 217, 0.3);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.trainer-card:hover .trainer-role {
+  color: #00a0ff;
 }
 
 /* Our Programs Section */
@@ -901,8 +827,8 @@
 
 .section-title,
 .offer-card,
-.vision-container,
-.stat-item,
+.trainer-card,
+.trainers-title,
 .programs-title,
 .programs-subtitle,
 .program-item {
@@ -914,9 +840,14 @@
 .offer-card:nth-child(3) { animation-delay: 0.3s; }
 .offer-card:nth-child(4) { animation-delay: 0.4s; }
 
-.stat-item:nth-child(1) { animation-delay: 0.1s; }
-.stat-item:nth-child(2) { animation-delay: 0.2s; }
-.stat-item:nth-child(3) { animation-delay: 0.3s; }
+.trainer-card:nth-child(1) { animation-delay: 0.1s; }
+.trainer-card:nth-child(2) { animation-delay: 0.2s; }
+.trainer-card:nth-child(3) { animation-delay: 0.3s; }
+.trainer-card:nth-child(4) { animation-delay: 0.4s; }
+.trainer-card:nth-child(5) { animation-delay: 0.5s; }
+.trainer-card:nth-child(6) { animation-delay: 0.6s; }
+.trainer-card:nth-child(7) { animation-delay: 0.7s; }
+.trainer-card:nth-child(8) { animation-delay: 0.8s; }
 
 .program-item:nth-child(1) { animation-delay: 0.1s; }
 .program-item:nth-child(2) { animation-delay: 0.2s; }
@@ -930,15 +861,11 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .vision-container {
-    flex-direction: column;
+  .trainers-container {
     gap: 20px;
   }
 
-  .stats-container {
-    flex-direction: column;
-    gap: 40px;
-  }
+  /* All trainer cards have the same size */
 
   .programs-header {
     flex-direction: column;
@@ -960,15 +887,15 @@
   }
 
   .section-title,
-  .programs-title {
+  .programs-title,
+  .trainers-title {
     font-size: 2rem;
   }
 
-  .vision-text {
-    font-size: 1.2rem;
+  .trainer-card {
+    width: 100%;
+    max-width: 280px;
   }
 
-  .stat-number {
-    font-size: 3rem;
-  }
+  /* All trainer cards have the same size on mobile */
 }

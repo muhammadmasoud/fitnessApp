@@ -1,28 +1,74 @@
 import React, { useEffect, useState, useRef } from 'react';
 import 'animate.css';
 import './Programs.css';
+import swimminginstructor from '../assets/images/swimming-instructor.jpg';
+import yogainstructor from '../assets/images/yoga-instructor.jpg';
+import crossfit from '../assets/images/crossfit-coach.jpg';
+import nutrition from '../assets/images/nutrition-coach.jpg';
+import Pilates from '../assets/images/Pilates-Instructor.jpg';
 
 const Programs = () => {
   const [loaded, setLoaded] = useState(false);
-  const [clientCount, setClientCount] = useState(0);
-  const [trainerCount, setTrainerCount] = useState(0);
-  const [experienceCount, setExperienceCount] = useState(0);
-  const statsRef = useRef(null);
-  const countersStarted = useRef(false);
+  const trainersRef = useRef(null);
+
+  // Trainer data with random images from Unsplash
+  const trainers = [
+    {
+      id: 1,
+      name: "Alex Chen",
+      role: "Karate Master",
+      image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      id: 2,
+      name: "Matt Booze",
+      role: "Swimming Instructor",
+      image: swimminginstructor
+    },
+    {
+      id: 3,
+      name: "Janet McDonald",
+      role: "Yoga Instructor",
+      image: yogainstructor
+    },
+    {
+      id: 4,
+      name: "Sarah Johnson",
+      role: "Pilates Instructor",
+      image: Pilates
+    },
+    {
+      id: 5,
+      name: "Marcus Lee",
+      role: "Boxing Coach",
+      image: "https://images.unsplash.com/photo-1549476464-37392f717541?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      id: 6,
+      name: "Michael Torres",
+      role: "CrossFit Coach",
+      image: crossfit
+    },
+    {
+      id: 7,
+      name: "Henry Boston",
+      role: "Fitness Coach",
+      image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    },
+    {
+      id: 8,
+      name: "Emma Rodriguez",
+      role: "Nutrition Coach",
+      image: nutrition
+    }
+  ];
 
   useEffect(() => {
     setLoaded(true);
 
     // Add scroll event listener for animations
     const handleScroll = () => {
-      if (statsRef.current && !countersStarted.current) {
-        const statsPosition = statsRef.current.getBoundingClientRect();
-        // Start counter animation when stats section is in view
-        if (statsPosition.top < window.innerHeight && statsPosition.bottom >= 0) {
-          startCounters();
-          countersStarted.current = true;
-        }
-      }
+      // Animation logic can be added here if needed
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -33,61 +79,6 @@ const Programs = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  const startCounters = () => {
-    // Client counter (0 to 20,000)
-    const clientDuration = 2000; // 2 seconds
-    const clientIncrement = 100;
-    const clientTarget = 20000;
-    let clientCurrent = 0;
-    const clientInterval = setInterval(() => {
-      clientCurrent += clientIncrement;
-      if (clientCurrent >= clientTarget) {
-        clearInterval(clientInterval);
-        setClientCount(clientTarget);
-      } else {
-        setClientCount(clientCurrent);
-      }
-    }, clientDuration / (clientTarget / clientIncrement));
-
-    // Trainer counter (0 to 30)
-    const trainerDuration = 1500; // 1.5 seconds
-    const trainerIncrement = 1;
-    const trainerTarget = 30;
-    let trainerCurrent = 0;
-    const trainerInterval = setInterval(() => {
-      trainerCurrent += trainerIncrement;
-      if (trainerCurrent >= trainerTarget) {
-        clearInterval(trainerInterval);
-        setTrainerCount(trainerTarget);
-      } else {
-        setTrainerCount(trainerCurrent);
-      }
-    }, trainerDuration / trainerTarget);
-
-    // Experience counter (0 to 8,000)
-    const expDuration = 1800; // 1.8 seconds
-    const expIncrement = 50;
-    const expTarget = 8000;
-    let expCurrent = 0;
-    const expInterval = setInterval(() => {
-      expCurrent += expIncrement;
-      if (expCurrent >= expTarget) {
-        clearInterval(expInterval);
-        setExperienceCount(expTarget);
-      } else {
-        setExperienceCount(expCurrent);
-      }
-    }, expDuration / (expTarget / expIncrement));
-  };
-
-  // Format the numbers for display
-  const formatNumber = (num) => {
-    if (num >= 1000) {
-      return `${Math.floor(num / 1000)}k+`;
-    }
-    return num.toString();
-  };
 
   return (
     <div className={`programs-page ${loaded ? 'loaded' : ''}`}>
@@ -150,42 +141,26 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* Vision & Mission Section */}
-      <section className="vision-section">
-        <div className="vision-container">
-          <div className="vision-left animate__animated animate__fadeInLeft">
-            <h3 className="vision-subtitle">Vision & Mission</h3>
-          </div>
-          <div className="vision-right animate__animated animate__fadeInRight">
-            <p className="vision-text">
-              We're on a mission to build stronger, healthier lives through focused,
-              intentional fitness. Our vision is to lead a movement where simplicity
-              meets strength and transformation begins.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Expert Trainers Section */}
+      <section className="trainers-section" ref={trainersRef}>
+        <h2 className="trainers-title animate__animated animate__fadeInDown">EXPERT TRAINERS</h2>
 
-      {/* Stats Section */}
-      <section className="stats-section" ref={statsRef}>
-        <div className="stats-container">
-          <div className="stat-item animate__animated animate__flipInX animate__delay-1s">
-            <div className="stat-glow"></div>
-            <h2 className="stat-number">{clientCount >= 20000 ? '20k+' : formatNumber(clientCount)}</h2>
-            <p className="stat-label">Clients</p>
-          </div>
-
-          <div className="stat-item animate__animated animate__flipInX animate__delay-2s">
-            <div className="stat-glow"></div>
-            <h2 className="stat-number">{trainerCount}</h2>
-            <p className="stat-label">Trainers</p>
-          </div>
-
-          <div className="stat-item animate__animated animate__flipInX animate__delay-3s">
-            <div className="stat-glow"></div>
-            <h2 className="stat-number">{experienceCount >= 8000 ? '8k+' : formatNumber(experienceCount)}</h2>
-            <p className="stat-label">Experience</p>
-          </div>
+        <div className="trainers-container">
+          {trainers.map((trainer, index) => (
+            <div key={trainer.id} className={`trainer-card animate__animated animate__fadeInUp animate__delay-${index + 1}s`}>
+              <div className="trainer-image-container">
+                <img src={trainer.image} alt={trainer.name} className="trainer-image" />
+                <div className="trainer-social">
+                  <a href="https://www.instagram.com/" className="social-icon"><i className="fab fa-instagram"></i></a>
+                  <a href="https://x.com/" className="social-icon"><i className="fa-brands fa-x-twitter"></i></a>
+                </div>
+              </div>
+              <div className="trainer-info">
+                <h3 className="trainer-name">{trainer.name}</h3>
+                <p className="trainer-role">{trainer.role}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

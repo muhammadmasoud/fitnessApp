@@ -307,6 +307,21 @@
   align-items: center;
 }
 
+.track-order-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.track-order-link:hover {
+  color: #0074D9;
+  transform: translateY(-2px);
+}
+
 /* User dropdown styling */
 .user-dropdown {
   background-color: #0074D9 !important;
