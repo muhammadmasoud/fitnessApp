@@ -4,13 +4,14 @@
   background-image: url('../assets/images/programs.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  /* Remove fixed attachment for better performance */
   color: white;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
   position: relative;
-  perspective: 1000px;
+  /* Remove perspective for better performance */
+  will-change: opacity, transform;
 }
 
 .programs-page::before {
@@ -22,19 +23,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 1;
-  animation: gradientPulse 8s infinite alternate;
-}
-
-@keyframes gradientPulse {
-  0% {
-    background: rgba(0, 0, 0, 0.7);
-  }
-  50% {
-    background: rgba(0, 0, 0, 0.65);
-  }
-  100% {
-    background: rgba(0, 0, 0, 0.75);
-  }
+  /* Remove animation for better performance */
 }
 
 .programs-page.loaded {
@@ -90,31 +79,14 @@
   border-radius: 15px;
   background-size: cover;
   background-position: center;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   border: 2px solid rgba(0, 116, 217, 0.1);
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transform: translateZ(0);
+  /* Remove 3D transforms for better performance */
+  will-change: transform, box-shadow;
 }
 
-.card-3d-effect {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 116, 217, 0.2) 0%,
-    rgba(0, 116, 217, 0) 70%
-  );
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  z-index: 1;
-  transform: translateZ(10px);
-}
+/* Remove card-3d-effect for better performance */
 
 .offer-card::before {
   content: '';
@@ -125,7 +97,7 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  transition: transform 8s ease;
+  transition: transform 0.5s ease;
   z-index: -1;
 }
 
@@ -170,34 +142,18 @@
 }
 
 .offer-card:hover {
-  transform: translateY(-15px) translateZ(10px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 116, 217, 0.3);
-  border-color: rgba(0, 116, 217, 0.5);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 116, 217, 0.3);
 }
 
-.offer-card:hover .card-3d-effect {
-  opacity: 1;
-  animation: pulse-glow 3s infinite;
-}
+/* Remove card-3d-effect hover styles */
 
 .offer-card:hover::before {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
-@keyframes pulse-glow {
-  0% {
-    opacity: 0.3;
-    transform: translateZ(10px) scale(0.95);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateZ(10px) scale(1);
-  }
-  100% {
-    opacity: 0.3;
-    transform: translateZ(10px) scale(0.95);
-  }
-}
+/* Remove pulse-glow animation for better performance */
 
 .offer-overlay {
   position: absolute;
@@ -376,20 +332,20 @@
   background: rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  backdrop-filter: blur(5px);
+  /* Remove 3D transforms for better performance */
+  /* Remove backdrop-filter for better performance */
+  will-change: transform, box-shadow;
 }
 
 /* Removed featured-trainer special styling */
 
 .trainer-card:hover {
-  transform: translateY(-15px) scale(1.05);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 116, 217, 0.3);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
   border-color: rgba(0, 116, 217, 0.3);
 }
 
@@ -671,12 +627,12 @@
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 15px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-  transform-style: preserve-3d;
-  perspective: 1000px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  /* Remove 3D transforms for better performance */
   border: 2px solid rgba(0, 116, 217, 0.1);
+  will-change: transform, box-shadow;
 }
 
 .program-shine {
@@ -733,26 +689,12 @@
 }
 
 .program-item:hover {
-  transform: translateY(-15px) translateZ(10px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 116, 217, 0.3);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
   border-color: rgba(0, 116, 217, 0.3);
 }
 
-.program-item:hover .program-shine {
-  opacity: 1;
-  animation: shine-move 3s infinite;
-}
-
-@keyframes shine-move {
-  0% {
-    top: -100%;
-    left: -100%;
-  }
-  100% {
-    top: 100%;
-    left: 100%;
-  }
-}
+/* Remove shine animation for better performance */
 
 .program-item:hover::before {
   opacity: 0.5;
@@ -767,14 +709,13 @@
   padding: 30px;
   background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
   z-index: 2;
-  transform: translateY(0) translateZ(5px);
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transform-style: preserve-3d;
+  transition: transform 0.3s ease, padding 0.3s ease;
+  /* Remove 3D transforms for better performance */
 }
 
 .program-item:hover .program-overlay {
-  transform: translateY(-10px) translateZ(20px);
-  padding-bottom: 40px;
+  transform: translateY(-5px);
+  padding-bottom: 35px;
 }
 
 .program-name {
@@ -783,12 +724,11 @@
   font-family: 'Teko', sans-serif;
   letter-spacing: 2px;
   color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 15px rgba(0, 116, 217, 0.5);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   position: relative;
   display: inline-block;
   padding-bottom: 8px;
-  transform: translateZ(10px);
-  transition: all 0.4s ease;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
 }
 
 .program-name::after {
@@ -799,25 +739,23 @@
   width: 0;
   height: 3px;
   background: linear-gradient(90deg, #0074D9, rgba(0, 116, 217, 0.5));
-  transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 0 10px rgba(0, 116, 217, 0.5);
+  transition: width 0.3s ease;
 }
 
 .program-item:hover .program-name {
-  transform: translateZ(30px) scale(1.1);
-  letter-spacing: 3px;
-  text-shadow: 3px 3px 6px rgba(0,0,0,0.7), 0 0 20px rgba(0, 116, 217, 0.7);
+  transform: scale(1.05);
+  letter-spacing: 2.5px;
 }
 
 .program-item:hover .program-name::after {
   width: 100%;
 }
 
-/* Animations */
+/* Simplified Animations */
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   100% {
     opacity: 1;
@@ -825,35 +763,14 @@
   }
 }
 
+/* Apply animations only to key elements */
 .section-title,
-.offer-card,
-.trainer-card,
 .trainers-title,
-.programs-title,
-.programs-subtitle,
-.program-item {
-  animation: fadeIn 0.8s ease-out forwards;
+.programs-title {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
-.offer-card:nth-child(1) { animation-delay: 0.1s; }
-.offer-card:nth-child(2) { animation-delay: 0.2s; }
-.offer-card:nth-child(3) { animation-delay: 0.3s; }
-.offer-card:nth-child(4) { animation-delay: 0.4s; }
-
-.trainer-card:nth-child(1) { animation-delay: 0.1s; }
-.trainer-card:nth-child(2) { animation-delay: 0.2s; }
-.trainer-card:nth-child(3) { animation-delay: 0.3s; }
-.trainer-card:nth-child(4) { animation-delay: 0.4s; }
-.trainer-card:nth-child(5) { animation-delay: 0.5s; }
-.trainer-card:nth-child(6) { animation-delay: 0.6s; }
-.trainer-card:nth-child(7) { animation-delay: 0.7s; }
-.trainer-card:nth-child(8) { animation-delay: 0.8s; }
-
-.program-item:nth-child(1) { animation-delay: 0.1s; }
-.program-item:nth-child(2) { animation-delay: 0.2s; }
-.program-item:nth-child(3) { animation-delay: 0.3s; }
-.program-item:nth-child(4) { animation-delay: 0.4s; }
-.program-item:nth-child(5) { animation-delay: 0.5s; }
+/* Remove staggered animations for better performance */
 
 /* Responsive adjustments */
 @media (max-width: 992px) {

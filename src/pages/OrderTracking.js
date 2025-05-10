@@ -298,6 +298,9 @@ const OrderTracking = () => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
 
+    // Add a class to the body to ensure proper spacing
+    document.body.classList.add('order-tracking-page');
+
     // If user is logged in, load their order details
     if (currentUser) {
       console.log("User is logged in, loading orders");
@@ -315,6 +318,7 @@ const OrderTracking = () => {
     // Cleanup function
     return () => {
       console.log("Cleaning up OrderTracking component");
+      document.body.classList.remove('order-tracking-page');
       clearInterval(newOrderCheckInterval);
     };
   }, [currentUser]); // Only re-run when currentUser changes
@@ -430,10 +434,20 @@ const OrderTracking = () => {
   };
 
   return (
-    <DynamicBackground imageUrl={ordertrackingBg} className="tracking-page">
+    <DynamicBackground
+      imageUrl={ordertrackingBg}
+      className="tracking-page"
+      style={{
+        justifyContent: 'flex-start', // Override the default center alignment
+        alignItems: 'center',
+        paddingTop: '220px',
+        paddingBottom: '100px',
+        minHeight: 'calc(100vh - 60px)' // Account for the announcement bar
+      }}
+    >
       <ToastContainer />
 
-      <Container className="tracking-container">
+      <Container fluid className="tracking-container">
         <div className="tracking-content">
           <h1 className="tracking-title animate__animated animate__fadeInDown">
             Track Your Order

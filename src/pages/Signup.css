@@ -2,8 +2,8 @@
   --primary-color: #007bff;
   --secondary-color: #6c757d;
   --accent-color: #ff6b6b;
-  --gradient-start: #8e2de2;
-  --gradient-end: #4a00e0;
+  --gradient-start: #4e54c8;
+  --gradient-end: #8f94fb;
 }
 
 .signup-page {
@@ -37,7 +37,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../assets/images/personal-training.jpg');
+  background-image: url('../assets/images/sign-up.jpg');
   background-size: cover;
   background-position: center;
   opacity: 0.2;
@@ -102,11 +102,11 @@
   right: -2px;
   bottom: -2px;
   background: linear-gradient(45deg,
-    rgba(142, 45, 226, 0),
-    rgba(142, 45, 226, 0.3),
-    rgba(142, 45, 226, 0),
-    rgba(142, 45, 226, 0.3),
-    rgba(142, 45, 226, 0));
+    rgba(0, 123, 255, 0),
+    rgba(0, 123, 255, 0.3),
+    rgba(0, 123, 255, 0),
+    rgba(0, 123, 255, 0.3),
+    rgba(0, 123, 255, 0));
   border-radius: 22px;
   z-index: -1;
   animation: border-glow 3s linear infinite;
@@ -129,13 +129,13 @@
 
 @keyframes gradient-shift {
   0% {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 240, 255, 0.95));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95));
   }
   50% {
-    background: linear-gradient(135deg, rgba(248, 245, 255, 0.95), rgba(255, 255, 255, 0.95));
+    background: linear-gradient(135deg, rgba(248, 250, 255, 0.95), rgba(255, 255, 255, 0.95));
   }
   100% {
-    background: linear-gradient(135deg, rgba(245, 240, 255, 0.95), rgba(250, 245, 255, 0.95));
+    background: linear-gradient(135deg, rgba(240, 248, 255, 0.95), rgba(245, 245, 255, 0.95));
   }
 }
 
@@ -197,6 +197,7 @@
   transition: transform 0.3s ease;
   display: flex;
   align-items: center;
+  height: 50px; /* Match the height of the input field */
 }
 
 .input-icon-wrapper:focus-within {
@@ -206,7 +207,7 @@
 .input-icon {
   position: absolute;
   left: 15px;
-  top: 50%;
+  top: 25px; /* Fixed position from the top instead of percentage */
   transform: translateY(-50%);
   color: #666; /* Darker color for better visibility */
   z-index: 10; /* Significantly increased z-index */
@@ -229,7 +230,7 @@
 }
 
 .input-icon-wrapper:focus-within .input-icon {
-  color: var(--gradient-start);
+  color: var(--primary-color);
   animation: icon-pulse 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   transform: translateY(-50%); /* Maintain vertical alignment during animation */
 }
@@ -237,27 +238,27 @@
 @keyframes icon-float {
   0% {
     transform: translateY(-50%) translateX(0) rotate(0deg);
-    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.1);
     filter: brightness(1);
   }
   25% {
     transform: translateY(-50%) translateX(-2px) rotate(-3deg);
-    box-shadow: 0 7px 15px rgba(138, 43, 226, 0.15);
+    box-shadow: 0 7px 15px rgba(0, 123, 255, 0.15);
     filter: brightness(1.05);
   }
   50% {
     transform: translateY(-50%) translateX(0) rotate(0deg);
-    box-shadow: 0 8px 20px rgba(138, 43, 226, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
     filter: brightness(1.1);
   }
   75% {
     transform: translateY(-50%) translateX(2px) rotate(3deg);
-    box-shadow: 0 7px 15px rgba(138, 43, 226, 0.15);
+    box-shadow: 0 7px 15px rgba(0, 123, 255, 0.15);
     filter: brightness(1.05);
   }
   100% {
     transform: translateY(-50%) translateX(0) rotate(0deg);
-    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.1);
     filter: brightness(1);
   }
 }
@@ -265,27 +266,27 @@
 @keyframes icon-pulse {
   0% {
     transform: translateY(-50%) scale(1);
-    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.7);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
     filter: brightness(1);
   }
   30% {
     transform: translateY(-50%) scale(1.2);
-    box-shadow: 0 0 10px 5px rgba(138, 43, 226, 0.4);
+    box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.4);
     filter: brightness(1.2);
   }
   50% {
     transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 0 15px 7px rgba(138, 43, 226, 0.2);
+    box-shadow: 0 0 15px 7px rgba(0, 123, 255, 0.2);
     filter: brightness(1.15);
   }
   70% {
     transform: translateY(-50%) scale(1.15);
-    box-shadow: 0 0 10px 5px rgba(138, 43, 226, 0.3);
+    box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.3);
     filter: brightness(1.1);
   }
   100% {
     transform: translateY(-50%) scale(1);
-    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
     filter: brightness(1);
   }
 }
@@ -319,7 +320,7 @@
     border-color: var(--primary-color);
   }
   100% {
-    border-color: #8a4dff;
+    border-color: #5e9eff;
   }
 }
 
@@ -365,14 +366,14 @@
 }
 
 .signup-btn {
-  background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+  background: linear-gradient(45deg, var(--primary-color), #0056b3);
   border: none;
   height: 55px;
   border-radius: 12px;
   font-weight: 600;
   font-size: 1.1rem;
   transition: all 0.4s ease;
-  box-shadow: 0 6px 15px rgba(138, 43, 226, 0.3);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
   position: relative;
   overflow: hidden;
   letter-spacing: 1px;
@@ -393,9 +394,9 @@
 
 .signup-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.5);
   color: white;
-  background: linear-gradient(45deg, var(--gradient-end), var(--gradient-start));
+  background: linear-gradient(45deg, #0056b3, var(--primary-color));
 }
 
 .signup-btn:hover::before {
@@ -405,18 +406,18 @@
 
 .signup-btn:active {
   transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 @keyframes button-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.7);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(138, 43, 226, 0);
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
   }
 }
 
@@ -604,7 +605,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background-color: var(--gradient-start);
+  background-color: var(--primary-color);
   transition: width 0.3s ease;
 }
 

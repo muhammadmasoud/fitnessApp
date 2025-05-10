@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import LogoAnimation from './LogoAnimation';
 import './Footer.css';
 
 const Footer = () => {
@@ -67,7 +68,10 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <div className="footer-logo">FITNESS</div>
+        <div className="footer-logo-container">
+          <LogoAnimation width={80} height={80} />
+          <div className="footer-logo">FITNESS</div>
+        </div>
         <p className="copyright">&copy; {new Date().getFullYear()} FITNESS. All rights reserved.</p>
       </div>
     </footer>

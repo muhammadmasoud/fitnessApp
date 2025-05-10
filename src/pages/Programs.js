@@ -1,6 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import 'animate.css';
 import './Programs.css';
+import LoadingPlaceholder from '../components/LoadingPlaceholder';
+
+// Import images normally to avoid issues with lazy loading images
 import swimminginstructor from '../assets/images/swimming-instructor.jpg';
 import yogainstructor from '../assets/images/yoga-instructor.jpg';
 import crossfit from '../assets/images/crossfit-coach.jpg';
@@ -64,19 +67,39 @@ const Programs = () => {
   ];
 
   useEffect(() => {
-    setLoaded(true);
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
 
-    // Add scroll event listener for animations
-    const handleScroll = () => {
-      // Animation logic can be added here if needed
+    // Use setTimeout to delay showing content for smoother loading
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 300);
+
+    // Preload program background images with low quality
+    const preloadProgramImages = () => {
+      const imageUrls = [
+        'https://images.unsplash.com/photo-1534438327276-14e5300c3a48',
+        'https://images.unsplash.com/photo-1588286840104-8957b019727f',
+        'https://images.unsplash.com/photo-1555597673-b21d5c935865',
+        'https://images.unsplash.com/photo-1530549387789-4c1017266635',
+        'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed'
+      ];
+
+      imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = `${url}?auto=format&fit=crop&w=300&q=40`; // Very low quality for preloading
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    // Initial check in case the section is already in view
-    handleScroll();
+    // Execute preloading in a non-blocking way
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(preloadProgramImages);
+    } else {
+      setTimeout(preloadProgramImages, 1000);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
     };
   }, []);
 
@@ -84,11 +107,11 @@ const Programs = () => {
     <div className={`programs-page ${loaded ? 'loaded' : ''}`}>
       {/* What We Offer Section */}
       <section className="offer-section">
-        <h2 className="section-title animate__animated animate__fadeInDown">WHAT WE OFFER</h2>
+        <h2 className="section-title">WHAT WE OFFER</h2>
 
         <div className="offer-grid">
-          <div className="offer-card animate__animated animate__zoomIn animate__delay-1s">
-            <div className="card-3d-effect"></div>
+          {/* Removed animate__animated classes to reduce animation load */}
+          <div className="offer-card">
             <div className="offer-overlay">
               <h3 className="offer-title">Group Classes</h3>
               <a href="#" className="learn-more">
@@ -100,8 +123,7 @@ const Programs = () => {
             </div>
           </div>
 
-          <div className="offer-card animate__animated animate__zoomIn animate__delay-2s">
-            <div className="card-3d-effect"></div>
+          <div className="offer-card">
             <div className="offer-overlay">
               <h3 className="offer-title">Personal Training</h3>
               <a href="#" className="learn-more">
@@ -113,8 +135,7 @@ const Programs = () => {
             </div>
           </div>
 
-          <div className="offer-card animate__animated animate__zoomIn animate__delay-3s">
-            <div className="card-3d-effect"></div>
+          <div className="offer-card">
             <div className="offer-overlay">
               <h3 className="offer-title">Specialized Programs</h3>
               <a href="#" className="learn-more">
@@ -126,8 +147,7 @@ const Programs = () => {
             </div>
           </div>
 
-          <div className="offer-card animate__animated animate__zoomIn animate__delay-4s">
-            <div className="card-3d-effect"></div>
+          <div className="offer-card">
             <div className="offer-overlay">
               <h3 className="offer-title">Additional Amenities</h3>
               <a href="#" className="learn-more">
@@ -143,24 +163,35 @@ const Programs = () => {
 
       {/* Expert Trainers Section */}
       <section className="trainers-section" ref={trainersRef}>
-        <h2 className="trainers-title animate__animated animate__fadeInDown">EXPERT TRAINERS</h2>
+        <h2 className="trainers-title">EXPERT TRAINERS</h2>
 
         <div className="trainers-container">
-          {trainers.map((trainer, index) => (
-            <div key={trainer.id} className={`trainer-card animate__animated animate__fadeInUp animate__delay-${index + 1}s`}>
-              <div className="trainer-image-container">
-                <img src={trainer.image} alt={trainer.name} className="trainer-image" />
-                <div className="trainer-social">
-                  <a href="https://www.instagram.com/" className="social-icon"><i className="fab fa-instagram"></i></a>
-                  <a href="https://x.com/" className="social-icon"><i className="fa-brands fa-x-twitter"></i></a>
+          {loaded ? (
+            trainers.map((trainer, index) => (
+              <div key={trainer.id} className="trainer-card">
+                <div className="trainer-image-container">
+                  <img
+                    src={trainer.image}
+                    alt={trainer.name}
+                    className="trainer-image"
+                    loading="lazy"
+                    width="240"
+                    height="300"
+                  />
+                  <div className="trainer-social">
+                    <a href="https://www.instagram.com/" className="social-icon"><i className="fab fa-instagram"></i></a>
+                    <a href="https://x.com/" className="social-icon"><i className="fa-brands fa-x-twitter"></i></a>
+                  </div>
+                </div>
+                <div className="trainer-info">
+                  <h3 className="trainer-name">{trainer.name}</h3>
+                  <p className="trainer-role">{trainer.role}</p>
                 </div>
               </div>
-              <div className="trainer-info">
-                <h3 className="trainer-name">{trainer.name}</h3>
-                <p className="trainer-role">{trainer.role}</p>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <LoadingPlaceholder type="card" count={5} />
+          )}
         </div>
       </section>
 
@@ -168,9 +199,9 @@ const Programs = () => {
       <section className="our-programs-section">
         <div className="programs-header">
           <div className="programs-header-left">
-            <h2 className="programs-title animate__animated animate__fadeInUp">OUR PROGRAMS</h2>
+            <h2 className="programs-title">OUR PROGRAMS</h2>
           </div>
-          <div className="programs-header-right animate__animated animate__fadeInUp animate__delay-1s">
+          <div className="programs-header-right">
             <p className="programs-subtitle">
               Discover a range of programs tailored to your goals. Whether you're
               building endurance, learning discipline, or pushing your limits.
@@ -185,40 +216,20 @@ const Programs = () => {
         </div>
 
         <div className="programs-grid">
-          <div className="program-item animate__animated animate__fadeInUp animate__delay-1s">
-            <div className="program-shine"></div>
-            <div className="program-overlay">
-              <h3 className="program-name">GYM</h3>
+          {/* Program items with optimized rendering */}
+          {[
+            { name: "GYM", bgIndex: 1 },
+            { name: "YOGA", bgIndex: 2 },
+            { name: "KARATE", bgIndex: 3 },
+            { name: "SWIMMING", bgIndex: 4 },
+            { name: "BOXING", bgIndex: 5 }
+          ].map((program, index) => (
+            <div key={index} className="program-item" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="program-overlay">
+                <h3 className="program-name">{program.name}</h3>
+              </div>
             </div>
-          </div>
-
-          <div className="program-item animate__animated animate__fadeInUp animate__delay-2s">
-            <div className="program-shine"></div>
-            <div className="program-overlay">
-              <h3 className="program-name">YOGA</h3>
-            </div>
-          </div>
-
-          <div className="program-item animate__animated animate__fadeInUp animate__delay-3s">
-            <div className="program-shine"></div>
-            <div className="program-overlay">
-              <h3 className="program-name">KARATE</h3>
-            </div>
-          </div>
-
-          <div className="program-item animate__animated animate__fadeInUp animate__delay-4s">
-            <div className="program-shine"></div>
-            <div className="program-overlay">
-              <h3 className="program-name">SWIMMING</h3>
-            </div>
-          </div>
-
-          <div className="program-item animate__animated animate__fadeInUp animate__delay-5s">
-            <div className="program-shine"></div>
-            <div className="program-overlay">
-              <h3 className="program-name">BOXING</h3>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>

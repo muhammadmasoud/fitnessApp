@@ -194,6 +194,7 @@
   transition: transform 0.3s ease;
   display: flex;
   align-items: center;
+  height: 55px; /* Match the height of the input field */
 }
 
 .input-icon-wrapper:focus-within {
@@ -203,9 +204,9 @@
 .input-icon {
   position: absolute;
   left: 15px;
-  top: 50%;
+  top: 20px; /* Fixed position from the top instead of percentage */
   transform: translateY(-50%);
-  color: #666; /* Darker color for better visibility */
+  color: #292929; /* Darker color for better visibility */
   z-index: 10; /* Significantly increased z-index */
   pointer-events: none;
   width: 30px; /* Increased width for better icon display */
@@ -213,7 +214,7 @@
   display: flex; /* Added flex display for centering */
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
-  font-size: 14px; /* Slightly reduced font size */
+  font-size: 16px; /* Slightly reduced font size */
   transition: all 0.3s ease;
   background-color: #ffffff; /* Solid white background */
   border-radius: 50%;

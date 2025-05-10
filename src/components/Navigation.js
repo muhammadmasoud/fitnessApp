@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { Navbar, Nav, Container, Button, Dropdown } from 'react-bootstrap';
+import { useState, useContext } from 'react';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 import './Navigation.css';
 import '../pages/DarkNavbar.css';
 import HoverDropdown from './HoverDropdown';
-import logo from '../assets/images/logo.png';
+import UserDropdown from './UserDropdown';
+import LogoAnimation from './LogoAnimation';
 
 const Navigation = () => {
   const location = useLocation();
@@ -29,7 +30,7 @@ const Navigation = () => {
       <Container>
         <Navbar.Brand as={Link} to={currentUser ? "/authenticated-home" : "/"} className="logo">
           <div className="brand-logo">
-            <img src={logo} alt="Fitness Logo" className="logo-image" />
+            <LogoAnimation width={150} height={150} style={{ marginRight: '10px' }} />
             <span className="brand-text">FITNESS</span>
           </div>
         </Navbar.Brand>
@@ -111,19 +112,17 @@ const Navigation = () => {
 
           <div className="auth-buttons">
             {currentUser ? (
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" className="user-dropdown">
-                  Hello, {currentUser.fullName}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/dashboard">Dashboard</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/order-tracking">Track Your Order</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <div className="nav-item">
+                <UserDropdown
+                  username={currentUser.fullName}
+                  items={[
+                    { label: 'Dashboard', path: '/dashboard' },
+                    { label: 'Profile', path: '/profile' },
+                    { label: 'Track Your Order', path: '/order-tracking' }
+                  ]}
+                  onLogout={handleLogout}
+                />
+              </div>
             ) : (
               <>
                 <Link to="/track-order" className="track-order-link">
