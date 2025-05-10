@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import { AuthContext } from '../context/AuthContext';
+import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './OrderTracking.css';
-import checkoutBg from '../assets/images/order-tracking.jpg';
+import ordertrackingBg from '../assets/images/order-tracking.jpg';
 
 const OrderTracking = () => {
   const { currentUser } = useContext(AuthContext);
   const carouselRef = useRef(null);
-  const [loaded, setLoaded] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [trackingProgress, setTrackingProgress] = useState(35); // Initial progress (Processing)
   // State for storing user orders
@@ -298,11 +298,6 @@ const OrderTracking = () => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
 
-    // Set loaded state after a short delay for animations
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
-
     // If user is logged in, load their order details
     if (currentUser) {
       console.log("User is logged in, loading orders");
@@ -316,10 +311,6 @@ const OrderTracking = () => {
     const newOrderCheckInterval = setInterval(() => {
       checkForNewOrders();
     }, 1000); // Check for new orders every second
-
-    // Preload the background image
-    const img = new Image();
-    img.src = checkoutBg;
 
     // Cleanup function
     return () => {
@@ -439,9 +430,8 @@ const OrderTracking = () => {
   };
 
   return (
-    <div className={`tracking-page ${loaded ? 'loaded' : ''}`}>
+    <DynamicBackground imageUrl={ordertrackingBg} className="tracking-page">
       <ToastContainer />
-      <div className="page-overlay"></div>
 
       <Container className="tracking-container">
         <div className="tracking-content">
@@ -704,7 +694,7 @@ const OrderTracking = () => {
           )}
         </div>
       </Container>
-    </div>
+    </DynamicBackground>
   );
 };
 

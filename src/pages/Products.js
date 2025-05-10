@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { WishlistContext } from '../context/WishlistContext';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
+import LoadingAnimation from '../components/LoadingAnimation';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import './Products.css';
@@ -42,6 +43,7 @@ import dumbbell from '../assets/images/dumbbell.png';
 
 const Products = () => {
   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -308,29 +310,42 @@ const Products = () => {
   };
 
   useEffect(() => {
-    setLoaded(true);
+    // Simulate loading data from an API
+    const loadProducts = async () => {
+      // Show loading animation for at least 2 seconds
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Animate title on load
-    const titleTimer = setTimeout(() => {
+      setLoading(false);
+      setLoaded(true);
+
+      // Animate title on load
       if (titleRef.current) {
         titleRef.current.classList.add('animate-title');
       }
-    }, 300);
+
+      // Start revealing products one by one
+      products.forEach((product, index) => {
+        setTimeout(() => {
+          setVisibleProducts(prev => [...prev, product.id]);
+        }, index * 150); // Stagger the animations
+      });
+    };
+
+    loadProducts();
 
     // Animate products on scroll
     const handleScroll = () => {
       if (productsRef.current) {
         const productsPosition = productsRef.current.getBoundingClientRect();
         if (productsPosition.top < window.innerHeight && productsPosition.bottom >= 0) {
-          // Start revealing products one by one
-          const revealProducts = () => {
+          // Start revealing products one by one if they're not already visible
+          if (visibleProducts.length === 0) {
             products.forEach((product, index) => {
               setTimeout(() => {
                 setVisibleProducts(prev => [...prev, product.id]);
               }, index * 150); // Stagger the animations
             });
-          };
-          revealProducts();
+          }
           window.removeEventListener('scroll', handleScroll);
         }
       }
@@ -346,15 +361,12 @@ const Products = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Initial check in case the section is already in view
-    handleScroll();
 
     // Add tilt effect after a delay to ensure cards are rendered
     const tiltTimer = setTimeout(addTiltEffect, 1000);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(titleTimer);
       clearTimeout(tiltTimer);
 
       // Clean up event listeners
@@ -462,6 +474,26 @@ const Products = () => {
   // Removed animation for price counting
 
   // Removed price animation initialization
+
+  // Show loading animation while products are being "fetched"
+  if (loading) {
+    return (
+      <div className="loading-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)'
+      }}>
+        <LoadingAnimation
+          width={200}
+          height={200}
+          text="Loading Products..."
+          style={{ color: 'white' }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={`products-page ${loaded ? 'loaded' : ''}`}>

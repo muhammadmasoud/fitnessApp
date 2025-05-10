@@ -1,20 +1,5 @@
-.cart-page {
-  min-height: 100vh;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  position: relative;
-  background-image: url('../assets/images/cart-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  overflow-x: hidden;
-}
+/* Background image is now handled by DynamicBackground component */
+/* Additional cart page styles are below */
 
 .page-overlay {
   position: fixed;

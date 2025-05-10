@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PageTransition from './components/PageTransition';
 import Layout from './components/Layout';
 import ScrollHandler from './components/ScrollHandler';
+import FireAnimation from './components/FireAnimation';
 import Home from './pages/Home';
 import AuthenticatedHome from './pages/AuthenticatedHome';
 import About from './pages/About';
@@ -27,6 +28,7 @@ import Checkout from './pages/Checkout';
 import OrderTracking from './pages/OrderTracking';
 import TrackOrderPublic from './pages/TrackOrderPublic';
 import Wishlist from './pages/Wishlist';
+import LottieDemo from './pages/LottieDemo';
 import ToastTest from './components/ToastTest';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -82,7 +84,11 @@ function App() {
             <header style={headerStyle}>
               <div className="announcement-bar">
                 <span className="announcement-email">📧 contact@fitness.com</span>
-                <span className="announcement-promotion">🔥 <span className="rainbow-text">20%</span> OFF all membership plans this MONTH — Sign up today and transform your fitness journey! 🔥</span>
+                <span className="announcement-promotion">
+                  <FireAnimation width={40} height={40} />
+                  <span className="rainbow-text">20%</span> OFF all membership plans this MONTH — Sign up today and transform your fitness journey!
+                  <FireAnimation width={40} height={40} />
+                </span>
                 <div className="announcement-social-icons">
                   <a href="https://www.facebook.com/" className="announcement-social-icon"><i className="fab fa-facebook-f"></i></a>
                   <a href="https://www.instagram.com/" className="announcement-social-icon"><i className="fab fa-instagram"></i></a>
@@ -157,6 +163,7 @@ function App() {
                         <Profile />
                       </ProtectedRoute>
                     } />
+                    <Route path="/lottie-demo" element={<LottieDemo />} />
                     <Route path="/toast-test" element={<ToastTest />} />
                   </Routes>
                 </PageTransition>

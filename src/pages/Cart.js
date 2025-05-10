@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
+import DynamicBackground from '../components/DynamicBackground';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import './Cart.css';
@@ -11,22 +12,12 @@ import '../styles/toast-custom.css';
 import cartBg from '../assets/images/cart-bg.jpg';
 
 const Cart = () => {
-  const [loaded, setLoaded] = useState(false);
   const { cartItems, removeFromCart, updateQuantity, clearCart, getTotalPrice } = useContext(CartContext);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-
-    // Set loaded state after a short delay for animations
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
-
-    // Preload the background image
-    const img = new Image();
-    img.src = cartBg;
   }, []);
 
   // Format price to always show 2 decimal places
@@ -74,10 +65,8 @@ const Cart = () => {
   };
 
   return (
-    <div className={`cart-page ${loaded ? 'loaded' : ''}`}>
+    <DynamicBackground imageUrl={cartBg} className="cart-page">
       <ToastContainer />
-      <div className="page-overlay"></div>
-
       <Container className="cart-container">
         <div className="cart-content">
           <h1 className="cart-title animate__animated animate__fadeInDown">YOUR CART</h1>
@@ -189,7 +178,7 @@ const Cart = () => {
           </div>
         </div>
       </Container>
-    </div>
+    </DynamicBackground>
   );
 };
 

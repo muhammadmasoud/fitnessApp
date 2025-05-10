@@ -3,14 +3,14 @@ import { Container, Row, Col, ProgressBar, Button, Carousel, Form } from 'react-
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
+import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './OrderTracking.css';
 import './TrackOrderPublic.css';
-import checkoutBg from '../assets/images/order-tracking.jpg';
+import trackingBg from '../assets/images/order-tracking.jpg';
 
 const TrackOrderPublic = () => {
   const carouselRef = useRef(null);
-  const [loaded, setLoaded] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [trackingProgress, setTrackingProgress] = useState(35); // Initial progress (Processing)
   const [trackingNumber, setTrackingNumber] = useState('');
@@ -23,15 +23,6 @@ const TrackOrderPublic = () => {
 
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-
-    // Set loaded state after a short delay for animations
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
-
-    // Preload the background image
-    const img = new Image();
-    img.src = checkoutBg;
   }, []);
 
   // Function to search for an order by tracking number
@@ -151,9 +142,8 @@ const TrackOrderPublic = () => {
   };
 
   return (
-    <div className={`tracking-page ${loaded ? 'loaded' : ''}`}>
+    <DynamicBackground imageUrl={trackingBg} className="tracking-page">
       <ToastContainer />
-      <div className="page-overlay"></div>
 
       <Container className="tracking-container">
         <div className="tracking-content">
@@ -374,7 +364,7 @@ const TrackOrderPublic = () => {
           )}
         </div>
       </Container>
-    </div>
+    </DynamicBackground>
   );
 };
 

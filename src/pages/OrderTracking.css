@@ -1,19 +1,6 @@
+/* Background image is now handled by DynamicBackground component */
 .tracking-page {
-  min-height: 100vh;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  position: relative;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/images/checkout-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   padding: 150px 0 60px 0; /* Added top and bottom padding to push content below navbar and above footer */
-  overflow-x: hidden;
 }
 
 .page-overlay {
