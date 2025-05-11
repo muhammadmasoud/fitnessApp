@@ -14,6 +14,7 @@ A modern fitness tracking web application built with React.js that helps users t
 ## Technologies Used
 
 - React.js
+- Vite (Build Tool)
 - React Router
 - React Bootstrap
 - Chart.js
@@ -42,7 +43,7 @@ npm install
 
 3. Start the development server:
 ```bash
-npm start
+npm run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -72,10 +73,10 @@ fitness-tracker/
 
 ## Available Scripts
 
-- `npm start` - Runs the app in development mode
-- `npm test` - Launches the test runner
+- `npm run dev` - Runs the app in development mode
 - `npm run build` - Builds the app for production
-- `npm run eject` - Ejects from Create React App
+- `npm run preview` - Previews the production build locally
+- `npm test` - Launches the test runner
 
 ## Contributing
 

@@ -33,12 +33,9 @@ footer {
   margin-top: auto; /* Pushes footer to the bottom if content is short */
 }
 
-/* Optimize performance for animations */
+/* Basic styling without animations */
 .app, .main-content, .page-transition {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Ensure no Bootstrap margins affect our layout */
@@ -72,6 +69,19 @@ footer {
   padding: 0;
 }
 
+/* Header styling for scroll behavior */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  will-change: transform;
+  transform: translateY(0); /* Ensure it starts visible */
+  background-color: transparent;
+}
+
 /* Override any Bootstrap navbar background */
 .navbar, .navbar-custom, .navbar-collapse {
   background-color: transparent !important;
@@ -90,6 +100,8 @@ footer {
   width: 100%;
   box-sizing: border-box;
   height: 50px;
+  position: relative;
+  z-index: 1001; /* Higher than the navbar */
 }
 
 .announcement-email {
@@ -190,7 +202,7 @@ a.announcement-social-icon {
 
 .main-content {
   flex: 1;
-  padding: 0;
+  padding: 210px 0 0 0; /* Add padding to account for fixed header (announcement bar + navbar height) */
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -285,9 +297,15 @@ a.announcement-social-icon {
     margin-top: 5px;
   }
 
-  /* Ensure navbar has no background on mobile */
+  /* Header styling for mobile */
+  header {
+    position: fixed;
+    width: 100%;
+  }
+
+  /* Ensure navbar has semi-transparent background on mobile */
   .navbar, .navbar-custom, .navbar-collapse {
-    background-color: transparent !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
   }
 
   .container {
@@ -305,5 +323,10 @@ a.announcement-social-icon {
   .cta-button {
     padding: 12px 30px;
     font-size: 1rem;
+  }
+
+  /* Adjust main content padding for mobile */
+  .main-content {
+    padding-top: 120px; /* Reduced padding for mobile */
   }
 }

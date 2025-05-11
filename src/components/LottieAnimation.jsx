@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import Lottie from 'lottie-react';
 import fitnessAnimation from '../assets/animations/fitness-animation.json';
 import workoutAnimation from '../assets/animations/workout-animation.json';

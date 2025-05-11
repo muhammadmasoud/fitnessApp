@@ -1,7 +1,7 @@
 .navbar-custom {
   background-color: transparent !important;
-  position: absolute !important;
-  top: 60px !important;
+  position: relative !important; /* Changed from absolute to relative since header is now fixed */
+  top: -15px !important; /* Move the navbar up by 15px */
   left: 0 !important;
   right: 0 !important;
   z-index: 1000;
@@ -13,6 +13,7 @@
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
+  transition: transform 0.3s ease !important; /* Added transition for smooth hiding/showing */
 }
 
 /* Add specific spacing for navbar collapse */
@@ -34,7 +35,7 @@
 }
 
 .container {
-  max-width: 1400px !important; /* Increased max-width */
+  max-width: 1500px !important; /* Further increased max-width from 1400px to 1500px */
   padding: 0 30px !important;
   margin: 0 auto !important;
   height: 100% !important;
@@ -101,7 +102,7 @@
   margin: 0 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 1.2rem !important; /* Reduced gap between nav links */
+  gap: 1.2rem !important; /* Adjusted gap between nav links to accommodate larger font */
 }
 
 .nav-item {
@@ -111,12 +112,13 @@
 
 .nav-link {
   color: white !important;
-  font-weight: 500;
-  padding: 0.5rem 0.5rem !important;
+  font-weight: 600; /* Increased font weight from 500 to 600 for better visibility */
+  padding: 0.5rem 0.4rem !important; /* Reduced horizontal padding from 0.5rem to 0.4rem */
   transition: all 0.3s ease !important;
-  font-size: 0.95rem;
+  font-size: 1.4rem; /* Further increased font size from 1.25rem to 1.4rem */
   text-align: center !important;
   position: relative;
+  letter-spacing: 0.5px; /* Added letter spacing for better readability */
 }
 
 .nav-link::after {
@@ -169,12 +171,13 @@
 
 .custom-dropdown .dropdown-toggle {
   color: white !important;
-  font-weight: 500;
-  padding: 0.5rem 0.5rem !important;
+  font-weight: 600; /* Increased font weight from 500 to 600 for better visibility */
+  padding: 0.5rem 0.4rem !important; /* Reduced horizontal padding from 0.5rem to 0.4rem */
   transition: all 0.3s ease !important;
-  font-size: 0.95rem;
+  font-size: 1.4rem; /* Further increased font size from 1.25rem to 1.4rem */
   text-align: center !important;
   position: relative;
+  letter-spacing: 0.5px; /* Added letter spacing for better readability */
 }
 
 .custom-dropdown .dropdown-toggle::after {
@@ -233,6 +236,8 @@
   color: white;
   padding: 0.5rem 1.5rem;
   transition: all 0.3s ease;
+  font-size: 1.25rem; /* Increased font size to better match the navigation links */
+  font-weight: 500; /* Added font weight for better visibility */
 }
 
 .custom-dropdown .dropdown-item:hover {
@@ -265,7 +270,7 @@
 
 .cart-icon-link {
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.5rem; /* Increased font size from 1.3rem to 1.5rem */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -285,10 +290,10 @@
   right: -10px;
   background-color: #0074D9;
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.8rem; /* Increased font size from 0.7rem to 0.8rem */
   font-weight: bold;
-  width: 18px;
-  height: 18px;
+  width: 20px; /* Increased width from 18px to 20px */
+  height: 20px; /* Increased height from 18px to 20px */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -323,10 +328,15 @@
   color: white;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.1rem; /* Increased font size from 0.9rem to 1.1rem */
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  gap: 5px; /* Add gap between icon and text */
+}
+
+.track-order-link i {
+  font-size: 1.2rem; /* Increased icon size */
 }
 
 .track-order-link:hover {
@@ -367,10 +377,10 @@
   border-radius: 30px !important;
   padding: 0.3rem 1.2rem !important;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.1rem; /* Increased font size from 0.9rem to 1.1rem */
   transition: all 0.3s ease !important;
   min-width: 100px !important;
-  height: 42px !important;
+  height: 45px !important; /* Increased height from 42px to 45px */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -389,8 +399,9 @@
   border-radius: 30px !important;
   padding: 0.5rem 1.2rem !important;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.1rem; /* Increased font size from 0.9rem to 1.1rem */
   transition: all 0.3s ease !important;
+  height: 45px !important; /* Added height to match login button */
 }
 
 .sign-up-btn:hover {
@@ -409,16 +420,17 @@
 /* Responsive adjustments */
 @media (max-width: 991px) {
   .navbar-custom {
-    position: fixed;
-    top: 50px;
+    position: relative;
+    top: 0;
     padding: 0;
-    background-color: transparent !important;
+    background-color: rgba(0, 0, 0, 0.8) !important; /* Semi-transparent background for mobile */
+    height: auto !important; /* Auto height for mobile */
   }
 
   .navbar-collapse {
     padding: 1rem;
     margin: 0 -1rem;
-    background-color: transparent !important;
+    background-color: rgba(0, 0, 0, 0.8) !important; /* Semi-transparent background for mobile */
   }
 
   .nav-link {
@@ -451,5 +463,10 @@
   .login-btn,
   .sign-up-btn {
     width: 100%;
+  }
+
+  /* Adjust main content padding for mobile */
+  .main-content {
+    padding-top: 120px; /* Reduced padding for mobile */
   }
 }

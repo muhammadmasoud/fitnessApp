@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import { useLottie } from 'lottie-react';
 import './LottieDemo.css';
 
-// Import all animation files dynamically
+// Import all animation files dynamically using Vite's import.meta.glob
 // This will automatically include any JSON files in the animations folder
-const animationContext = require.context('../assets/animations', false, /\.json$/);
-const animationFiles = animationContext.keys().map(key => {
+const animationModules = import.meta.glob('../assets/animations/*.json', { eager: true });
+const animationFiles = Object.entries(animationModules).map(([path, module]) => {
   // Get the filename without extension
-  const filename = key.replace('./', '').replace('.json', '');
+  const filename = path.split('/').pop().replace('.json', '');
   return {
     name: filename,
-    data: animationContext(key)
+    data: module.default || module
   };
 });
 

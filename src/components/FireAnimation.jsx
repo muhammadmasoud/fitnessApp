@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Lottie from 'lottie-react';
 import { getAnimationByName } from '../utils/animationUtils';
 import './FireAnimation.css';

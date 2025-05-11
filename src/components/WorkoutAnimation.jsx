@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import Lottie from 'lottie-react';
 import workoutAnimation from '../assets/animations/workout-animation.json';
 
 /**
  * WorkoutAnimation component for displaying workout-related animations
- * 
+ *
  * @param {Object} props - Component props
  * @param {number} props.width - Width of the animation (default: 300)
  * @param {number} props.height - Height of the animation (default: 300)
@@ -27,7 +27,7 @@ const WorkoutAnimation = ({
   useEffect(() => {
     // You can access the Lottie instance and control it programmatically
     const lottieInstance = lottieRef.current;
-    
+
     // Example: Pause the animation after 3 seconds if it's not looping
     if (!loop && autoplay) {
       const timer = setTimeout(() => {
@@ -35,7 +35,7 @@ const WorkoutAnimation = ({
           lottieInstance.pause();
         }
       }, 3000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [loop, autoplay]);

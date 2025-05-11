@@ -1,0 +1,337 @@
+import { useEffect, useState, useRef } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import './About.css';
+import fitness from '../assets/images/fitness.jpg';
+
+const About = () => {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [yearsCount, setYearsCount] = useState(0);
+  const [trainersCount, setTrainersCount] = useState(0);
+  const [branchesCount, setBranchesCount] = useState(0);
+  const [clientsCount, setClientsCount] = useState(0);
+
+  const statsRef = useRef(null);
+  const statsObserved = useRef(false);
+
+  const testimonials = [
+    {
+      id: 1,
+      name: "Sarah Johnson",
+      role: "Member since 2020",
+      quote: "This gym completely transformed my life. The trainers are exceptional and the community is so supportive. I've lost 30 pounds and gained confidence I never thought possible.",
+      image: "https://randomuser.me/api/portraits/women/32.jpg"
+    },
+    {
+      id: 2,
+      name: "Michael Chen",
+      role: "Member since 2019",
+      quote: "The personalized training programs here are unmatched. I've tried many gyms before, but the attention to detail and genuine care from the staff makes this place special.",
+      image: "https://randomuser.me/api/portraits/men/54.jpg"
+    },
+    {
+      id: 3,
+      name: "Emma Rodriguez",
+      role: "Member since 2021",
+      quote: "Not only have I achieved my fitness goals, but I've made lifelong friends. The community events and challenges keep me motivated and excited about my fitness journey.",
+      image: "https://randomuser.me/api/portraits/women/65.jpg"
+    },
+    {
+      id: 4,
+      name: "David Wilson",
+      role: "Member since 2018",
+      quote: "As someone who was intimidated by gyms, I can't express how welcoming this environment is. The trainers meet you where you are and help you grow at your own pace.",
+      image: "https://randomuser.me/api/portraits/men/22.jpg"
+    },
+    {
+      id: 5,
+      name: "Jennifer Lee",
+      role: "Member since 2022",
+      quote: "The variety of classes keeps my workouts fresh and exciting. I've never been this consistent with exercise before, and it's all thanks to the engaging programs and motivating instructors.",
+      image: "https://randomuser.me/api/portraits/women/44.jpg"
+    },
+    {
+      id: 6,
+      name: "Robert Garcia",
+      role: "Member since 2019",
+      quote: "After my injury, I was afraid to get back into fitness. The trainers here designed a rehabilitation program that helped me recover safely and build strength gradually. I'm now stronger than before my injury!",
+      image: "https://randomuser.me/api/portraits/men/67.jpg"
+    },
+    {
+      id: 7,
+      name: "Olivia Thompson",
+      role: "Member since 2021",
+      quote: "The nutrition guidance alongside the workout plans has been a game-changer. I've learned how to fuel my body properly, and the results speak for themselves. My energy levels are through the roof!",
+      image: "https://randomuser.me/api/portraits/women/28.jpg"
+    },
+    {
+      id: 8,
+      name: "James Mitchell",
+      role: "Member since 2020",
+      quote: "As a busy professional, I appreciate the flexible scheduling and the efficiency of the workouts. In just 45 minutes, I get a complete session that keeps me fit despite my hectic lifestyle.",
+      image: "https://randomuser.me/api/portraits/men/36.jpg"
+    },
+    {
+      id: 9,
+      name: "Sophia Patel",
+      role: "Member since 2022",
+      quote: "The online coaching during the pandemic was exceptional. They didn't miss a beat in providing quality instruction, and the transition back to in-person training was seamless. Truly professional service!",
+      image: "https://randomuser.me/api/portraits/women/57.jpg"
+    }
+  ];
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true,
+      easing: 'ease-in-out'
+    });
+
+    // Auto-rotate testimonials
+    const interval = setInterval(() => {
+      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
+    }, 5000);
+
+    // Stats counter observer
+    const observer = new IntersectionObserver((entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && !statsObserved.current) {
+        startCounters();
+        statsObserved.current = true;
+      }
+    }, { threshold: 0.1 });
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      clearInterval(interval);
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, [testimonials.length]);
+
+  const startCounters = () => {
+    // Years counter (0 to 10)
+    const yearsDuration = 2000; // 2 seconds
+    const yearsIncrement = 1;
+    const yearsTarget = 10;
+    let yearsCurrent = 0;
+    const yearsInterval = setInterval(() => {
+      yearsCurrent += yearsIncrement;
+      if (yearsCurrent > yearsTarget) {
+        clearInterval(yearsInterval);
+        setYearsCount(yearsTarget);
+      } else {
+        setYearsCount(yearsCurrent);
+      }
+    }, yearsDuration / yearsTarget);
+
+    // Trainers counter (0 to 45)
+    const trainersDuration = 2000;
+    const trainersIncrement = 1;
+    const trainersTarget = 45;
+    let trainersCurrent = 0;
+    const trainersInterval = setInterval(() => {
+      trainersCurrent += trainersIncrement;
+      if (trainersCurrent > trainersTarget) {
+        clearInterval(trainersInterval);
+        setTrainersCount(trainersTarget);
+      } else {
+        setTrainersCount(trainersCurrent);
+      }
+    }, trainersDuration / trainersTarget);
+
+    // Branches counter (0 to 12)
+    const branchesDuration = 2000;
+    const branchesIncrement = 1;
+    const branchesTarget = 12;
+    let branchesCurrent = 0;
+    const branchesInterval = setInterval(() => {
+      branchesCurrent += branchesIncrement;
+      if (branchesCurrent > branchesTarget) {
+        clearInterval(branchesInterval);
+        setBranchesCount(branchesTarget);
+      } else {
+        setBranchesCount(branchesCurrent);
+      }
+    }, branchesDuration / branchesTarget);
+
+    // Clients counter (0 to 20000)
+    const clientsDuration = 2000;
+    const clientsIncrement = 500;
+    const clientsTarget = 20000;
+    let clientsCurrent = 0;
+    const clientsInterval = setInterval(() => {
+      clientsCurrent += clientsIncrement;
+      if (clientsCurrent > clientsTarget) {
+        clearInterval(clientsInterval);
+        setClientsCount(clientsTarget);
+      } else {
+        setClientsCount(clientsCurrent);
+      }
+    }, clientsDuration / (clientsTarget / clientsIncrement));
+  };
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial(prev => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const goToTestimonial = (index) => {
+    setCurrentTestimonial(index);
+  };
+
+  // Add animation reset when testimonial changes
+  useEffect(() => {
+    const testimonialCard = document.querySelector('.testimonial-card');
+    if (testimonialCard) {
+      testimonialCard.style.animation = 'none';
+      setTimeout(() => {
+        testimonialCard.style.animation = 'fadeIn 0.5s ease-in-out';
+      }, 10);
+    }
+  }, [currentTestimonial]);
+
+  return (
+    <div className="about-page">
+      <section className="about-hero-section">
+        <div className="about-hero-content">
+          <h1 className="about-hero-title" data-aos="fade-up">ABOUT US</h1>
+          <p className="about-hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+            Our mission is to empower individuals in our community to lead healthier, stronger,<br />
+            and more confident lives. We believe fitness is not just about physical strength —<br />
+            it's about building self-concern, cultivating self-love, and creating a positive mindset<br />
+            that lasts a lifetime.
+          </p>
+        </div>
+      </section>
+
+      {/* Expertise Section */}
+      <section className="expertise-section">
+        <div className="expertise-container">
+          <div className="expertise-main">
+            <div className="expertise-image" data-aos="fade-right">
+              <img src={fitness} alt="Fitness trainer" />
+            </div>
+            <div className="expertise-content" data-aos="fade-left">
+              <div className="expertise-subtitle">INFORMATION ABOUT US</div>
+              <h2 className="expertise-title"><span>FITNESS</span> WORKOUT<br />TRAINING CENTER</h2>
+              <p className="expertise-description">
+                At FITNESS, we bring a decade of specialized experience in fitness training and wellness coaching.
+                Our team of certified professionals is dedicated to providing personalized fitness solutions that
+                address your unique needs and goals.
+              </p>
+              <ul className="expertise-list">
+                <li className="expertise-list-item">
+                  <i className="fas fa-chevron-right"></i>
+                  <span>MEN FITNESS AND WORKOUT</span>
+                </li>
+                <li className="expertise-list-item">
+                  <i className="fas fa-chevron-right"></i>
+                  <span>WOMEN FITNESS AND WORKOUT</span>
+                </li>
+                <li className="expertise-list-item">
+                  <i className="fas fa-chevron-right"></i>
+                  <span>PERSONAL TRAININGS</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Full-width Stats Ribbon */}
+        <div className="stats-ribbon">
+          <div className="stats-ribbon-content">
+            <div className="stats-ribbon-item">
+              <div className="stats-number">10+</div>
+              <div className="stats-label">YEARS OF EXPERIENCE</div>
+            </div>
+
+            <div className="stats-ribbon-item">
+              <div className="stats-number">45+</div>
+              <div className="stats-label">FITNESS TRAINERS</div>
+            </div>
+
+            <div className="stats-ribbon-item">
+              <div className="stats-number">310+</div>
+              <div className="stats-label">BEST EQUIPMENTS</div>
+            </div>
+
+            <div className="stats-ribbon-item">
+              <div className="stats-number">20k+</div>
+              <div className="stats-label">SATISFIED CLIENTS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="testimonials-section">
+        <div className="section-header" data-aos="fade-up">
+          <h2 className="section-title">WHAT OUR COMMUNITY SAYS</h2>
+          <div className="section-divider"></div>
+        </div>
+
+        <Container>
+          <div className="testimonials-container" data-aos="fade-up" data-aos-delay="200">
+            <div className="testimonial-card">
+              <div className="testimonial-image-container">
+                <img
+                  src={testimonials[currentTestimonial].image}
+                  alt={testimonials[currentTestimonial].name}
+                  className="testimonial-image"
+                />
+              </div>
+              <div className="testimonial-content">
+                <div className="quote-icon">
+                  <i className="fas fa-quote-left"></i>
+                </div>
+                <p className="testimonial-quote">{testimonials[currentTestimonial].quote}</p>
+                <h3 className="testimonial-name">{testimonials[currentTestimonial].name}</h3>
+                <p className="testimonial-role">{testimonials[currentTestimonial].role}</p>
+              </div>
+            </div>
+
+            <div className="testimonial-controls">
+              <button
+                className="testimonial-control-btn prev-btn"
+                onClick={prevTestimonial}
+                aria-label="Previous testimonial"
+              >
+                <i className="fas fa-chevron-left"></i>
+              </button>
+
+              <div className="testimonial-indicators">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`testimonial-indicator ${index === currentTestimonial ? 'active' : ''}`}
+                    onClick={() => goToTestimonial(index)}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  ></button>
+                ))}
+              </div>
+
+              <button
+                className="testimonial-control-btn next-btn"
+                onClick={nextTestimonial}
+                aria-label="Next testimonial"
+              >
+                <i className="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </Container>
+      </section>
+    </div>
+  );
+};
+
+export default About;
