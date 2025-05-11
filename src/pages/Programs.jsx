@@ -1,70 +1,9 @@
-import { useEffect, useState, useRef, lazy, Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import 'animate.css';
 import './Programs.css';
-import LoadingPlaceholder from '../components/LoadingPlaceholder';
-
-// Import images normally to avoid issues with lazy loading images
-import swimminginstructor from '../assets/images/swimming-instructor.jpg';
-import yogainstructor from '../assets/images/yoga-instructor.jpg';
-import crossfit from '../assets/images/crossfit-coach.jpg';
-import nutrition from '../assets/images/nutrition-coach.jpg';
-import Pilates from '../assets/images/Pilates-Instructor.jpg';
 
 const Programs = () => {
   const [loaded, setLoaded] = useState(false);
-  const trainersRef = useRef(null);
-
-  // Trainer data with random images from Unsplash
-  const trainers = [
-    {
-      id: 1,
-      name: "Alex Chen",
-      role: "Karate Master",
-      image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-    },
-    {
-      id: 2,
-      name: "Matt Booze",
-      role: "Swimming Instructor",
-      image: swimminginstructor
-    },
-    {
-      id: 3,
-      name: "Janet McDonald",
-      role: "Yoga Instructor",
-      image: yogainstructor
-    },
-    {
-      id: 4,
-      name: "Sarah Johnson",
-      role: "Pilates Instructor",
-      image: Pilates
-    },
-    {
-      id: 5,
-      name: "Marcus Lee",
-      role: "Boxing Coach",
-      image: "https://images.unsplash.com/photo-1549476464-37392f717541?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-    },
-    {
-      id: 6,
-      name: "Michael Torres",
-      role: "CrossFit Coach",
-      image: crossfit
-    },
-    {
-      id: 7,
-      name: "Henry Boston",
-      role: "Fitness Coach",
-      image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-    },
-    {
-      id: 8,
-      name: "Emma Rodriguez",
-      role: "Nutrition Coach",
-      image: nutrition
-    }
-  ];
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -161,39 +100,7 @@ const Programs = () => {
         </div>
       </section>
 
-      {/* Expert Trainers Section */}
-      <section className="trainers-section" ref={trainersRef}>
-        <h2 className="trainers-title">EXPERT TRAINERS</h2>
 
-        <div className="trainers-container">
-          {loaded ? (
-            trainers.map((trainer, index) => (
-              <div key={trainer.id} className="trainer-card">
-                <div className="trainer-image-container">
-                  <img
-                    src={trainer.image}
-                    alt={trainer.name}
-                    className="trainer-image"
-                    loading="lazy"
-                    width="240"
-                    height="300"
-                  />
-                  <div className="trainer-social">
-                    <a href="https://www.instagram.com/" className="social-icon"><i className="fab fa-instagram"></i></a>
-                    <a href="https://x.com/" className="social-icon"><i className="fa-brands fa-x-twitter"></i></a>
-                  </div>
-                </div>
-                <div className="trainer-info">
-                  <h3 className="trainer-name">{trainer.name}</h3>
-                  <p className="trainer-role">{trainer.role}</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <LoadingPlaceholder type="card" count={5} />
-          )}
-        </div>
-      </section>
 
       {/* Our Programs Section */}
       <section className="our-programs-section">

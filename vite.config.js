@@ -2,6 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { loadEnv } from 'vite';
+import eslint from 'vite-plugin-eslint';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -10,7 +15,19 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      eslint({
+        include: ['src/**/*.js', 'src/**/*.jsx'],
+        cache: false,
+        failOnError: false,
+        failOnWarning: false,
+        lintOnStart: true,
+        emitWarning: true,
+        emitError: true,
+        eslintPath: 'eslint',
+      }),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 
 // Mock any global objects or modules that might cause issues in tests
-global.ResizeObserver = class ResizeObserver {
+// Use globalThis instead of global for ESM compatibility
+globalThis.ResizeObserver = class ResizeObserver {
   constructor(callback) {
     this.callback = callback;
   }

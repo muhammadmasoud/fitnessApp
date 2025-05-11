@@ -209,6 +209,12 @@ a.announcement-social-icon {
   min-height: 100vh;
   position: relative;
   z-index: 1;
+  transition: padding 0.3s ease;
+}
+
+/* Class to adjust padding when announcement bar is not visible */
+.main-content-no-announcement {
+  padding-top: 160px !important; /* Reduced padding when announcement bar is hidden */
 }
 
 /* Override Bootstrap container for full-width sections */

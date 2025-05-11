@@ -616,22 +616,22 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  gap: 0;
   position: relative;
   z-index: 1;
 }
 
 .program-item {
-  height: 240px;
+  height: 400px;
   position: relative;
   overflow: hidden;
   background-size: cover;
   background-position: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 15px;
+  border-radius: 0;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   /* Remove 3D transforms for better performance */
-  border: 2px solid rgba(0, 116, 217, 0.1);
+  border: none;
   will-change: transform, box-shadow;
 }
 
@@ -662,10 +662,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+  background: rgba(0,0,0,0.5);
   z-index: 1;
   transition: all 0.6s ease;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .program-item:nth-child(1) {
@@ -689,16 +689,14 @@
 }
 
 .program-item:hover {
-  transform: translateY(-10px);
+  transform: translateY(0);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-  border-color: rgba(0, 116, 217, 0.3);
 }
 
 /* Remove shine animation for better performance */
 
 .program-item:hover::before {
   opacity: 0.5;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
 }
 
 .program-overlay {
@@ -707,19 +705,23 @@
   left: 0;
   width: 100%;
   padding: 30px;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: none;
   z-index: 2;
   transition: transform 0.3s ease, padding 0.3s ease;
   /* Remove 3D transforms for better performance */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .program-item:hover .program-overlay {
-  transform: translateY(-5px);
-  padding-bottom: 35px;
+  transform: translateY(0);
+  padding-bottom: 30px;
 }
 
 .program-name {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   font-family: 'Teko', sans-serif;
   letter-spacing: 2px;
@@ -729,26 +731,16 @@
   display: inline-block;
   padding-bottom: 8px;
   transition: transform 0.3s ease, letter-spacing 0.3s ease;
+  text-align: center;
 }
 
 .program-name::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #0074D9, rgba(0, 116, 217, 0.5));
-  transition: width 0.3s ease;
+  content: none;
 }
 
 .program-item:hover .program-name {
   transform: scale(1.05);
   letter-spacing: 2.5px;
-}
-
-.program-item:hover .program-name::after {
-  width: 100%;
 }
 
 /* Simplified Animations */
@@ -792,6 +784,10 @@
   .programs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .program-item {
+    height: 350px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -801,6 +797,10 @@
 
   .programs-grid {
     grid-template-columns: 1fr;
+  }
+
+  .program-item {
+    height: 300px;
   }
 
   .section-title,

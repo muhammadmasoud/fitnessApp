@@ -59,7 +59,7 @@ const Navigation = () => {
               onClick={() => setExpanded(false)}
               className={location.pathname === '/gallery' ? 'active' : ''}
             >
-              Gallery
+              Trainers
             </Nav.Link>
             <div className="nav-item">
               <HoverDropdown

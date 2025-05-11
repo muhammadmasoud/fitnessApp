@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navigation from './components/Navigation.jsx';
 import Footer from './components/Footer.jsx';
@@ -30,7 +30,7 @@ import TrackOrderPublic from './pages/TrackOrderPublic.jsx';
 import Wishlist from './pages/Wishlist.jsx';
 import LottieDemo from './pages/LottieDemo.jsx';
 import ToastTest from './components/ToastTest.jsx';
-import { AuthProvider } from './context/AuthContext.jsx';
+import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 import { WishlistProvider } from './context/WishlistContext.jsx';
 import './App.css';
@@ -79,108 +79,125 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <WishlistProvider>
-          <div className="app" style={appStyle}>
-            <ScrollHandler />
-            <header style={headerStyle}>
-              <div className="announcement-bar">
-                <Fragment>
-                  <span className="announcement-email">📧 contact@fitness.com</span>
-                  <span className="announcement-promotion">
-                    <FireAnimation width={40} height={40} />
-                    <span className="rainbow-text">20%</span> OFF all membership plans this MONTH — Sign up today and transform your fitness journey!
-                    <FireAnimation width={40} height={40} />
-                  </span>
-                </Fragment>
-                <div className="announcement-social-icons">
-                  <Fragment>
-                    <a href="https://www.facebook.com/" className="announcement-social-icon"><i className="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/" className="announcement-social-icon"><i className="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/" className="announcement-social-icon"><i className="fab fa-youtube"></i></a>
-                    <a href="https://www.x.com/" className="announcement-social-icon"><i className="fa-brands fa-x-twitter"></i></a>
-                  </Fragment>
-                </div>
-              </div>
-              <Navigation />
-            </header>
-            <main className="main-content" style={mainStyle}>
-              <Layout>
-                <PageTransition>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/authenticated-home" element={
-                      <ProtectedRoute>
-                        <AuthenticatedHome />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/offers" element={<Offers />} />
-                    <Route path="/programs" element={<Programs />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/cart" element={
-                      <ProtectedRoute>
-                        <Cart />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/checkout" element={
-                      <ProtectedRoute>
-                        <Checkout />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/order-tracking" element={
-                      <ProtectedRoute>
-                        <OrderTracking />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/track-order" element={<TrackOrderPublic />} />
-                    <Route path="/wishlist" element={
-                      <ProtectedRoute>
-                        <Wishlist />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/exercises" element={
-                      <ProtectedRoute>
-                        <Exercises />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/goals" element={
-                      <ProtectedRoute>
-                        <Goals />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/progress" element={
-                      <ProtectedRoute>
-                        <Progress />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/profile" element={
-                      <ProtectedRoute>
-                        <Profile />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/lottie-demo" element={<LottieDemo />} />
-                    <Route path="/toast-test" element={<ToastTest />} />
-                  </Routes>
-                </PageTransition>
-              </Layout>
-            </main>
-            <footer style={footerStyle}>
-              <Footer />
-            </footer>
-          </div>
+          <AppContent
+            appStyle={appStyle}
+            headerStyle={headerStyle}
+            mainStyle={mainStyle}
+            footerStyle={footerStyle}
+          />
         </WishlistProvider>
       </CartProvider>
     </AuthProvider>
   );
 }
+
+// Create a component that will use the AuthContext
+const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
+  const { currentUser } = useContext(AuthContext);
+
+  return (
+    <div className="app" style={appStyle}>
+      <ScrollHandler />
+      <header style={headerStyle}>
+        {/* Only show announcement bar when user is not logged in */}
+        {!currentUser && (
+          <div className="announcement-bar">
+            <Fragment>
+              <span className="announcement-email">📧 contact@fitness.com</span>
+              <span className="announcement-promotion">
+                <FireAnimation width={35} height={40} />
+                <span className="rainbow-text">20%</span> OFF for all new members this MONTH — Sign up today and transform your fitness journey!
+                <FireAnimation width={35} height={40} />
+              </span>
+            </Fragment>
+            <div className="announcement-social-icons">
+              <Fragment>
+                <a href="https://www.facebook.com/" className="announcement-social-icon"><i className="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/" className="announcement-social-icon"><i className="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/" className="announcement-social-icon"><i className="fab fa-youtube"></i></a>
+                <a href="https://www.x.com/" className="announcement-social-icon"><i className="fa-brands fa-x-twitter"></i></a>
+              </Fragment>
+            </div>
+          </div>
+        )}
+        <Navigation />
+      </header>
+      <main className="main-content" style={mainStyle}>
+        <Layout>
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/authenticated-home" element={
+                <ProtectedRoute>
+                  <AuthenticatedHome />
+                </ProtectedRoute>
+              } />
+              <Route path="/about" element={<About />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/offers" element={<Offers />} />
+              <Route path="/programs" element={<Programs />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/cart" element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              } />
+              <Route path="/checkout" element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              } />
+              <Route path="/order-tracking" element={
+                <ProtectedRoute>
+                  <OrderTracking />
+                </ProtectedRoute>
+              } />
+              <Route path="/track-order" element={<TrackOrderPublic />} />
+              <Route path="/wishlist" element={
+                <ProtectedRoute>
+                  <Wishlist />
+                </ProtectedRoute>
+              } />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/exercises" element={
+                <ProtectedRoute>
+                  <Exercises />
+                </ProtectedRoute>
+              } />
+              <Route path="/goals" element={
+                <ProtectedRoute>
+                  <Goals />
+                </ProtectedRoute>
+              } />
+              <Route path="/progress" element={
+                <ProtectedRoute>
+                  <Progress />
+                </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } />
+              <Route path="/lottie-demo" element={<LottieDemo />} />
+              <Route path="/toast-test" element={<ToastTest />} />
+            </Routes>
+          </PageTransition>
+        </Layout>
+      </main>
+      <footer style={footerStyle}>
+        <Footer />
+      </footer>
+    </div>
+  );
+};
 
 export default App;
