@@ -55,9 +55,9 @@ const Navigation = () => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/gallery"
+              to="/trainers"
               onClick={() => setExpanded(false)}
-              className={location.pathname === '/gallery' ? 'active' : ''}
+              className={location.pathname === '/trainers' ? 'active' : ''}
             >
               Trainers
             </Nav.Link>

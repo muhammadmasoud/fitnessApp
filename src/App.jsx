@@ -10,7 +10,7 @@ import FireAnimation from './components/FireAnimation.jsx';
 import Home from './pages/Home.jsx';
 import AuthenticatedHome from './pages/AuthenticatedHome.jsx';
 import About from './pages/About.jsx';
-import Gallery from './pages/Gallery.jsx';
+import Trainers from './pages/Trainers.jsx';
 import Pricing from './pages/Pricing.jsx';
 import Contact from './pages/Contact.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -28,7 +28,7 @@ import Checkout from './pages/Checkout.jsx';
 import OrderTracking from './pages/OrderTracking.jsx';
 import TrackOrderPublic from './pages/TrackOrderPublic.jsx';
 import Wishlist from './pages/Wishlist.jsx';
-import LottieDemo from './pages/LottieDemo.jsx';
+
 import ToastTest from './components/ToastTest.jsx';
 import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
@@ -133,7 +133,7 @@ const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
                 </ProtectedRoute>
               } />
               <Route path="/about" element={<About />} />
-              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/trainers" element={<Trainers />} />
               <Route path="/offers" element={<Offers />} />
               <Route path="/programs" element={<Programs />} />
               <Route path="/products" element={<Products />} />
@@ -187,7 +187,7 @@ const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
                   <Profile />
                 </ProtectedRoute>
               } />
-              <Route path="/lottie-demo" element={<LottieDemo />} />
+
               <Route path="/toast-test" element={<ToastTest />} />
             </Routes>
           </PageTransition>

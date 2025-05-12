@@ -39,7 +39,6 @@ const Footer = () => {
               <li><Link to="/privacy-policy">Privacy Policy</Link></li>
               <li><Link to="/terms-and-conditions">Terms and Conditions</Link></li>
               <li><Link to="/cookie-policy">Cookie Policy</Link></li>
-              <li><Link to="/lottie-demo"><i className="fas fa-magic"></i> Animation Gallery</Link></li>
             </ul>
           </div>
         </Fragment>

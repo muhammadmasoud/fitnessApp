@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from 'react';
 import 'animate.css';
 import './Trainers.css';
@@ -11,7 +10,7 @@ import crossfit from '../assets/images/crossfit-coach.jpg';
 import nutrition from '../assets/images/nutrition-coach.jpg';
 import Pilates from '../assets/images/Pilates-Instructor.jpg';
 
-const Gallery = () => {
+const Trainers = () => {
   const [loaded, setLoaded] = useState(false);
   const trainersRef = useRef(null);
 
@@ -124,4 +123,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default Trainers;
