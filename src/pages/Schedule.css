@@ -1,0 +1,177 @@
+.schedule-page {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.schedule-page.loaded {
+  opacity: 1;
+}
+
+.schedule-hero {
+  height: 50vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/images/fitness.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.schedule-hero-content {
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.schedule-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.schedule-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.schedule-container {
+  padding: 2rem 0 4rem;
+}
+
+.schedule-description-row {
+  margin-bottom: 3rem;
+}
+
+.schedule-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.schedule-description h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.schedule-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.schedule-tabs {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  border-bottom: none;
+}
+
+.schedule-tabs .nav-item {
+  margin: 0 0.5rem;
+}
+
+.schedule-tabs .nav-link {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  color: #333;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background-color: #f5f5f5;
+}
+
+.schedule-tabs .nav-link:hover {
+  background-color: #e0e0e0;
+}
+
+.schedule-tabs .nav-link.active {
+  background-color: #0074D9;
+  color: white;
+}
+
+.schedule-table-container {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.schedule-table {
+  margin-bottom: 0;
+}
+
+.schedule-table thead {
+  background-color: #0074D9;
+  color: white;
+}
+
+.schedule-table th {
+  padding: 1rem;
+  font-weight: 600;
+  border: none;
+}
+
+.schedule-table td {
+  padding: 1rem;
+  vertical-align: middle;
+  border-color: #f0f0f0;
+}
+
+.schedule-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.schedule-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.book-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: #0074D9;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #0066c0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .schedule-title {
+    font-size: 2.5rem;
+  }
+  
+  .schedule-subtitle {
+    font-size: 1rem;
+  }
+  
+  .schedule-description h2 {
+    font-size: 2rem;
+  }
+  
+  .schedule-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  
+  .schedule-tabs .nav-item {
+    margin: 0 0.25rem;
+  }
+  
+  .schedule-tabs .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

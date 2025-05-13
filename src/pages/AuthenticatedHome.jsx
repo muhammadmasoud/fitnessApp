@@ -89,8 +89,8 @@ const AuthenticatedHome = () => {
             </p>
             <div className="auth-hero-buttons">
               <Link to="/dashboard" className="auth-cta-button">
-                <span>My Dashboard</span>
-                <i className="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+                <i className="fas fa-chart-line"></i>
               </Link>
               <Link to="/exercises" className="auth-secondary-button">
                 <span>Workout Library</span>

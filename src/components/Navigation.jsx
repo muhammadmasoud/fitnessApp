@@ -14,7 +14,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useContext(AuthContext);
   const { getCartCount } = useContext(CartContext);
-  const pagesWithDarkNav = ['/pricing', '/about', '/gallery', '/services', '/offers', '/programs', '/products', '/contact', '/cart', '/checkout', '/wishlist', '/exercises', '/dashboard'];
+  const pagesWithDarkNav = ['/pricing', '/about', '/gallery', '/services', '/offers', '/programs', '/products', '/contact', '/cart', '/checkout', '/wishlist', '/exercises', '/dashboard', '/classes', '/schedule', '/nutrition', '/bmi-calculator'];
   const needsDarkNav = pagesWithDarkNav.includes(location.pathname);
   const [expanded, setExpanded] = useState(false);
 
@@ -64,10 +64,12 @@ const Navigation = () => {
             <div className="nav-item">
               <HoverDropdown
                 title="Activities"
-                isActive={location.pathname === '/exercises' || location.pathname === '/dashboard'}
+                isActive={location.pathname === '/exercises' || location.pathname === '/classes' || location.pathname === '/schedule' || location.pathname === '/nutrition'}
                 items={[
                   { label: 'Exercises', path: '/exercises' },
-                  { label: 'Dashboard', path: '/dashboard' }
+                  { label: 'Classes', path: '/classes' },
+                  { label: 'Schedule', path: '/schedule' },
+                  { label: 'Nutrition', path: '/nutrition' }
                 ]}
               />
             </div>
@@ -127,6 +129,7 @@ const Navigation = () => {
                   username={currentUser.fullName}
                   items={[
                     { label: 'Dashboard', path: '/dashboard' },
+                    { label: 'BMI Calculator', path: '/bmi-calculator' },
                     { label: 'Profile', path: '/profile' },
                     { label: 'Track Your Order', path: '/order-tracking' }
                   ]}

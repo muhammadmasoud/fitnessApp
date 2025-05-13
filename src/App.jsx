@@ -15,6 +15,10 @@ import Pricing from './pages/Pricing.jsx';
 import Contact from './pages/Contact.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Exercises from './pages/Exercises.jsx';
+import Classes from './pages/Classes.jsx';
+import Schedule from './pages/Schedule.jsx';
+import Nutrition from './pages/Nutrition.jsx';
+import BMICalculator from './pages/BMICalculator.jsx';
 import Goals from './pages/Goals.jsx';
 import Progress from './pages/Progress.jsx';
 import Profile from './pages/Profile.jsx';
@@ -170,6 +174,26 @@ const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
               <Route path="/exercises" element={
                 <ProtectedRoute>
                   <Exercises />
+                </ProtectedRoute>
+              } />
+              <Route path="/classes" element={
+                <ProtectedRoute>
+                  <Classes />
+                </ProtectedRoute>
+              } />
+              <Route path="/schedule" element={
+                <ProtectedRoute>
+                  <Schedule />
+                </ProtectedRoute>
+              } />
+              <Route path="/nutrition" element={
+                <ProtectedRoute>
+                  <Nutrition />
+                </ProtectedRoute>
+              } />
+              <Route path="/bmi-calculator" element={
+                <ProtectedRoute>
+                  <BMICalculator />
                 </ProtectedRoute>
               } />
               <Route path="/goals" element={

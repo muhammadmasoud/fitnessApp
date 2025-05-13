@@ -1,0 +1,250 @@
+.nutrition-page {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.nutrition-page.loaded {
+  opacity: 1;
+}
+
+.nutrition-hero {
+  height: 50vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/images/fitness.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.nutrition-hero-content {
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.nutrition-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.nutrition-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.nutrition-container {
+  padding: 2rem 0 4rem;
+}
+
+.nutrition-description-row {
+  margin-bottom: 3rem;
+}
+
+.nutrition-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.nutrition-description h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.nutrition-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.nutrition-tips-row {
+  margin-bottom: 4rem;
+}
+
+.nutrition-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.nutrition-accordion .accordion-button {
+  font-weight: 600;
+  color: #333;
+  background-color: #f8f9fa;
+  padding: 1.25rem;
+}
+
+.nutrition-accordion .accordion-button:not(.collapsed) {
+  color: white;
+  background-color: #0074D9;
+}
+
+.nutrition-accordion .accordion-body {
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.meal-plans-row {
+  margin-bottom: 4rem;
+}
+
+.meal-plan-col {
+  margin-bottom: 2rem;
+}
+
+.meal-plan-card {
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+}
+
+.meal-plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.meal-plan-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #0074D9;
+}
+
+.meal-plan-description {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.meal-list {
+  margin-bottom: 1.5rem;
+}
+
+.meal-item {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.meal-item:last-child {
+  border-bottom: none;
+}
+
+.meal-time {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.meal-description {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.get-plan-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0074D9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.get-plan-btn:hover {
+  background-color: #0066c0;
+}
+
+.nutrition-consultation-row {
+  margin-top: 2rem;
+}
+
+.consultation-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.consultation-card h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.consultation-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.consultation-btn {
+  padding: 1rem 2.5rem;
+  background-color: #0074D9;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.consultation-btn:hover {
+  background-color: #0066c0;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .nutrition-title {
+    font-size: 2.5rem;
+  }
+  
+  .nutrition-subtitle {
+    font-size: 1rem;
+  }
+  
+  .nutrition-description h2 {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .consultation-card {
+    padding: 2rem;
+  }
+  
+  .consultation-card h3 {
+    font-size: 1.75rem;
+  }
+}
