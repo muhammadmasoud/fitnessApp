@@ -1,4 +1,3 @@
-
 import { Container } from 'react-bootstrap';
 
 const Goals = () => {

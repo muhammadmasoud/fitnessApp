@@ -1,10 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { AuthContext } from '../context/AuthContext';
+import { CartContext } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Pricing.css';
 
 const Pricing = () => {
+  const { currentUser, updateProfile } = useContext(AuthContext);
+  const { addToCart, clearCart } = useContext(CartContext);
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
@@ -18,8 +27,47 @@ const Pricing = () => {
     }
   }, []);
 
+  const handleSubscribe = async (packageName, price) => {
+    if (!currentUser) {
+      // Redirect to signup if not logged in
+      navigate('/signup');
+      return;
+    }
+
+    try {
+      // Clear the cart first to ensure only the subscription package is in it
+      clearCart();
+
+      // Create a subscription product object
+      const subscriptionProduct = {
+        id: `subscription-${Date.now()}`,
+        name: packageName,
+        price: price,
+        image: '/images/subscription.jpg',
+        category: 'Subscription',
+        description: `${packageName} subscription package`,
+        isSubscription: true
+      };
+
+      // Add the subscription to the cart
+      addToCart(subscriptionProduct);
+
+      // Show a toast notification
+      toast.info(`Adding ${packageName} to cart...`);
+
+      // Redirect to checkout page after a short delay
+      setTimeout(() => {
+        navigate('/checkout');
+      }, 1500);
+    } catch (error) {
+      toast.error('Failed to process subscription. Please try again.');
+      console.error('Subscription error:', error);
+    }
+  };
+
   return (
     <section className="pricing-section">
+      <ToastContainer />
       <Container>
         <div className="pricing-header">
           <h1 className="pricing-title">PRICING</h1>
@@ -63,7 +111,7 @@ const Pricing = () => {
                   <span>Nutritional Counseling</span>
                 </li>
               </ul>
-              <Button as="a" href="/signup" className="pricing-btn">Get started</Button>
+              <Button onClick={() => handleSubscribe('Basic Package', 24)} className="pricing-btn">Subscribe Now</Button>
             </div>
           </div>
 
@@ -104,7 +152,7 @@ const Pricing = () => {
                   <span>Nutritional Counseling</span>
                 </li>
               </ul>
-              <Button as="a" href="/signup" className="pricing-btn">Get started</Button>
+              <Button onClick={() => handleSubscribe('Standard Package', 48)} className="pricing-btn">Subscribe Now</Button>
             </div>
           </div>
 
@@ -145,7 +193,7 @@ const Pricing = () => {
                   <span>Nutritional Counseling</span>
                 </li>
               </ul>
-              <Button as="a" href="/signup" className="pricing-btn">Get started</Button>
+              <Button onClick={() => handleSubscribe('Premium Package', 56)} className="pricing-btn">Subscribe Now</Button>
             </div>
           </div>
         </div>

@@ -87,6 +87,57 @@
   font-size: 0.8rem;
 }
 
+/* Welcome Modal Styles */
+.welcome-modal .modal-content {
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-modal .modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #007bff;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 15px 20px;
+}
+
+.welcome-modal .modal-title {
+  font-weight: 700;
+}
+
+.welcome-modal .modal-body {
+  padding: 30px 20px;
+}
+
+.welcome-modal .welcome-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  color: #28a745;
+}
+
+.welcome-modal .modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+}
+
+.welcome-modal .btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 25px;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.welcome-modal .btn-primary:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-title {

@@ -1,10 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import { CartContext } from '../context/CartContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import './Offers.css';
 
 const Offers = () => {
   const [loaded, setLoaded] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const { addToCart, clearCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoaded(true);
@@ -14,6 +22,44 @@ const Offers = () => {
       setHoveredCard(null);
     };
   }, []);
+
+  const handleSubscribe = async (offerName, price) => {
+    if (!currentUser) {
+      // Redirect to signup if not logged in
+      navigate('/signup');
+      return;
+    }
+
+    try {
+      // Clear the cart first to ensure only the subscription package is in it
+      clearCart();
+
+      // Create a subscription product object
+      const subscriptionProduct = {
+        id: `offer-${Date.now()}`,
+        name: offerName,
+        price: price,
+        image: '/images/subscription.jpg',
+        category: 'Special Offer',
+        description: `${offerName} special offer`,
+        isSubscription: true
+      };
+
+      // Add the subscription to the cart
+      addToCart(subscriptionProduct);
+
+      // Show a toast notification
+      toast.info(`Adding ${offerName} to cart...`);
+
+      // Redirect to checkout page after a short delay
+      setTimeout(() => {
+        navigate('/checkout');
+      }, 1500);
+    } catch (error) {
+      toast.error('Failed to process offer. Please try again.');
+      console.error('Subscription error:', error);
+    }
+  };
 
   const handleCardHover = (index) => {
     setHoveredCard(index);
@@ -25,6 +71,7 @@ const Offers = () => {
 
   return (
     <div className={`offers-page ${loaded ? 'loaded' : ''}`}>
+      <ToastContainer />
       <div className="offers-content-wrapper">
         <div className="offers-header">
           <h1 className="offers-title animate__animated animate__fadeInDown">Special Offers</h1>
@@ -47,7 +94,7 @@ const Offers = () => {
               <span className="original-price">$299</span>
               <span className="discounted-price price-animation">$199</span>
             </div>
-            <button className="special-offer-button">
+            <button className="special-offer-button" onClick={() => handleSubscribe('Summer Body Challenge', 199)}>
               <span className="button-text">Claim Offer</span>
               <span className="button-shine"></span>
             </button>
@@ -66,7 +113,7 @@ const Offers = () => {
               <span className="original-price">$399</span>
               <span className="discounted-price price-animation">$299</span>
             </div>
-            <button className="special-offer-button">
+            <button className="special-offer-button" onClick={() => handleSubscribe('Couple\'s Package', 299)}>
               <span className="button-text">Claim Offer</span>
               <span className="button-shine"></span>
             </button>
@@ -85,7 +132,7 @@ const Offers = () => {
               <span className="original-price">$59/month</span>
               <span className="discounted-price price-animation">$49/month</span>
             </div>
-            <button className="special-offer-button">
+            <button className="special-offer-button" onClick={() => handleSubscribe('First Month Free', 49)}>
               <span className="button-text">Claim Offer</span>
               <span className="button-shine"></span>
             </button>

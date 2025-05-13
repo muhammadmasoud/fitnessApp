@@ -1,11 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Container, Modal, Button } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './Home.css';
 
 const Home = () => {
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [welcomePackage, setWelcomePackage] = useState('');
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -13,10 +18,66 @@ const Home = () => {
       mirror: true,
       easing: 'ease-in-out'
     });
+
+    // Check for welcome message in sessionStorage
+    const welcomeMessageJson = sessionStorage.getItem('welcomeMessage');
+    if (welcomeMessageJson) {
+      try {
+        const welcomeMessage = JSON.parse(welcomeMessageJson);
+
+        // Check if the message is recent (within the last 5 minutes)
+        const now = new Date().getTime();
+        const messageTime = welcomeMessage.timestamp || 0;
+        const fiveMinutesInMs = 5 * 60 * 1000;
+
+        if (welcomeMessage.show && (now - messageTime < fiveMinutesInMs)) {
+          // Show the welcome modal
+          setWelcomePackage(welcomeMessage.package || 'Fitness Package');
+          setShowWelcomeModal(true);
+
+          // Clear the welcome message from sessionStorage
+          sessionStorage.removeItem('welcomeMessage');
+        }
+      } catch (error) {
+        console.error('Error parsing welcome message:', error);
+      }
+    }
   }, []);
+
+  // Handle closing the welcome modal
+  const handleCloseWelcomeModal = () => {
+    setShowWelcomeModal(false);
+  };
 
   return (
     <div className="home">
+      <ToastContainer />
+
+      {/* Welcome Modal */}
+      <Modal
+        show={showWelcomeModal}
+        onHide={handleCloseWelcomeModal}
+        centered
+        className="welcome-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Welcome to Our Fitness Family!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="text-center">
+            <i className="fas fa-check-circle text-success welcome-icon"></i>
+            <h4>Thank you for subscribing to {welcomePackage}!</h4>
+            <p>Your subscription is now active. You can now access all the features and benefits of your package.</p>
+            <p>Visit your profile page to see your active status and start your fitness journey today!</p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseWelcomeModal}>
+            Let's Get Started!
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <section className="hero-section">
         <Container>
           <div className="hero-content">

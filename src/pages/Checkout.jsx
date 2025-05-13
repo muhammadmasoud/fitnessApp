@@ -16,7 +16,9 @@ const Checkout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { cartItems, getTotalPrice, clearCart } = useContext(CartContext);
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateProfile } = useContext(AuthContext);
+  const [hasSubscription, setHasSubscription] = useState(false);
+  const [subscriptionDetails, setSubscriptionDetails] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -158,6 +160,13 @@ const Checkout = () => {
       return;
     }
 
+    // Check if there's a subscription product in the cart
+    const subscriptionItem = cartItems.find(item => item.isSubscription);
+    if (subscriptionItem) {
+      setHasSubscription(true);
+      setSubscriptionDetails(subscriptionItem);
+    }
+
     // Set loaded state after a short delay for animations
     setTimeout(() => {
       setLoaded(true);
@@ -189,7 +198,10 @@ const Checkout = () => {
 
   // Calculate order total
   const getOrderTotal = () => {
-    return getTotalPrice() + getShippingCost() + getTax();
+    // Skip shipping costs for subscription-only orders
+    const isSubscriptionOnly = cartItems.every(item => item.isSubscription);
+    const shippingCost = isSubscriptionOnly ? 0 : getShippingCost();
+    return getTotalPrice() + shippingCost + getTax();
   };
 
   // Validation functions
@@ -565,19 +577,25 @@ const Checkout = () => {
   const handleNextStep = () => {
     // If we're on the shipping step, validate the form before proceeding
     if (currentStep === 2) {
-      // Mark all fields as touched
-      const allTouched = Object.keys(formTouched).reduce((acc, key) => {
-        acc[key] = true;
-        return acc;
-      }, {});
-      setFormTouched(allTouched);
+      // Check if this is a subscription-only order
+      const isSubscriptionOnly = cartItems.every(item => item.isSubscription);
 
-      // Validate the form
-      const isValid = validateShippingForm();
+      // If it's a subscription-only order, we can skip shipping validation
+      if (!isSubscriptionOnly) {
+        // Mark all fields as touched
+        const allTouched = Object.keys(formTouched).reduce((acc, key) => {
+          acc[key] = true;
+          return acc;
+        }, {});
+        setFormTouched(allTouched);
 
-      if (!isValid) {
-        CustomToast.error('Please fill in all required fields correctly');
-        return;
+        // Validate the form
+        const isValid = validateShippingForm();
+
+        if (!isValid) {
+          CustomToast.error('Please fill in all required fields correctly');
+          return;
+        }
       }
     }
 
@@ -896,9 +914,6 @@ const Checkout = () => {
     setIsProcessing(true);
 
     try {
-      // Generate a unique tracking number
-      const trackingNumber = generateRandomTrackingNumber();
-
       // Ensure user is logged in before proceeding
       if (!currentUser) {
         CustomToast.error('You must be logged in to place an order');
@@ -906,78 +921,165 @@ const Checkout = () => {
         return;
       }
 
-      // Save order information to session storage for tracking page
-      const orderInfo = {
-        items: [...cartItems], // Create a copy of cart items
-        totalAmount: getOrderTotal(),
-        shippingInfo: {...shippingInfo},
-        paymentMethod: paymentMethod === 'creditCard' ? 'Credit Card' : pendingPaymentMethod,
-        shippingMethod: shippingMethod, // Add shipping method
-        shippingCost: getShippingCost(), // Add shipping cost
-        orderDate: new Date().toISOString(),
-        trackingNumber: trackingNumber,
-        userId: currentUser.id // Always associate order with user ID
-      };
+      // Check if there's a subscription product in the cart
+      const subscriptionItem = cartItems.find(item => item.isSubscription);
+      const isSubscriptionOnly = cartItems.every(item => item.isSubscription);
 
-      // Store the order info in session storage
-      sessionStorage.setItem('completedOrder', JSON.stringify(orderInfo));
+      // For subscription-only orders, we don't create a tracking order
+      if (!isSubscriptionOnly) {
+        // Generate a unique tracking number for physical products
+        const trackingNumber = generateRandomTrackingNumber();
 
-      // Save to user-specific orders in localStorage
-      const userOrdersKey = `userOrders_${currentUser.id}`;
-      const savedOrdersJson = localStorage.getItem(userOrdersKey);
-      let orders = [];
+        // Save order information to session storage for tracking page
+        const orderInfo = {
+          items: cartItems.filter(item => !item.isSubscription), // Only include non-subscription items
+          totalAmount: getOrderTotal(),
+          shippingInfo: {...shippingInfo},
+          paymentMethod: paymentMethod === 'creditCard' ? 'Credit Card' : pendingPaymentMethod,
+          shippingMethod: shippingMethod,
+          shippingCost: getShippingCost(),
+          orderDate: new Date().toISOString(),
+          trackingNumber: trackingNumber,
+          userId: currentUser.id
+        };
 
-      if (savedOrdersJson) {
-        try {
-          const parsedOrders = JSON.parse(savedOrdersJson);
-          if (Array.isArray(parsedOrders)) {
-            orders = parsedOrders;
+        // Store the order info in session storage
+        sessionStorage.setItem('completedOrder', JSON.stringify(orderInfo));
+
+        // Save to user-specific orders in localStorage
+        const userOrdersKey = `userOrders_${currentUser.id}`;
+        const savedOrdersJson = localStorage.getItem(userOrdersKey);
+        let orders = [];
+
+        if (savedOrdersJson) {
+          try {
+            const parsedOrders = JSON.parse(savedOrdersJson);
+            if (Array.isArray(parsedOrders)) {
+              orders = parsedOrders;
+            }
+          } catch (error) {
+            console.error("Error parsing existing orders:", error);
           }
-        } catch (error) {
-          console.error("Error parsing existing orders:", error);
         }
-      }
 
-      // Add the new order
-      orders.push(orderInfo);
+        // Add the new order
+        orders.push(orderInfo);
 
-      // Save back to localStorage
-      localStorage.setItem(userOrdersKey, JSON.stringify(orders));
+        // Save back to localStorage
+        localStorage.setItem(userOrdersKey, JSON.stringify(orders));
 
-      // Clear old userOrders data if it exists (migration step)
-      if (localStorage.getItem('userOrders')) {
-        localStorage.removeItem('userOrders');
-      }
+        // Clear old userOrders data if it exists (migration step)
+        if (localStorage.getItem('userOrders')) {
+          localStorage.removeItem('userOrders');
+        }
 
-      // Save to orderMap for tracking when logged out (public tracking)
-      const savedOrderMap = localStorage.getItem('orderMap');
-      let orderMap = {};
+        // Save to orderMap for tracking when logged out (public tracking)
+        const savedOrderMap = localStorage.getItem('orderMap');
+        let orderMap = {};
 
-      if (savedOrderMap) {
-        try {
-          const parsedMap = JSON.parse(savedOrderMap);
-          if (typeof parsedMap === 'object') {
-            orderMap = parsedMap;
+        if (savedOrderMap) {
+          try {
+            const parsedMap = JSON.parse(savedOrderMap);
+            if (typeof parsedMap === 'object') {
+              orderMap = parsedMap;
+            }
+          } catch (error) {
+            console.error("Error parsing order map:", error);
           }
-        } catch (error) {
-          console.error("Error parsing order map:", error);
         }
+
+        // Add the new order to the map
+        orderMap[trackingNumber] = orderInfo;
+
+        // Save back to localStorage
+        localStorage.setItem('orderMap', JSON.stringify(orderMap));
       }
 
-      // Add the new order to the map
-      orderMap[trackingNumber] = orderInfo;
+      // If this is a subscription order, update the user's subscription status
+      if (subscriptionItem) {
+        // Get all users to find the current user
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userIndex = users.findIndex(user => user.id === currentUser.id);
 
-      // Save back to localStorage
-      localStorage.setItem('orderMap', JSON.stringify(orderMap));
+        if (userIndex !== -1) {
+          // Get current user data
+          const userData = users[userIndex];
 
-      // Show success message
-      CustomToast.success('Order placed successfully!');
+          // Determine if this is a special offer or regular subscription
+          const isOffer = subscriptionItem.category === 'Special Offer';
 
-      // Clear the cart immediately to prevent issues
-      clearCart();
+          // Create a new subscription object
+          const newSubscription = {
+            id: `${isOffer ? 'offer' : 'subscription'}-${Date.now()}`,
+            name: subscriptionItem.name,
+            date: new Date().toISOString(),
+            type: isOffer ? 'offer' : 'package',
+            price: subscriptionItem.price
+          };
 
-      // Force immediate hard redirect to tracking page
-      window.location.replace('/order-tracking');
+          // Initialize or update the subscriptions array
+          let subscriptions = [];
+
+          if (userData.subscriptions && Array.isArray(userData.subscriptions)) {
+            // Add to existing subscriptions array
+            subscriptions = [...userData.subscriptions, newSubscription];
+          } else {
+            // Create new subscriptions array
+            subscriptions = [newSubscription];
+
+            // If user has a legacy subscription, add it to the array
+            if (userData.subscriptionStatus && userData.subscriptionPackage) {
+              subscriptions.unshift({
+                id: 'legacy-subscription',
+                name: userData.subscriptionPackage,
+                date: userData.subscriptionDate || new Date().toISOString(),
+                type: subscriptionItem.category === 'Special Offer' ? 'offer' : 'package'
+              });
+            }
+          }
+
+          // Update the user's subscription status directly in localStorage
+          users[userIndex].subscriptionStatus = true;
+          users[userIndex].subscriptionPackage = subscriptionItem.name;
+          users[userIndex].subscriptionDate = new Date().toISOString();
+          users[userIndex].subscriptions = subscriptions;
+
+          // Save the updated users array back to localStorage
+          localStorage.setItem('users', JSON.stringify(users));
+
+          // Also update the profile using the context method
+          updateProfile({
+            subscriptionStatus: true,
+            subscriptionPackage: subscriptionItem.name,
+            subscriptionDate: new Date().toISOString(),
+            subscriptions: subscriptions
+          });
+
+          // Clear the cart immediately to prevent issues
+          clearCart();
+
+          // Store welcome message in sessionStorage to display on home page
+          sessionStorage.setItem('welcomeMessage', JSON.stringify({
+            show: true,
+            package: subscriptionItem.name,
+            timestamp: new Date().getTime()
+          }));
+
+          // Force immediate hard redirect to home page for subscriptions
+          window.location.replace('/');
+        } else {
+          throw new Error('User not found in localStorage');
+        }
+      } else {
+        // Show success message for regular order
+        CustomToast.success('Order placed successfully!');
+
+        // Clear the cart immediately to prevent issues
+        clearCart();
+
+        // Force immediate hard redirect to tracking page for regular orders
+        window.location.replace('/order-tracking');
+      }
     } catch (error) {
       console.error('Error during order placement:', error);
       CustomToast.error('There was an error processing your order. Please try again.');
@@ -1272,44 +1374,58 @@ const Checkout = () => {
                 </Form.Group>
               </Form>
 
-              <div className="shipping-method-section mt-5">
-                <h3 className="mb-3">Shipping Method</h3>
+              {/* Only show shipping method for physical products */}
+              {!cartItems.every(item => item.isSubscription) && (
+                <div className="shipping-method-section mt-5">
+                  <h3 className="mb-3">Shipping Method</h3>
 
-                <div className="shipping-options">
-                  <div
-                    className={`shipping-option ${shippingMethod === 'standard' ? 'selected' : ''}`}
-                    onClick={() => setShippingMethod('standard')}
-                  >
-                    <div className="shipping-option-header">
-                      <span className="shipping-option-title">Standard Shipping</span>
-                      <span className="shipping-option-price">FREE</span>
+                  <div className="shipping-options">
+                    <div
+                      className={`shipping-option ${shippingMethod === 'standard' ? 'selected' : ''}`}
+                      onClick={() => setShippingMethod('standard')}
+                    >
+                      <div className="shipping-option-header">
+                        <span className="shipping-option-title">Standard Shipping</span>
+                        <span className="shipping-option-price">FREE</span>
+                      </div>
+                      <p className="shipping-option-description">Delivery in 5-7 business days</p>
                     </div>
-                    <p className="shipping-option-description">Delivery in 5-7 business days</p>
-                  </div>
 
-                  <div
-                    className={`shipping-option ${shippingMethod === 'express' ? 'selected' : ''}`}
-                    onClick={() => setShippingMethod('express')}
-                  >
-                    <div className="shipping-option-header">
-                      <span className="shipping-option-title">Express Shipping</span>
-                      <span className="shipping-option-price">$15.99</span>
+                    <div
+                      className={`shipping-option ${shippingMethod === 'express' ? 'selected' : ''}`}
+                      onClick={() => setShippingMethod('express')}
+                    >
+                      <div className="shipping-option-header">
+                        <span className="shipping-option-title">Express Shipping</span>
+                        <span className="shipping-option-price">$15.99</span>
+                      </div>
+                      <p className="shipping-option-description">Delivery in 2-3 business days</p>
                     </div>
-                    <p className="shipping-option-description">Delivery in 2-3 business days</p>
-                  </div>
 
-                  <div
-                    className={`shipping-option ${shippingMethod === 'overnight' ? 'selected' : ''}`}
-                    onClick={() => setShippingMethod('overnight')}
-                  >
-                    <div className="shipping-option-header">
-                      <span className="shipping-option-title">Overnight Shipping</span>
-                      <span className="shipping-option-price">$29.99</span>
+                    <div
+                      className={`shipping-option ${shippingMethod === 'overnight' ? 'selected' : ''}`}
+                      onClick={() => setShippingMethod('overnight')}
+                    >
+                      <div className="shipping-option-header">
+                        <span className="shipping-option-title">Overnight Shipping</span>
+                        <span className="shipping-option-price">$29.99</span>
+                      </div>
+                      <p className="shipping-option-description">Delivery next business day</p>
                     </div>
-                    <p className="shipping-option-description">Delivery next business day</p>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* Show subscription message for subscription-only orders */}
+              {cartItems.every(item => item.isSubscription) && (
+                <div className="subscription-info-section mt-5">
+                  <h3 className="mb-3">Subscription Service</h3>
+                  <div className="subscription-info-box">
+                    <i className="fas fa-check-circle text-success me-2"></i>
+                    <p className="mb-0">This is a digital subscription service. No shipping required.</p>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -1852,10 +1968,13 @@ const Checkout = () => {
                     <span>Subtotal:</span>
                     <span>${getTotalPrice().toFixed(2)}</span>
                   </div>
-                  <div className="summary-row">
-                    <span>Shipping ({shippingMethod}):</span>
-                    <span>${getShippingCost().toFixed(2)}</span>
-                  </div>
+                  {/* Only show shipping for physical products */}
+                  {!cartItems.every(item => item.isSubscription) && (
+                    <div className="summary-row">
+                      <span>Shipping ({shippingMethod}):</span>
+                      <span>${getShippingCost().toFixed(2)}</span>
+                    </div>
+                  )}
                   <div className="summary-row">
                     <span>Tax (8.5%):</span>
                     <span>${getTax().toFixed(2)}</span>
@@ -1867,42 +1986,67 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="review-shipping-info mt-4">
-                <h3 className="review-section-title">Shipping Information</h3>
+              {/* Only show shipping info for physical products */}
+              {!cartItems.every(item => item.isSubscription) ? (
+                <div className="review-shipping-info mt-4">
+                  <h3 className="review-section-title">Shipping Information</h3>
 
-                <div className="review-info-grid">
-                  <div className="review-info">
-                    <span className="review-label">Name:</span>
-                    <span className="review-value">{shippingInfo.firstName} {shippingInfo.lastName}</span>
-                  </div>
+                  <div className="review-info-grid">
+                    <div className="review-info">
+                      <span className="review-label">Name:</span>
+                      <span className="review-value">{shippingInfo.firstName} {shippingInfo.lastName}</span>
+                    </div>
 
-                  <div className="review-info">
-                    <span className="review-label">Email:</span>
-                    <span className="review-value">{shippingInfo.email}</span>
-                  </div>
+                    <div className="review-info">
+                      <span className="review-label">Email:</span>
+                      <span className="review-value">{shippingInfo.email}</span>
+                    </div>
 
-                  <div className="review-info">
-                    <span className="review-label">Phone:</span>
-                    <span className="review-value">{shippingInfo.phone}</span>
-                  </div>
+                    <div className="review-info">
+                      <span className="review-label">Phone:</span>
+                      <span className="review-value">{shippingInfo.phone}</span>
+                    </div>
 
-                  <div className="review-info">
-                    <span className="review-label">Address:</span>
-                    <span className="review-value">
-                      {shippingInfo.address}, {shippingInfo.city}, {shippingInfo.state} {shippingInfo.zipCode}, {shippingInfo.country}
-                    </span>
-                  </div>
+                    <div className="review-info">
+                      <span className="review-label">Address:</span>
+                      <span className="review-value">
+                        {shippingInfo.address}, {shippingInfo.city}, {shippingInfo.state} {shippingInfo.zipCode}, {shippingInfo.country}
+                      </span>
+                    </div>
 
-                  <div className="review-info">
-                    <span className="review-label">Shipping Method:</span>
-                    <span className="review-value">
-                      {shippingMethod === 'standard' && 'Standard Shipping (5-7 business days)'}
-                      {shippingMethod === 'express' && 'Express Shipping (2-3 business days)'}
-                      {shippingMethod === 'overnight' && 'Overnight Shipping (Next business day)'}
-                    </span>
+                    <div className="review-info">
+                      <span className="review-label">Shipping Method:</span>
+                      <span className="review-value">
+                        {shippingMethod === 'standard' && 'Standard Shipping (5-7 business days)'}
+                        {shippingMethod === 'express' && 'Express Shipping (2-3 business days)'}
+                        {shippingMethod === 'overnight' && 'Overnight Shipping (Next business day)'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="review-subscription-info mt-4">
+                  <h3 className="review-section-title">Subscription Information</h3>
+                  <div className="review-info-grid">
+                    <div className="review-info">
+                      <span className="review-label">Name:</span>
+                      <span className="review-value">{shippingInfo.firstName} {shippingInfo.lastName}</span>
+                    </div>
+                    <div className="review-info">
+                      <span className="review-label">Email:</span>
+                      <span className="review-value">{shippingInfo.email}</span>
+                    </div>
+                    <div className="review-info">
+                      <span className="review-label">Phone:</span>
+                      <span className="review-value">{shippingInfo.phone}</span>
+                    </div>
+                    <div className="review-info">
+                      <span className="review-label">Service Type:</span>
+                      <span className="review-value">Digital Subscription (No Shipping Required)</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="review-payment-info mt-4">
                 <h3 className="review-section-title">Payment Information</h3>
@@ -1999,87 +2143,7 @@ const Checkout = () => {
                 <Button
                   variant="success"
                   className="place-order-btn"
-                  onClick={() => {
-                    // Ensure user is logged in before proceeding
-                    if (!currentUser) {
-                      CustomToast.error('You must be logged in to place an order');
-                      return;
-                    }
-
-                    // Set processing state
-                    setIsProcessing(true);
-
-                    // Generate a unique tracking number
-                    const trackingNumber = generateRandomTrackingNumber();
-
-                    // Create order info
-                    const orderInfo = {
-                      items: [...cartItems],
-                      totalAmount: getOrderTotal(),
-                      shippingInfo: {...shippingInfo},
-                      paymentMethod: paymentMethod === 'creditCard' ? 'Credit Card' : pendingPaymentMethod,
-                      shippingMethod: shippingMethod,
-                      shippingCost: getShippingCost(),
-                      orderDate: new Date().toISOString(),
-                      trackingNumber: trackingNumber,
-                      userId: currentUser.id // Always associate with current user
-                    };
-
-                    // Store in session storage
-                    sessionStorage.setItem('completedOrder', JSON.stringify(orderInfo));
-
-                    // Save to user-specific orders in localStorage
-                    const userOrdersKey = `userOrders_${currentUser.id}`;
-                    const savedOrdersJson = localStorage.getItem(userOrdersKey);
-                    let orders = [];
-
-                    if (savedOrdersJson) {
-                      try {
-                        const parsedOrders = JSON.parse(savedOrdersJson);
-                        if (Array.isArray(parsedOrders)) {
-                          orders = parsedOrders;
-                        }
-                      } catch (error) {
-                        console.error("Error parsing existing orders:", error);
-                      }
-                    }
-
-                    // Add the new order
-                    orders.push(orderInfo);
-
-                    // Save back to localStorage
-                    localStorage.setItem(userOrdersKey, JSON.stringify(orders));
-
-                    // Save to orderMap for tracking when logged out (public tracking)
-                    const savedOrderMap = localStorage.getItem('orderMap');
-                    let orderMap = {};
-
-                    if (savedOrderMap) {
-                      try {
-                        const parsedMap = JSON.parse(savedOrderMap);
-                        if (typeof parsedMap === 'object') {
-                          orderMap = parsedMap;
-                        }
-                      } catch (error) {
-                        console.error("Error parsing order map:", error);
-                      }
-                    }
-
-                    // Add the new order to the map
-                    orderMap[trackingNumber] = orderInfo;
-
-                    // Save back to localStorage
-                    localStorage.setItem('orderMap', JSON.stringify(orderMap));
-
-                    // Clear cart
-                    clearCart();
-
-                    // Show success message
-                    CustomToast.success('Order placed successfully!');
-
-                    // Force immediate hard redirect to tracking page
-                    window.location.replace('/order-tracking');
-                  }}
+                  onClick={handleFinalOrderPlacement}
                   disabled={isProcessing}
                 >
                   {isProcessing ? (
@@ -2089,7 +2153,7 @@ const Checkout = () => {
                     </>
                   ) : (
                     <>
-                      Finish <i className="fas fa-check"></i>
+                      {cartItems.some(item => item.isSubscription) ? 'Complete Subscription' : 'Place Order'} <i className="fas fa-check"></i>
                     </>
                   )}
                 </Button>
