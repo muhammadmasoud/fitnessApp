@@ -1008,11 +1008,23 @@ const Checkout = () => {
           // Determine if this is a special offer or regular subscription
           const isOffer = subscriptionItem.category === 'Special Offer';
 
+          // Calculate expiry date (30 days for regular packages, 60 days for "First Month Free" offer)
+          const startDate = new Date();
+          const expiryDate = new Date(startDate);
+
+          // If it's the "First Month Free" offer, set expiry to 60 days
+          if (subscriptionItem.name === 'First Month Free') {
+            expiryDate.setDate(startDate.getDate() + 60); // 60 days (2 months)
+          } else {
+            expiryDate.setDate(startDate.getDate() + 30); // 30 days (1 month)
+          }
+
           // Create a new subscription object
           const newSubscription = {
             id: `${isOffer ? 'offer' : 'subscription'}-${Date.now()}`,
             name: subscriptionItem.name,
-            date: new Date().toISOString(),
+            date: startDate.toISOString(),
+            expiryDate: expiryDate.toISOString(),
             type: isOffer ? 'offer' : 'package',
             price: subscriptionItem.price
           };
@@ -1021,20 +1033,47 @@ const Checkout = () => {
           let subscriptions = [];
 
           if (userData.subscriptions && Array.isArray(userData.subscriptions)) {
-            // Add to existing subscriptions array
-            subscriptions = [...userData.subscriptions, newSubscription];
+            // Check if user already has a subscription of the same type
+            const existingSubscriptionIndex = userData.subscriptions.findIndex(
+              sub => sub.type === (isOffer ? 'offer' : 'package')
+            );
+
+            if (existingSubscriptionIndex !== -1) {
+              // Replace existing subscription of the same type
+              subscriptions = [...userData.subscriptions];
+
+              // Store the name of the replaced subscription for notification
+              const replacedSubscription = subscriptions[existingSubscriptionIndex];
+
+              // Replace the existing subscription with the new one
+              subscriptions[existingSubscriptionIndex] = newSubscription;
+
+              // Show notification about replacement
+              CustomToast.info(`Your previous ${isOffer ? 'special offer' : 'subscription plan'} "${replacedSubscription.name}" has been replaced with "${newSubscription.name}"`);
+            } else {
+              // Add new subscription to existing array
+              subscriptions = [...userData.subscriptions, newSubscription];
+            }
           } else {
             // Create new subscriptions array
             subscriptions = [newSubscription];
 
             // If user has a legacy subscription, add it to the array
             if (userData.subscriptionStatus && userData.subscriptionPackage) {
-              subscriptions.unshift({
-                id: 'legacy-subscription',
-                name: userData.subscriptionPackage,
-                date: userData.subscriptionDate || new Date().toISOString(),
-                type: subscriptionItem.category === 'Special Offer' ? 'offer' : 'package'
-              });
+              const legacyType = isSpecialOffer(userData.subscriptionPackage) ? 'offer' : 'package';
+
+              // Only add legacy subscription if it's of a different type than the new one
+              if (legacyType !== (isOffer ? 'offer' : 'package')) {
+                subscriptions.unshift({
+                  id: 'legacy-subscription',
+                  name: userData.subscriptionPackage,
+                  date: userData.subscriptionDate || new Date().toISOString(),
+                  type: legacyType
+                });
+              } else {
+                // Show notification about replacement
+                CustomToast.info(`Your previous ${isOffer ? 'special offer' : 'subscription plan'} "${userData.subscriptionPackage}" has been replaced with "${newSubscription.name}"`);
+              }
             }
           }
 
@@ -1096,6 +1135,18 @@ const Checkout = () => {
 
     // Combine timestamp and random digits for uniqueness
     return `${prefix}${timestamp}${randomDigits}`;
+  };
+
+  // Helper function to check if a subscription is a special offer
+  const isSpecialOffer = (packageName) => {
+    // List of special offers from the Offers page
+    const specialOffers = [
+      'Summer Body Challenge',
+      'Couple\'s Package',
+      'First Month Free'
+    ];
+
+    return specialOffers.some(offer => packageName.includes(offer));
   };
 
   return (

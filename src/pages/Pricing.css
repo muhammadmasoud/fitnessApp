@@ -50,6 +50,23 @@
   z-index: 1;
 }
 
+.current-subscription-note {
+  text-align: center;
+  background-color: rgba(0, 116, 217, 0.1);
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: white;
+  font-size: 16px;
+  border: 1px solid rgba(0, 116, 217, 0.3);
+  width: 80%;
+  max-width: 600px;
+  margin: 1rem auto 2rem;
+}
+
+.current-subscription-note i {
+  color: #0074D9;
+}
+
 .pricing-title {
   font-size: 3.5rem;
   font-weight: 800;
@@ -162,6 +179,26 @@
 
 .pricing-card.featured:hover {
   transform: translateY(-25px) scale(1.05);
+}
+
+.pricing-card.current-subscription {
+  position: relative;
+  opacity: 0.8;
+  border: 2px solid #0074D9;
+}
+
+.current-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #0074D9;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .pricing-card-header {

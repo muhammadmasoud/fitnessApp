@@ -218,7 +218,7 @@
 /* Stats Section */
 .stats-section {
   padding: 5rem 0;
-  background: #000000;
+  background: #ffffff;
   text-align: center;
 }
 
@@ -308,7 +308,7 @@
 .stat-value {
   font-size: 3.5rem;
   font-weight: 700;
-  color: #000;
+  color: #000000 !important;
   margin-bottom: 0.5rem;
   height: 60px;
   display: flex;
@@ -318,7 +318,7 @@
 
 .stat-label {
   font-size: 1rem;
-  color: #666 !important;
+  color: #000000 !important;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
@@ -327,13 +327,6 @@
   line-height: 1.2;
   margin-top: 0.5rem;
   font-weight: 500;
-}
-
-/* Workouts Section */
-.workouts-section {
-  padding: 5rem 0;
-  background-color: #000000;
-  text-align: center;
 }
 
 .recommended-title {

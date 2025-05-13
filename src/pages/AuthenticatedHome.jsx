@@ -25,7 +25,17 @@ const AuthenticatedHome = () => {
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        const currentValue = Math.floor(progress * (end - start) + start);
+
+        // Create a span with black text color and set its content
+        const span = document.createElement('span');
+        span.style.color = 'black';
+        span.textContent = currentValue;
+
+        // Clear the element and append the span
+        obj.innerHTML = '';
+        obj.appendChild(span);
+
         if (progress < 1) {
           window.requestAnimationFrame(step);
         }
@@ -99,51 +109,51 @@ const AuthenticatedHome = () => {
       </section>
 
       {/* Quick Stats Section */}
-      <section className="stats-section">
+      <section className="stats-section" style={{backgroundColor: 'white', padding: '5rem 0', textAlign: 'center'}}>
         <div className="fitness-journey-title animated-title" data-aos="zoom-in">YOUR FITNESS JOURNEY</div>
         <div className="fitness-journey-underline" data-aos="fade-up" data-aos-delay="300"></div>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-content">
-              <div className="stat-icon">
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '1.5rem', width: '100%', margin: '0 auto', padding: '1rem 0'}}>
+          <div style={{background: 'white', borderRadius: '10px', padding: '1.5rem 1rem', textAlign: 'center', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)', width: '220px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '240px'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+              <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-fire"></i>
               </div>
-              <div className="stat-value" data-value="1250">0</div>
-              <div className="stat-label">CALORIES BURNED</div>
+              <div className="stat-value" data-value="1250" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>1250</div>
+              <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>CALORIES BURNED</div>
             </div>
           </div>
-          <div className="stat-card">
-            <div className="stat-content">
-              <div className="stat-icon">
+          <div style={{background: 'white', borderRadius: '10px', padding: '1.5rem 1rem', textAlign: 'center', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)', width: '220px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '240px'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+              <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-running"></i>
               </div>
-              <div className="stat-value" data-value="12">0</div>
-              <div className="stat-label">WORKOUTS COMPLETED</div>
+              <div className="stat-value" data-value="12" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>12</div>
+              <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>WORKOUTS COMPLETED</div>
             </div>
           </div>
-          <div className="stat-card">
-            <div className="stat-content">
-              <div className="stat-icon">
+          <div style={{background: 'white', borderRadius: '10px', padding: '1.5rem 1rem', textAlign: 'center', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)', width: '220px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '240px'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+              <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-stopwatch"></i>
               </div>
-              <div className="stat-value" data-value="320">0</div>
-              <div className="stat-label">MINUTES ACTIVE</div>
+              <div className="stat-value" data-value="320" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>320</div>
+              <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>MINUTES ACTIVE</div>
             </div>
           </div>
-          <div className="stat-card">
-            <div className="stat-content">
-              <div className="stat-icon">
+          <div style={{background: 'white', borderRadius: '10px', padding: '1.5rem 1rem', textAlign: 'center', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)', width: '220px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '240px'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+              <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-medal"></i>
               </div>
-              <div className="stat-value" data-value="5">0</div>
-              <div className="stat-label">ACHIEVEMENTS</div>
+              <div className="stat-value" data-value="5" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>5</div>
+              <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>ACHIEVEMENTS</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Recommended Workouts Section */}
-      <section className="workouts-section">
+      <section className="workouts-section" style={{backgroundColor: '#474747', padding: '5rem 0', textAlign: 'center'}}>
         <div className="recommended-title animated-title" data-aos="zoom-in">RECOMMENDED FOR YOU</div>
         <div className="recommended-underline" data-aos="fade-up" data-aos-delay="300"></div>
         <div className="workouts-grid">

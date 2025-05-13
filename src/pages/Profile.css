@@ -342,6 +342,24 @@
   width: 100%;
 }
 
+.subscription-policy-note {
+  background-color: rgba(0, 116, 217, 0.1);
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  border: 1px solid rgba(0, 116, 217, 0.3);
+  width: 80%;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subscription-policy-note i {
+  color: #0074D9;
+}
+
 .empty-state-actions {
   display: flex;
   justify-content: center;
@@ -400,8 +418,27 @@
 
 .subscription-actions-top {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   margin-bottom: 20px;
+}
+
+.subscription-info-note {
+  background-color: rgba(0, 116, 217, 0.1);
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  border: 1px solid rgba(0, 116, 217, 0.3);
+  width: 100%;
+}
+
+.subscription-info-note i {
+  color: #0074D9;
+}
+
+.subscription-buttons {
+  display: flex;
+  justify-content: flex-end;
   gap: 10px;
 }
 
@@ -472,6 +509,13 @@
   margin-left: 10px;
   vertical-align: middle;
   box-shadow: 0 2px 5px rgba(255, 107, 107, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show badge when hovering over the entire subscription card */
+.subscription-info-card:hover .special-offer-badge {
+  opacity: 1;
 }
 
 .subscription-header h4 {
@@ -482,9 +526,29 @@
 }
 
 .subscription-header p {
-  margin: 0;
+  margin: 0 0 8px 0;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.subscription-countdown {
+  background-color: rgba(0, 116, 217, 0.2);
+  border-radius: 20px;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(0, 116, 217, 0.3);
+}
+
+.subscription-countdown i {
+  color: #0074D9;
+  font-size: 12px;
+}
+
+.subscription-countdown span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .subscription-features {

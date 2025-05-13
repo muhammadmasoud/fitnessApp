@@ -14,7 +14,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useContext(AuthContext);
   const { getCartCount } = useContext(CartContext);
-  const pagesWithDarkNav = ['/pricing', '/about', '/gallery', '/services', '/offers', '/programs', '/products', '/contact', '/cart', '/checkout', '/wishlist'];
+  const pagesWithDarkNav = ['/pricing', '/about', '/gallery', '/services', '/offers', '/programs', '/products', '/contact', '/cart', '/checkout', '/wishlist', '/exercises', '/dashboard'];
   const needsDarkNav = pagesWithDarkNav.includes(location.pathname);
   const [expanded, setExpanded] = useState(false);
 
@@ -61,6 +61,16 @@ const Navigation = () => {
             >
               Trainers
             </Nav.Link>
+            <div className="nav-item">
+              <HoverDropdown
+                title="Activities"
+                isActive={location.pathname === '/exercises' || location.pathname === '/dashboard'}
+                items={[
+                  { label: 'Exercises', path: '/exercises' },
+                  { label: 'Dashboard', path: '/dashboard' }
+                ]}
+              />
+            </div>
             <div className="nav-item">
               <HoverDropdown
                 title="Services"

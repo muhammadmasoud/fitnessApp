@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 import { toast, ToastContainer } from 'react-toastify';
+import SubscriptionConfirmModal from '../components/SubscriptionConfirmModal';
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
+import '../components/SubscriptionConfirmModal.css';
 import './Offers.css';
 
 const Offers = () => {
@@ -13,6 +15,13 @@ const Offers = () => {
   const { currentUser } = useContext(AuthContext);
   const { addToCart, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
+
+  // State for current subscription
+  const [currentOffer, setCurrentOffer] = useState(null);
+
+  // State for confirmation modal
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [pendingOffer, setPendingOffer] = useState({ name: '', price: 0 });
 
   useEffect(() => {
     setLoaded(true);
@@ -23,6 +32,37 @@ const Offers = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Check if user has an active offer subscription
+    if (currentUser) {
+      // Get all users to find the complete user data
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userData = users.find(user => user.id === currentUser.id) || {};
+
+      // Check for subscriptions array
+      if (userData.subscriptions && Array.isArray(userData.subscriptions)) {
+        // Find offer subscription
+        const offerSubscription = userData.subscriptions.find(sub => sub.type === 'offer');
+        if (offerSubscription) {
+          setCurrentOffer(offerSubscription);
+        }
+      }
+      // Check for legacy subscription
+      else if (userData.subscriptionStatus && userData.subscriptionPackage) {
+        // Check if it's an offer
+        const specialOffers = ['Summer Body Challenge', 'Couple\'s Package', 'First Month Free'];
+        const isOffer = specialOffers.some(offer => userData.subscriptionPackage.includes(offer));
+
+        if (isOffer) {
+          setCurrentOffer({
+            name: userData.subscriptionPackage,
+            date: userData.subscriptionDate || new Date().toISOString()
+          });
+        }
+      }
+    }
+  }, [currentUser]);
+
   const handleSubscribe = async (offerName, price) => {
     if (!currentUser) {
       // Redirect to signup if not logged in
@@ -30,6 +70,20 @@ const Offers = () => {
       return;
     }
 
+    // Check if user is already subscribed to an offer
+    if (currentOffer && currentOffer.name !== offerName) {
+      // Show confirmation modal
+      setPendingOffer({ name: offerName, price: price });
+      setShowConfirmModal(true);
+      return;
+    }
+
+    // If no confirmation needed or user is subscribing to the same offer
+    proceedWithSubscription(offerName, price);
+  };
+
+  // Function to handle the actual subscription process
+  const proceedWithSubscription = (offerName, price) => {
     try {
       // Clear the cart first to ensure only the subscription package is in it
       clearCart();
@@ -78,14 +132,23 @@ const Offers = () => {
           <p className="offers-subtitle animate__animated animate__fadeIn animate__delay-1s">
             Exclusive deals to help you achieve your fitness goals
           </p>
+          {currentOffer && (
+            <div className="current-offer-note animate__animated animate__fadeIn animate__delay-1s">
+              <i className="fas fa-info-circle me-2"></i>
+              You are currently subscribed to <strong>{currentOffer.name}</strong>
+            </div>
+          )}
         </div>
 
         <div className="offers-container">
           <div
-            className={`special-offer-card ${hoveredCard === 0 ? 'card-hovered' : ''}`}
+            className={`special-offer-card ${hoveredCard === 0 ? 'card-hovered' : ''} ${currentOffer && currentOffer.name === 'Summer Body Challenge' ? 'current-offer' : ''}`}
             onMouseEnter={() => handleCardHover(0)}
             onMouseLeave={handleCardLeave}
           >
+            {currentOffer && currentOffer.name === 'Summer Body Challenge' && (
+              <div className="current-offer-badge">Current Offer</div>
+            )}
             <div className="card-glow"></div>
             <div className="special-offer-badge animate__animated animate__pulse animate__infinite">Limited Time</div>
             <h2 className="special-offer-heading">Summer Body Challenge</h2>
@@ -94,17 +157,26 @@ const Offers = () => {
               <span className="original-price">$299</span>
               <span className="discounted-price price-animation">$199</span>
             </div>
-            <button className="special-offer-button" onClick={() => handleSubscribe('Summer Body Challenge', 199)}>
-              <span className="button-text">Claim Offer</span>
+            <button
+              className="special-offer-button"
+              onClick={() => handleSubscribe('Summer Body Challenge', 199)}
+              disabled={currentOffer && currentOffer.name === 'Summer Body Challenge'}
+            >
+              <span className="button-text">
+                {currentOffer && currentOffer.name === 'Summer Body Challenge' ? 'Current Offer' : 'Claim Offer'}
+              </span>
               <span className="button-shine"></span>
             </button>
           </div>
 
           <div
-            className={`special-offer-card ${hoveredCard === 1 ? 'card-hovered' : ''}`}
+            className={`special-offer-card ${hoveredCard === 1 ? 'card-hovered' : ''} ${currentOffer && currentOffer.name === 'Couple\'s Package' ? 'current-offer' : ''}`}
             onMouseEnter={() => handleCardHover(1)}
             onMouseLeave={handleCardLeave}
           >
+            {currentOffer && currentOffer.name === 'Couple\'s Package' && (
+              <div className="current-offer-badge">Current Offer</div>
+            )}
             <div className="card-glow"></div>
             <div className="special-offer-badge animate__animated animate__pulse animate__infinite">Most Popular</div>
             <h2 className="special-offer-heading">Couple's Package</h2>
@@ -113,17 +185,26 @@ const Offers = () => {
               <span className="original-price">$399</span>
               <span className="discounted-price price-animation">$299</span>
             </div>
-            <button className="special-offer-button" onClick={() => handleSubscribe('Couple\'s Package', 299)}>
-              <span className="button-text">Claim Offer</span>
+            <button
+              className="special-offer-button"
+              onClick={() => handleSubscribe('Couple\'s Package', 299)}
+              disabled={currentOffer && currentOffer.name === 'Couple\'s Package'}
+            >
+              <span className="button-text">
+                {currentOffer && currentOffer.name === 'Couple\'s Package' ? 'Current Offer' : 'Claim Offer'}
+              </span>
               <span className="button-shine"></span>
             </button>
           </div>
 
           <div
-            className={`special-offer-card ${hoveredCard === 2 ? 'card-hovered' : ''}`}
+            className={`special-offer-card ${hoveredCard === 2 ? 'card-hovered' : ''} ${currentOffer && currentOffer.name === 'First Month Free' ? 'current-offer' : ''}`}
             onMouseEnter={() => handleCardHover(2)}
             onMouseLeave={handleCardLeave}
           >
+            {currentOffer && currentOffer.name === 'First Month Free' && (
+              <div className="current-offer-badge">Current Offer</div>
+            )}
             <div className="card-glow"></div>
             <div className="special-offer-badge animate__animated animate__pulse animate__infinite">New Members</div>
             <h2 className="special-offer-heading">First Month Free</h2>
@@ -132,8 +213,14 @@ const Offers = () => {
               <span className="original-price">$59/month</span>
               <span className="discounted-price price-animation">$49/month</span>
             </div>
-            <button className="special-offer-button" onClick={() => handleSubscribe('First Month Free', 49)}>
-              <span className="button-text">Claim Offer</span>
+            <button
+              className="special-offer-button"
+              onClick={() => handleSubscribe('First Month Free', 49)}
+              disabled={currentOffer && currentOffer.name === 'First Month Free'}
+            >
+              <span className="button-text">
+                {currentOffer && currentOffer.name === 'First Month Free' ? 'Current Offer' : 'Claim Offer'}
+              </span>
               <span className="button-shine"></span>
             </button>
           </div>
@@ -141,8 +228,22 @@ const Offers = () => {
 
         <div className="offers-footer animate__animated animate__fadeIn animate__delay-2s">
           <p>All offers are subject to terms and conditions. Limited time only.</p>
+          <p className="subscription-policy">You can have one subscription plan and one special offer active at a time.</p>
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      <SubscriptionConfirmModal
+        show={showConfirmModal}
+        onHide={() => setShowConfirmModal(false)}
+        onConfirm={() => {
+          setShowConfirmModal(false);
+          proceedWithSubscription(pendingOffer.name, pendingOffer.price);
+        }}
+        packageName={pendingOffer.name}
+        currentPackage={currentOffer ? currentOffer.name : ''}
+        isOffer={true}
+      />
     </div>
   );
 };

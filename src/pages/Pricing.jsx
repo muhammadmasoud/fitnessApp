@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,13 +6,22 @@ import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import SubscriptionConfirmModal from '../components/SubscriptionConfirmModal';
 import 'react-toastify/dist/ReactToastify.css';
+import '../components/SubscriptionConfirmModal.css';
 import './Pricing.css';
 
 const Pricing = () => {
   const { currentUser, updateProfile } = useContext(AuthContext);
   const { addToCart, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
+
+  // State for current subscription
+  const [currentSubscription, setCurrentSubscription] = useState(null);
+
+  // State for confirmation modal
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [pendingPackage, setPendingPackage] = useState({ name: '', price: 0 });
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -25,7 +34,36 @@ const Pricing = () => {
         titleElement.classList.add('animated');
       }, 10);
     }
-  }, []);
+
+    // Check if user has an active subscription
+    if (currentUser) {
+      // Get all users to find the complete user data
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userData = users.find(user => user.id === currentUser.id) || {};
+
+      // Check for subscriptions array
+      if (userData.subscriptions && Array.isArray(userData.subscriptions)) {
+        // Find package subscription (not offer)
+        const packageSubscription = userData.subscriptions.find(sub => sub.type === 'package');
+        if (packageSubscription) {
+          setCurrentSubscription(packageSubscription);
+        }
+      }
+      // Check for legacy subscription
+      else if (userData.subscriptionStatus && userData.subscriptionPackage) {
+        // Check if it's not an offer
+        const specialOffers = ['Summer Body Challenge', 'Couple\'s Package', 'First Month Free'];
+        const isOffer = specialOffers.some(offer => userData.subscriptionPackage.includes(offer));
+
+        if (!isOffer) {
+          setCurrentSubscription({
+            name: userData.subscriptionPackage,
+            date: userData.subscriptionDate || new Date().toISOString()
+          });
+        }
+      }
+    }
+  }, [currentUser]);
 
   const handleSubscribe = async (packageName, price) => {
     if (!currentUser) {
@@ -34,6 +72,20 @@ const Pricing = () => {
       return;
     }
 
+    // Check if user is already subscribed to a package
+    if (currentSubscription && currentSubscription.name !== packageName) {
+      // Show confirmation modal
+      setPendingPackage({ name: packageName, price: price });
+      setShowConfirmModal(true);
+      return;
+    }
+
+    // If no confirmation needed or user is subscribing to the same package
+    proceedWithSubscription(packageName, price);
+  };
+
+  // Function to handle the actual subscription process
+  const proceedWithSubscription = (packageName, price) => {
     try {
       // Clear the cart first to ensure only the subscription package is in it
       clearCart();
@@ -71,11 +123,20 @@ const Pricing = () => {
       <Container>
         <div className="pricing-header">
           <h1 className="pricing-title">PRICING</h1>
+          {currentSubscription && (
+            <div className="current-subscription-note">
+              <i className="fas fa-info-circle me-2"></i>
+              You are currently subscribed to <strong>{currentSubscription.name}</strong>
+            </div>
+          )}
         </div>
 
         <div className="pricing-container">
           {/* Basic Package */}
-          <div className="pricing-card">
+          <div className={`pricing-card ${currentSubscription && currentSubscription.name === 'Basic Package' ? 'current-subscription' : ''}`}>
+            {currentSubscription && currentSubscription.name === 'Basic Package' && (
+              <div className="current-badge">Current Plan</div>
+            )}
             <div className="pricing-card-header">
               <h3 className="package-name">Basic Package</h3>
               <span className="price">$24/month</span>
@@ -111,12 +172,21 @@ const Pricing = () => {
                   <span>Nutritional Counseling</span>
                 </li>
               </ul>
-              <Button onClick={() => handleSubscribe('Basic Package', 24)} className="pricing-btn">Subscribe Now</Button>
+              <Button
+                onClick={() => handleSubscribe('Basic Package', 24)}
+                className="pricing-btn"
+                disabled={currentSubscription && currentSubscription.name === 'Basic Package'}
+              >
+                {currentSubscription && currentSubscription.name === 'Basic Package' ? 'Current Plan' : 'Subscribe Now'}
+              </Button>
             </div>
           </div>
 
           {/* Standard Package */}
-          <div className="pricing-card featured">
+          <div className={`pricing-card featured ${currentSubscription && currentSubscription.name === 'Standard Package' ? 'current-subscription' : ''}`}>
+            {currentSubscription && currentSubscription.name === 'Standard Package' && (
+              <div className="current-badge">Current Plan</div>
+            )}
             <div className="pricing-card-header">
               <h3 className="package-name">Standard Package</h3>
               <span className="price">$48/month</span>
@@ -152,12 +222,21 @@ const Pricing = () => {
                   <span>Nutritional Counseling</span>
                 </li>
               </ul>
-              <Button onClick={() => handleSubscribe('Standard Package', 48)} className="pricing-btn">Subscribe Now</Button>
+              <Button
+                onClick={() => handleSubscribe('Standard Package', 48)}
+                className="pricing-btn"
+                disabled={currentSubscription && currentSubscription.name === 'Standard Package'}
+              >
+                {currentSubscription && currentSubscription.name === 'Standard Package' ? 'Current Plan' : 'Subscribe Now'}
+              </Button>
             </div>
           </div>
 
           {/* Premium Package */}
-          <div className="pricing-card">
+          <div className={`pricing-card ${currentSubscription && currentSubscription.name === 'Premium Package' ? 'current-subscription' : ''}`}>
+            {currentSubscription && currentSubscription.name === 'Premium Package' && (
+              <div className="current-badge">Current Plan</div>
+            )}
             <div className="pricing-card-header">
               <h3 className="package-name">Premium Package</h3>
               <span className="price">$56/month</span>
@@ -193,11 +272,29 @@ const Pricing = () => {
                   <span>Nutritional Counseling</span>
                 </li>
               </ul>
-              <Button onClick={() => handleSubscribe('Premium Package', 56)} className="pricing-btn">Subscribe Now</Button>
+              <Button
+                onClick={() => handleSubscribe('Premium Package', 56)}
+                className="pricing-btn"
+                disabled={currentSubscription && currentSubscription.name === 'Premium Package'}
+              >
+                {currentSubscription && currentSubscription.name === 'Premium Package' ? 'Current Plan' : 'Subscribe Now'}
+              </Button>
             </div>
           </div>
         </div>
       </Container>
+
+      {/* Confirmation Modal */}
+      <SubscriptionConfirmModal
+        show={showConfirmModal}
+        onHide={() => setShowConfirmModal(false)}
+        onConfirm={() => {
+          setShowConfirmModal(false);
+          proceedWithSubscription(pendingPackage.name, pendingPackage.price);
+        }}
+        packageName={pendingPackage.name}
+        currentPackage={currentSubscription ? currentSubscription.name : ''}
+      />
     </section>
   );
 };

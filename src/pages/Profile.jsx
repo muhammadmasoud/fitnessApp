@@ -47,6 +47,124 @@ const Profile = () => {
     confirmPassword: ''
   });
 
+  // Function to check if a subscription is expired
+  const isSubscriptionExpired = (subscription) => {
+    if (!subscription.expiryDate) {
+      // For legacy subscriptions without expiry date, add one (30 days from start date)
+      const startDate = new Date(subscription.date);
+      const expiryDate = new Date(startDate);
+
+      // If it's the "First Month Free" offer, set expiry to 60 days
+      if (subscription.name === 'First Month Free') {
+        expiryDate.setDate(startDate.getDate() + 60); // 60 days (2 months)
+      } else {
+        expiryDate.setDate(startDate.getDate() + 30); // 30 days (1 month)
+      }
+
+      subscription.expiryDate = expiryDate.toISOString();
+    }
+
+    const now = new Date();
+    const expiry = new Date(subscription.expiryDate);
+    return now > expiry;
+  };
+
+
+
+  // Function to calculate remaining time for a subscription
+  const getRemainingTime = (subscription) => {
+    if (!subscription.expiryDate) {
+      // For legacy subscriptions without expiry date, add one (30 days from start date)
+      const startDate = new Date(subscription.date);
+      const expiryDate = new Date(startDate);
+
+      // If it's the "First Month Free" offer, set expiry to 60 days
+      if (subscription.name === 'First Month Free') {
+        expiryDate.setDate(startDate.getDate() + 60); // 60 days (2 months)
+      } else {
+        expiryDate.setDate(startDate.getDate() + 30); // 30 days (1 month)
+      }
+
+      subscription.expiryDate = expiryDate.toISOString();
+    }
+
+    const now = new Date();
+    const expiry = new Date(subscription.expiryDate);
+    const diffTime = expiry - now;
+
+    // If expired, return 0
+    if (diffTime <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+    // Calculate days, hours, minutes, seconds
+    const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+    return { days, hours, minutes, seconds };
+  };
+
+  // Function to calculate remaining days for a subscription (for backward compatibility)
+  const getRemainingDays = (subscription) => {
+    const { days } = getRemainingTime(subscription);
+    return days;
+  };
+
+  // Function to check and update expired subscriptions
+  const checkAndUpdateSubscriptions = async () => {
+    if (!currentUser) return;
+
+    // Get all users to find the complete user data
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIndex = users.findIndex(user => user.id === currentUser.id);
+
+    if (userIndex === -1) return;
+
+    const userData = users[userIndex];
+    let subscriptions = userData.subscriptions || [];
+
+    // Check for expired subscriptions
+    const activeSubscriptions = subscriptions.filter(sub => !isSubscriptionExpired(sub));
+
+    // If subscriptions changed (some expired), update the user data
+    if (activeSubscriptions.length !== subscriptions.length) {
+      // Update user data
+      userData.subscriptions = activeSubscriptions;
+      userData.subscriptionStatus = activeSubscriptions.length > 0;
+
+      if (activeSubscriptions.length > 0) {
+        userData.subscriptionPackage = activeSubscriptions[0].name;
+        userData.subscriptionDate = activeSubscriptions[0].date;
+      } else {
+        userData.subscriptionPackage = '';
+        userData.subscriptionDate = '';
+      }
+
+      // Save updated user data
+      users[userIndex] = userData;
+      localStorage.setItem('users', JSON.stringify(users));
+
+      // Update profile data
+      setProfileData(prev => ({
+        ...prev,
+        subscriptions: activeSubscriptions,
+        subscriptionStatus: activeSubscriptions.length > 0,
+        subscriptionPackage: activeSubscriptions.length > 0 ? activeSubscriptions[0].name : '',
+        subscriptionDate: activeSubscriptions.length > 0 ? activeSubscriptions[0].date : ''
+      }));
+
+      // Update profile using context method
+      await updateProfile({
+        subscriptions: activeSubscriptions,
+        subscriptionStatus: activeSubscriptions.length > 0,
+        subscriptionPackage: activeSubscriptions.length > 0 ? activeSubscriptions[0].name : '',
+        subscriptionDate: activeSubscriptions.length > 0 ? activeSubscriptions[0].date : ''
+      });
+    }
+
+    return activeSubscriptions;
+  };
+
   // Get user data on component mount
   useEffect(() => {
     if (currentUser) {
@@ -59,17 +177,69 @@ const Profile = () => {
 
       // If user has a legacy subscription (single subscription), add it to the array
       if (fullUserData.subscriptionStatus && fullUserData.subscriptionPackage) {
-        subscriptions.push({
+        const legacySubscription = {
           id: 'legacy-subscription',
           name: fullUserData.subscriptionPackage,
           date: fullUserData.subscriptionDate || new Date().toISOString(),
           type: isSpecialOffer(fullUserData.subscriptionPackage) ? 'offer' : 'package'
-        });
+        };
+
+        // Add expiry date for legacy subscription (30 days from start date, or 60 for "First Month Free")
+        const startDate = new Date(legacySubscription.date);
+        const expiryDate = new Date(startDate);
+
+        if (legacySubscription.name === 'First Month Free') {
+          expiryDate.setDate(startDate.getDate() + 60); // 60 days for "First Month Free"
+        } else {
+          expiryDate.setDate(startDate.getDate() + 30); // 30 days for regular subscriptions
+        }
+
+        legacySubscription.expiryDate = expiryDate.toISOString();
+        subscriptions.push(legacySubscription);
       }
 
       // If user has subscriptions array, use that instead
       if (fullUserData.subscriptions && Array.isArray(fullUserData.subscriptions)) {
         subscriptions = fullUserData.subscriptions;
+
+        // Add expiry dates to subscriptions that don't have them
+        subscriptions = subscriptions.map(sub => {
+          if (!sub.expiryDate) {
+            const startDate = new Date(sub.date);
+            const expiryDate = new Date(startDate);
+
+            if (sub.name === 'First Month Free') {
+              expiryDate.setDate(startDate.getDate() + 60); // 60 days for "First Month Free"
+            } else {
+              expiryDate.setDate(startDate.getDate() + 30); // 30 days for regular subscriptions
+            }
+
+            return { ...sub, expiryDate: expiryDate.toISOString() };
+          }
+          return sub;
+        });
+      }
+
+      // Filter out expired subscriptions
+      const activeSubscriptions = subscriptions.filter(sub => !isSubscriptionExpired(sub));
+
+      // Update user data if subscriptions changed
+      if (activeSubscriptions.length !== subscriptions.length) {
+        const userIndex = users.findIndex(user => user.id === currentUser.id);
+        if (userIndex !== -1) {
+          users[userIndex].subscriptions = activeSubscriptions;
+          users[userIndex].subscriptionStatus = activeSubscriptions.length > 0;
+
+          if (activeSubscriptions.length > 0) {
+            users[userIndex].subscriptionPackage = activeSubscriptions[0].name;
+            users[userIndex].subscriptionDate = activeSubscriptions[0].date;
+          } else {
+            users[userIndex].subscriptionPackage = '';
+            users[userIndex].subscriptionDate = '';
+          }
+
+          localStorage.setItem('users', JSON.stringify(users));
+        }
       }
 
       setProfileData({
@@ -82,15 +252,29 @@ const Profile = () => {
         fitnessGoal: fullUserData.fitnessGoal || 'weight-loss',
         activityLevel: fullUserData.activityLevel || 'beginner',
         profileImage: fullUserData.profileImage || null,
-        subscriptionStatus: fullUserData.subscriptionStatus || subscriptions.length > 0,
-        subscriptionPackage: fullUserData.subscriptionPackage || '',
-        subscriptionDate: fullUserData.subscriptionDate || '',
-        subscriptions: subscriptions
+        subscriptionStatus: activeSubscriptions.length > 0,
+        subscriptionPackage: activeSubscriptions.length > 0 ? activeSubscriptions[0].name : '',
+        subscriptionDate: activeSubscriptions.length > 0 ? activeSubscriptions[0].date : '',
+        subscriptions: activeSubscriptions
       });
     }
 
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
+  }, [currentUser]);
+
+  // Set up interval to check for expired subscriptions
+  useEffect(() => {
+    // Check immediately on mount
+    checkAndUpdateSubscriptions();
+
+    // Set up interval to check every minute
+    const intervalId = setInterval(() => {
+      checkAndUpdateSubscriptions();
+    }, 60000); // Check every minute
+
+    // Clean up interval on unmount
+    return () => clearInterval(intervalId);
   }, [currentUser]);
 
   const handleProfileChange = (e) => {
@@ -188,6 +372,8 @@ const Profile = () => {
     // Navigate to pricing page
     window.location.href = '/pricing';
   };
+
+
 
   // Check if subscription is a special offer
   const isSpecialOffer = (packageName) => {
@@ -519,19 +705,25 @@ const Profile = () => {
                     {profileData.subscriptions.length > 0 ? (
                       <div className="subscription-details">
                         <div className="subscription-actions-top">
-                          <Button
-                            variant="outline-primary"
-                            className="me-2"
-                            onClick={handleChangeSubscription}
-                          >
-                            <i className="fas fa-plus-circle me-1"></i> Add New Plan
-                          </Button>
-                          <Button
-                            variant="outline-info"
-                            onClick={() => window.location.href = '/offers'}
-                          >
-                            <i className="fas fa-gift me-1"></i> View Special Offers
-                          </Button>
+                          <div className="subscription-info-note mb-3">
+                            <i className="fas fa-info-circle me-2"></i>
+                            <span>You can have one subscription plan and one special offer active at a time.</span>
+                          </div>
+                          <div className="subscription-buttons">
+                            <Button
+                              variant="outline-primary"
+                              className="me-2"
+                              onClick={handleChangeSubscription}
+                            >
+                              <i className="fas fa-plus-circle me-1"></i> Change Plan
+                            </Button>
+                            <Button
+                              variant="outline-info"
+                              onClick={() => window.location.href = '/offers'}
+                            >
+                              <i className="fas fa-gift me-1"></i> View Special Offers
+                            </Button>
+                          </div>
                         </div>
 
                         {/* Regular Subscriptions */}
@@ -548,6 +740,10 @@ const Profile = () => {
                                     <div>
                                       <h4>{subscription.name}</h4>
                                       <p>Active since: {new Date(subscription.date).toLocaleDateString()}</p>
+                                      <div className="subscription-countdown">
+                                        <i className="fas fa-clock me-1"></i>
+                                        <span>{getRemainingDays(subscription)} days remaining</span>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="subscription-features">
@@ -612,6 +808,10 @@ const Profile = () => {
                                         <span className="special-offer-badge">Special Offer</span>
                                       </h4>
                                       <p>Active since: {new Date(subscription.date).toLocaleDateString()}</p>
+                                      <div className="subscription-countdown">
+                                        <i className="fas fa-clock me-1"></i>
+                                        <span>{getRemainingDays(subscription)} days remaining</span>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="subscription-features">
@@ -671,6 +871,10 @@ const Profile = () => {
                       <div className="empty-state">
                         <i className="fas fa-crown empty-icon"></i>
                         <p>You don't have any active subscriptions or offers.</p>
+                        <p className="subscription-policy-note">
+                          <i className="fas fa-info-circle me-2"></i>
+                          You can have one subscription plan and one special offer active at a time.
+                        </p>
                         <div className="empty-state-actions">
                           <Button
                             variant="primary"
