@@ -169,7 +169,7 @@ const Login = () => {
               </div>
 
               <div className="text-center mt-4 signup-prompt form-item" data-animation-delay="500">
-                <p>Don't have an account? <Link to="/signup" className="signup-link">Sign up</Link></p>
+                <p>Don&apos;t have an account? <Link to="/signup" className="signup-link">Sign up</Link></p>
               </div>
 
               <div className="social-login form-item" data-animation-delay="600">

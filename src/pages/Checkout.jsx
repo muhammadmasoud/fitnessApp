@@ -17,15 +17,17 @@ const Checkout = () => {
   const location = useLocation();
   const { cartItems, getTotalPrice, clearCart } = useContext(CartContext);
   const { currentUser, updateProfile } = useContext(AuthContext);
-  const [hasSubscription, setHasSubscription] = useState(false);
-  const [subscriptionDetails, setSubscriptionDetails] = useState(null);
+  // State for subscription status
+  const [, setHasSubscription] = useState(false);
+  const [, setSubscriptionDetails] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showCompletePayment, setShowCompletePayment] = useState(false);
   const [pendingPaymentMethod, setPendingPaymentMethod] = useState('');
   const [paymentCompleted, setPaymentCompleted] = useState(false);
-  const [isValidAccess, setIsValidAccess] = useState(false);
+  // State for access validation (not currently used)
+  const [, ] = useState(false);
 
   // Form states
   const [shippingInfo, setShippingInfo] = useState({
@@ -295,11 +297,12 @@ const Checkout = () => {
       case 'email':
         error = validateEmail(value);
         break;
-      case 'phone':
+      case 'phone': {
         // Use the country code from the dataset or the stored one
         const countryCode = dataset?.countryCode || shippingInfo.phoneCountryCode;
         error = validatePhone(value, countryCode);
         break;
+      }
       case 'zipCode':
         error = validateZipCode(value);
         break;
@@ -477,14 +480,14 @@ const Checkout = () => {
 
     // Check if all relevant fields for the selected payment method are valid
     const relevantErrors = Object.entries(errors)
-      .filter(([key, _]) => {
+      .filter(([key]) => {
         if (paymentMethod === 'creditCard') return ['cardName', 'cardNumber', 'expiryDate', 'cvv'].includes(key);
         if (paymentMethod === 'paypal') return ['paypalEmail'].includes(key);
         if (paymentMethod === 'applePay') return ['applePayIdentifier'].includes(key);
         if (paymentMethod === 'googlePay') return ['googlePayEmail'].includes(key);
         return false;
       })
-      .map(([_, value]) => value);
+      .map(([, value]) => value);
 
     return relevantErrors.every(error => error === '');
   };

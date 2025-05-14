@@ -12,7 +12,7 @@ import trackingBg from '../assets/images/order-tracking.jpg';
 const TrackOrderPublic = () => {
   const carouselRef = useRef(null);
   const [orderDetails, setOrderDetails] = useState(null);
-  const [trackingProgress, setTrackingProgress] = useState(35); // Initial progress (Processing)
+  const [trackingProgress] = useState(35); // Initial progress (Processing)
   const [trackingNumber, setTrackingNumber] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState('');
@@ -187,7 +187,7 @@ const TrackOrderPublic = () => {
                 </Button>
               </Form>
               <div className="tracking-form-footer">
-                <p>Don't have an account? <Link to="/signup">Sign up</Link> or <Link to="/login">sign in</Link> to easily track all your orders.</p>
+                <p>Don&apos;t have an account? <Link to="/signup">Sign up</Link> or <Link to="/login">sign in</Link> to easily track all your orders.</p>
               </div>
             </div>
           )}

@@ -1,5 +1,5 @@
 import { Fragment, useContext } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -41,8 +41,6 @@ import './App.css';
 import './styles/navbar-override.css';
 
 function App() {
-  const location = useLocation();
-
   const appStyle = {
     margin: 0,
     padding: 0,

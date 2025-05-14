@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './About.css';
@@ -7,62 +7,60 @@ import fitness from '../assets/images/fitness.jpg';
 
 const About = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [yearsCount, setYearsCount] = useState(0);
-  const [trainersCount, setTrainersCount] = useState(0);
-  const [branchesCount, setBranchesCount] = useState(0);
-  const [clientsCount, setClientsCount] = useState(0);
 
   const statsRef = useRef(null);
   const statsObserved = useRef(false);
+  // Store a reference to the observer for cleanup
+  const observerRef = useRef(null);
 
   const testimonials = [
     {
       id: 1,
       name: "Sarah Johnson",
       role: "Member since 2020",
-      quote: "This gym completely transformed my life. The trainers are exceptional and the community is so supportive. I've lost 30 pounds and gained confidence I never thought possible.",
+      quote: "This gym completely transformed my life. The trainers are exceptional and the community is so supportive. I&apos;ve lost 30 pounds and gained confidence I never thought possible.",
       image: "https://randomuser.me/api/portraits/women/32.jpg"
     },
     {
       id: 2,
       name: "Michael Chen",
       role: "Member since 2019",
-      quote: "The personalized training programs here are unmatched. I've tried many gyms before, but the attention to detail and genuine care from the staff makes this place special.",
+      quote: "The personalized training programs here are unmatched. I&apos;ve tried many gyms before, but the attention to detail and genuine care from the staff makes this place special.",
       image: "https://randomuser.me/api/portraits/men/54.jpg"
     },
     {
       id: 3,
       name: "Emma Rodriguez",
       role: "Member since 2021",
-      quote: "Not only have I achieved my fitness goals, but I've made lifelong friends. The community events and challenges keep me motivated and excited about my fitness journey.",
+      quote: "Not only have I achieved my fitness goals, but I&apos;ve made lifelong friends. The community events and challenges keep me motivated and excited about my fitness journey.",
       image: "https://randomuser.me/api/portraits/women/65.jpg"
     },
     {
       id: 4,
       name: "David Wilson",
       role: "Member since 2018",
-      quote: "As someone who was intimidated by gyms, I can't express how welcoming this environment is. The trainers meet you where you are and help you grow at your own pace.",
+      quote: "As someone who was intimidated by gyms, I can&apos;t express how welcoming this environment is. The trainers meet you where you are and help you grow at your own pace.",
       image: "https://randomuser.me/api/portraits/men/22.jpg"
     },
     {
       id: 5,
       name: "Jennifer Lee",
       role: "Member since 2022",
-      quote: "The variety of classes keeps my workouts fresh and exciting. I've never been this consistent with exercise before, and it's all thanks to the engaging programs and motivating instructors.",
+      quote: "The variety of classes keeps my workouts fresh and exciting. I&apos;ve never been this consistent with exercise before, and it&apos;s all thanks to the engaging programs and motivating instructors.",
       image: "https://randomuser.me/api/portraits/women/44.jpg"
     },
     {
       id: 6,
       name: "Robert Garcia",
       role: "Member since 2019",
-      quote: "After my injury, I was afraid to get back into fitness. The trainers here designed a rehabilitation program that helped me recover safely and build strength gradually. I'm now stronger than before my injury!",
+      quote: "After my injury, I was afraid to get back into fitness. The trainers here designed a rehabilitation program that helped me recover safely and build strength gradually. I&apos;m now stronger than before my injury!",
       image: "https://randomuser.me/api/portraits/men/67.jpg"
     },
     {
       id: 7,
       name: "Olivia Thompson",
       role: "Member since 2021",
-      quote: "The nutrition guidance alongside the workout plans has been a game-changer. I've learned how to fuel my body properly, and the results speak for themselves. My energy levels are through the roof!",
+      quote: "The nutrition guidance alongside the workout plans has been a game-changer. I&apos;ve learned how to fuel my body properly, and the results speak for themselves. My energy levels are through the roof!",
       image: "https://randomuser.me/api/portraits/women/28.jpg"
     },
     {
@@ -76,7 +74,7 @@ const About = () => {
       id: 9,
       name: "Sophia Patel",
       role: "Member since 2022",
-      quote: "The online coaching during the pandemic was exceptional. They didn't miss a beat in providing quality instruction, and the transition back to in-person training was seamless. Truly professional service!",
+      quote: "The online coaching during the pandemic was exceptional. They didn&apos;t miss a beat in providing quality instruction, and the transition back to in-person training was seamless. Truly professional service!",
       image: "https://randomuser.me/api/portraits/women/57.jpg"
     }
   ];
@@ -95,7 +93,7 @@ const About = () => {
     }, 5000);
 
     // Stats counter observer
-    const observer = new IntersectionObserver((entries) => {
+    observerRef.current = new IntersectionObserver((entries) => {
       const [entry] = entries;
       if (entry.isIntersecting && !statsObserved.current) {
         startCounters();
@@ -104,77 +102,25 @@ const About = () => {
     }, { threshold: 0.1 });
 
     if (statsRef.current) {
-      observer.observe(statsRef.current);
+      observerRef.current.observe(statsRef.current);
     }
+
+    // Store a reference to the current statsRef value for cleanup
+    const currentStatsRef = statsRef.current;
 
     return () => {
       clearInterval(interval);
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current);
+      if (currentStatsRef && observerRef.current) {
+        observerRef.current.unobserve(currentStatsRef);
       }
     };
   }, [testimonials.length]);
 
+
+
   const startCounters = () => {
-    // Years counter (0 to 10)
-    const yearsDuration = 2000; // 2 seconds
-    const yearsIncrement = 1;
-    const yearsTarget = 10;
-    let yearsCurrent = 0;
-    const yearsInterval = setInterval(() => {
-      yearsCurrent += yearsIncrement;
-      if (yearsCurrent > yearsTarget) {
-        clearInterval(yearsInterval);
-        setYearsCount(yearsTarget);
-      } else {
-        setYearsCount(yearsCurrent);
-      }
-    }, yearsDuration / yearsTarget);
-
-    // Trainers counter (0 to 45)
-    const trainersDuration = 2000;
-    const trainersIncrement = 1;
-    const trainersTarget = 45;
-    let trainersCurrent = 0;
-    const trainersInterval = setInterval(() => {
-      trainersCurrent += trainersIncrement;
-      if (trainersCurrent > trainersTarget) {
-        clearInterval(trainersInterval);
-        setTrainersCount(trainersTarget);
-      } else {
-        setTrainersCount(trainersCurrent);
-      }
-    }, trainersDuration / trainersTarget);
-
-    // Branches counter (0 to 12)
-    const branchesDuration = 2000;
-    const branchesIncrement = 1;
-    const branchesTarget = 12;
-    let branchesCurrent = 0;
-    const branchesInterval = setInterval(() => {
-      branchesCurrent += branchesIncrement;
-      if (branchesCurrent > branchesTarget) {
-        clearInterval(branchesInterval);
-        setBranchesCount(branchesTarget);
-      } else {
-        setBranchesCount(branchesCurrent);
-      }
-    }, branchesDuration / branchesTarget);
-
-    // Clients counter (0 to 20000)
-    const clientsDuration = 2000;
-    const clientsIncrement = 500;
-    const clientsTarget = 20000;
-    let clientsCurrent = 0;
-    const clientsInterval = setInterval(() => {
-      clientsCurrent += clientsIncrement;
-      if (clientsCurrent > clientsTarget) {
-        clearInterval(clientsInterval);
-        setClientsCount(clientsTarget);
-      } else {
-        setClientsCount(clientsCurrent);
-      }
-    }, clientsDuration / (clientsTarget / clientsIncrement));
+    // Animation is handled by CSS now
+    // We don't need to manually update state counters
   };
 
   const nextTestimonial = () => {
@@ -208,7 +154,7 @@ const About = () => {
           <p className="about-hero-subtitle" data-aos="fade-up" data-aos-delay="200">
             Our mission is to empower individuals in our community to lead healthier, stronger,<br />
             and more confident lives. We believe fitness is not just about physical strength —<br />
-            it's about building self-concern, cultivating self-love, and creating a positive mindset<br />
+            it&apos;s about building self-concern, cultivating self-love, and creating a positive mindset<br />
             that lasts a lifetime.
           </p>
         </div>

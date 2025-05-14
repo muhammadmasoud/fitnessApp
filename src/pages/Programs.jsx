@@ -110,7 +110,7 @@ const Programs = () => {
           </div>
           <div className="programs-header-right">
             <p className="programs-subtitle">
-              Discover a range of programs tailored to your goals. Whether you're
+              Discover a range of programs tailored to your goals. Whether you&apos;re
               building endurance, learning discipline, or pushing your limits.
             </p>
             <a href="#" className="view-schedule-btn">

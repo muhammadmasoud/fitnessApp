@@ -12,7 +12,7 @@ import '../components/SubscriptionConfirmModal.css';
 import './Pricing.css';
 
 const Pricing = () => {
-  const { currentUser, updateProfile } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const { addToCart, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
 

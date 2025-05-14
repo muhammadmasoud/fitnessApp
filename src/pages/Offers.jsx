@@ -179,7 +179,7 @@ const Offers = () => {
             )}
             <div className="card-glow"></div>
             <div className="special-offer-badge animate__animated animate__pulse animate__infinite">Most Popular</div>
-            <h2 className="special-offer-heading">Couple's Package</h2>
+            <h2 className="special-offer-heading">Couple&apos;s Package</h2>
             <p className="special-offer-description">Train together, achieve together. Special package for couples with shared personal training sessions.</p>
             <div className="special-offer-price">
               <span className="original-price">$399</span>

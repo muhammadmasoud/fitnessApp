@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Modal, Button } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -73,7 +73,7 @@ const Home = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleCloseWelcomeModal}>
-            Let's Get Started!
+            Let&apos;s Get Started!
           </Button>
         </Modal.Footer>
       </Modal>

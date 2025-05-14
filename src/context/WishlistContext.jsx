@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 
-export const WishlistContext = createContext();
+const WishlistContext = createContext();
 
-export const WishlistProvider = ({ children }) => {
+const WishlistProvider = ({ children }) => {
   // Initialize wishlist from localStorage or empty array
   const [wishlistItems, setWishlistItems] = useState(() => {
     const savedWishlist = localStorage.getItem('wishlist');
@@ -67,3 +67,6 @@ export const WishlistProvider = ({ children }) => {
     </WishlistContext.Provider>
   );
 };
+
+// Export the context and provider
+export { WishlistContext, WishlistProvider };

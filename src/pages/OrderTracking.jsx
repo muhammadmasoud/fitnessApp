@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { Container, Row, Col, ProgressBar, Button, Carousel, Nav, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -77,7 +77,7 @@ const OrderTracking = () => {
   };
 
   // Function to load and process user orders - supporting multiple orders
-  const loadUserOrders = () => {
+  const loadUserOrders = useCallback(() => {
     console.log("Loading user orders");
 
     if (!currentUser) {
@@ -183,10 +183,10 @@ const OrderTracking = () => {
       setOrderDetails(null);
       setActiveOrderIndex(0);
     }
-  };
+  }, [currentUser]);
 
   // Check for new completed orders in sessionStorage
-  const checkForNewOrders = () => {
+  const checkForNewOrders = useCallback(() => {
     // Get completed order from sessionStorage
     const completedOrderJson = sessionStorage.getItem('completedOrder');
     if (!completedOrderJson) {
@@ -240,8 +240,8 @@ const OrderTracking = () => {
           if (!Array.isArray(existingOrders)) {
             existingOrders = [];
           }
-        } catch (parseError) {
-          console.error("Failed to parse existing orders");
+        } catch (error) {
+          console.error("Failed to parse existing orders", error);
         }
       }
 
@@ -289,7 +289,7 @@ const OrderTracking = () => {
       // Still clear the sessionStorage to prevent repeated errors
       sessionStorage.removeItem('completedOrder');
     }
-  };
+  }, [currentUser]);
 
   // Load order details from storage
   useEffect(() => {
@@ -321,7 +321,7 @@ const OrderTracking = () => {
       document.body.classList.remove('order-tracking-page');
       clearInterval(newOrderCheckInterval);
     };
-  }, [currentUser]); // Only re-run when currentUser changes
+  }, [currentUser, loadUserOrders, checkForNewOrders]); // Include all dependencies
 
   // Update tracking progress when order details change
   useEffect(() => {
@@ -357,7 +357,7 @@ const OrderTracking = () => {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [currentUser]);
+  }, [currentUser, loadUserOrders, checkForNewOrders]);
 
   // No longer needed as we generate the tracking number inline
 
@@ -462,7 +462,7 @@ const OrderTracking = () => {
               </div>
               <h2 className="no-orders-title">No Orders Found</h2>
               <p className="no-orders-message">
-                You don't have any orders to track yet. Start shopping to see your orders here!
+                You don&apos;t have any orders to track yet. Start shopping to see your orders here!
               </p>
               <div className="no-orders-actions">
                 <Button
@@ -486,7 +486,7 @@ const OrderTracking = () => {
               {showManualSearch && (
                 <div className="manual-tracking-form-container animate__animated animate__fadeIn mt-4">
                   <p className="tracking-form-intro">
-                    Can't find your order? Enter your order number to track it manually
+                    Can&apos;t find your order? Enter your order number to track it manually
                   </p>
                   <Form className="tracking-form" onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">

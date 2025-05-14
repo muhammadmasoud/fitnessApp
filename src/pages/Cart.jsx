@@ -78,7 +78,7 @@ const Cart = () => {
                   <i className="fas fa-shopping-cart"></i>
                 </div>
                 <h3 className="cart-empty-title">Your cart is currently empty</h3>
-                <p className="cart-empty-text">Looks like you haven't added any products to your cart yet.</p>
+                <p className="cart-empty-text">Looks like you haven&apos;t added any products to your cart yet.</p>
                 <Link to="/products" className="continue-shopping-btn">
                   <i className="fas fa-arrow-left"></i> Continue Shopping
                 </Link>

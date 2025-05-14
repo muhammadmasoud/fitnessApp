@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
@@ -41,7 +41,7 @@ import trapbar from '../assets/images/trap-bar.png';
 import dumbbell from '../assets/images/dumbbell.png';
 
 const Products = () => {
-  const [loaded, setLoaded] = useState(true);
+  const [loaded] = useState(true);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,7 +56,7 @@ const Products = () => {
   const navigate = useNavigate();
 
   // Product data
-  const products = [
+  const products = useMemo(() => [
     {
       id: 1,
       name: 'Naturade Weight Gain 578g',
@@ -281,7 +281,7 @@ const Products = () => {
       bestSeller: true,
       category: 'equipment'
     }
-  ];
+  ], []);
 
   // 3D tilt effect for product cards
   const handleMouseMove = (e, cardElement) => {
@@ -363,7 +363,7 @@ const Products = () => {
         card.removeEventListener('mouseleave', () => handleMouseLeave(card));
       });
     };
-  }, []);
+  }, [products, visibleProducts.length]);
 
   // Format price to always show 2 decimal places
   const formatPrice = (price) => {
@@ -386,13 +386,13 @@ const Products = () => {
     CustomToast.success(`${product.name} added to cart!`);
   };
 
-  // Navigate to cart page
-  const goToCart = () => {
-    navigate('/cart');
-  };
+  // Navigate to cart page function (kept for future use)
+  // const goToCart = () => {
+  //   navigate('/cart');
+  // };
 
   // State to control dropdown visibility
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [, setShowCategoryDropdown] = useState(false);
 
   // Filter products by category
   const filterByCategory = (category) => {
@@ -407,10 +407,10 @@ const Products = () => {
     setCurrentPage(1); // Reset to first page when showing all
   };
 
-  // Toggle category dropdown
-  const toggleCategoryDropdown = () => {
-    setShowCategoryDropdown(!showCategoryDropdown);
-  };
+  // Toggle category dropdown function (kept for future use)
+  // const toggleCategoryDropdown = () => {
+  //   setShowCategoryDropdown(!showCategoryDropdown);
+  // };
 
   // Pagination functions
   const paginate = (pageNumber) => {

@@ -158,7 +158,7 @@ const Signup = () => {
                 <Form.Label htmlFor="email-input">Email address</Form.Label>
                 <br></br>
                 <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
+                  We&apos;ll never share your email with anyone else.
                 </Form.Text>
               </Form.Group>
 

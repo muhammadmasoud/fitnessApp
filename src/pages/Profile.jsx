@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import { Container, Row, Col, Form, Button, Alert, Modal, Tab, Nav } from 'react-bootstrap';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
@@ -48,7 +48,7 @@ const Profile = () => {
   });
 
   // Function to check if a subscription is expired
-  const isSubscriptionExpired = (subscription) => {
+  const isSubscriptionExpired = useCallback((subscription) => {
     if (!subscription.expiryDate) {
       // For legacy subscriptions without expiry date, add one (30 days from start date)
       const startDate = new Date(subscription.date);
@@ -67,7 +67,7 @@ const Profile = () => {
     const now = new Date();
     const expiry = new Date(subscription.expiryDate);
     return now > expiry;
-  };
+  }, []);
 
 
 
@@ -111,7 +111,7 @@ const Profile = () => {
   };
 
   // Function to check and update expired subscriptions
-  const checkAndUpdateSubscriptions = async () => {
+  const checkAndUpdateSubscriptions = useCallback(async () => {
     if (!currentUser) return;
 
     // Get all users to find the complete user data
@@ -163,7 +163,7 @@ const Profile = () => {
     }
 
     return activeSubscriptions;
-  };
+  }, [currentUser, updateProfile, isSubscriptionExpired, setProfileData]);
 
   // Get user data on component mount
   useEffect(() => {
@@ -261,7 +261,7 @@ const Profile = () => {
 
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-  }, [currentUser]);
+  }, [currentUser, isSubscriptionExpired]);
 
   // Set up interval to check for expired subscriptions
   useEffect(() => {
@@ -275,7 +275,7 @@ const Profile = () => {
 
     // Clean up interval on unmount
     return () => clearInterval(intervalId);
-  }, [currentUser]);
+  }, [currentUser, checkAndUpdateSubscriptions]);
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
@@ -380,7 +380,7 @@ const Profile = () => {
     // List of special offers from the Offers page
     const specialOffers = [
       'Summer Body Challenge',
-      'Couple\'s Package',
+      'Couple&apos;s Package',
       'First Month Free'
     ];
 
@@ -452,6 +452,7 @@ const Profile = () => {
 
       toast.info('Your account has been deleted.');
     } catch (error) {
+      console.error('Failed to delete account:', error);
       setError('Failed to delete account. Please try again.');
     }
   };
@@ -870,7 +871,7 @@ const Profile = () => {
                     ) : (
                       <div className="empty-state">
                         <i className="fas fa-crown empty-icon"></i>
-                        <p>You don't have any active subscriptions or offers.</p>
+                        <p>You don&apos;t have any active subscriptions or offers.</p>
                         <p className="subscription-policy-note">
                           <i className="fas fa-info-circle me-2"></i>
                           You can have one subscription plan and one special offer active at a time.
@@ -901,7 +902,7 @@ const Profile = () => {
                     <h3>Your Workout History</h3>
                     <div className="empty-state">
                       <i className="fas fa-dumbbell empty-icon"></i>
-                      <p>You haven't completed any workouts yet.</p>
+                      <p>You haven&apos;t completed any workouts yet.</p>
                       <Button variant="primary" className="mt-3">Start a Workout</Button>
                     </div>
                   </div>

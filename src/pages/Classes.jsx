@@ -83,8 +83,8 @@ const Classes = () => {
             <div className="classes-description">
               <h2>Find Your Perfect Class</h2>
               <p>
-                Whether you're looking to build strength, improve flexibility, or boost your cardio fitness,
-                we have a class that's perfect for you. Our expert instructors will guide you through each
+                Whether you&apos;re looking to build strength, improve flexibility, or boost your cardio fitness,
+                we have a class that&apos;s perfect for you. Our expert instructors will guide you through each
                 session, ensuring proper form and maximum results.
               </p>
             </div>

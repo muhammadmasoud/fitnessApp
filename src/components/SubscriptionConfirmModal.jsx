@@ -1,13 +1,12 @@
-import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const SubscriptionConfirmModal = ({ 
-  show, 
-  onHide, 
-  onConfirm, 
-  packageName, 
+const SubscriptionConfirmModal = ({
+  show,
+  onHide,
+  onConfirm,
+  packageName,
   currentPackage,
-  isOffer = false 
+  isOffer = false
 }) => {
   return (
     <Modal
@@ -39,7 +38,7 @@ const SubscriptionConfirmModal = ({
           No, Go Back
         </Button>
         <Button variant="primary" onClick={onConfirm}>
-          Yes, I'm Sure
+          Yes, I&apos;m Sure
         </Button>
       </Modal.Footer>
     </Modal>

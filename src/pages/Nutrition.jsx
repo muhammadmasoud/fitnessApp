@@ -100,7 +100,7 @@ const Nutrition = () => {
             <div className="nutrition-description">
               <h2>Nutrition is Key to Fitness Success</h2>
               <p>
-                Proper nutrition is essential for achieving your fitness goals, whether you're looking to lose weight,
+                Proper nutrition is essential for achieving your fitness goals, whether you&apos;re looking to lose weight,
                 build muscle, or improve your overall health. Our nutrition guidance provides you with the knowledge
                 and tools to make informed dietary choices that complement your fitness routine.
               </p>

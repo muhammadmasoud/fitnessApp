@@ -1,10 +1,10 @@
 import { createContext, useState, useEffect } from 'react';
 
 // Create the authentication context
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 // Create a provider component
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -117,3 +117,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+// Export the context and provider
+export { AuthContext, AuthProvider };

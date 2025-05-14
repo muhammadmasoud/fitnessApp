@@ -63,9 +63,6 @@ const AuthenticatedHome = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    setShowLogoutConfirm(true);
-  };
 
   const confirmLogout = () => {
     logout();
@@ -85,7 +82,7 @@ const AuthenticatedHome = () => {
           <div className="auth-hero-content" data-aos="fade-up">
             <h1 className="auth-hero-title">Welcome Back, {currentUser?.fullName || 'Fitness Enthusiast'}!</h1>
             <p className="auth-hero-subtitle">
-              Your fitness journey continues. Let's crush those goals together!
+              Your fitness journey continues. Let&apos;s crush those goals together!
             </p>
             <div className="auth-hero-buttons">
               <Link to="/dashboard" className="auth-cta-button">
