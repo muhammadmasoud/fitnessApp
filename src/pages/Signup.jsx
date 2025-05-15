@@ -22,28 +22,12 @@ const Signup = () => {
 
   // Force the form to be visible immediately
   useEffect(() => {
-    console.log("Signup component mounted");
-
-    // Force form to be visible with inline style
+    // Apply styles to the form using the ref
     if (formRef.current) {
-      console.log("Form ref exists, applying styles");
       formRef.current.style.opacity = "1";
       formRef.current.style.transform = "translateY(0)";
       formRef.current.style.visibility = "visible";
-    } else {
-      console.log("Form ref does not exist yet");
-    }
-
-    // Fallback method using querySelector
-    const form = document.querySelector('.animated-form');
-    if (form) {
-      console.log("Form found via querySelector, applying styles");
-      form.style.opacity = "1";
-      form.style.transform = "translateY(0)";
-      form.style.visibility = "visible";
-      form.classList.add('form-loaded');
-    } else {
-      console.log("Form not found via querySelector");
+      formRef.current.classList.add('form-loaded');
     }
   }, []);
 
@@ -244,7 +228,7 @@ const Signup = () => {
                     className="btn btn-outline-primary social-btn"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log('Facebook signup clicked');
+                      // Facebook signup functionality would go here
                     }}
                   >
                     <i className="fab fa-facebook-f"></i>
@@ -254,7 +238,7 @@ const Signup = () => {
                     className="btn btn-outline-danger social-btn"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log('Google signup clicked');
+                      // Google signup functionality would go here
                     }}
                   >
                     <i className="fab fa-google"></i>
@@ -264,7 +248,7 @@ const Signup = () => {
                     className="btn btn-outline-dark social-btn"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log('Apple signup clicked');
+                      // Apple signup functionality would go here
                     }}
                   >
                     <i className="fab fa-apple"></i>

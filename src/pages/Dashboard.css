@@ -1,0 +1,740 @@
+/* Dashboard Main Styles */
+:root {
+  --primary-color: #4F46E5;
+  --secondary-color: #818CF8;
+  --cardio-color: #FFD700;
+  --strength-color: #90EE90;
+  --yoga-color: #87CEFA;
+  --text-primary: #333;
+  --text-secondary: #777;
+  --text-muted: #999;
+  --bg-light: #f8f9fa;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --border-radius: 12px;
+  --border-color: #eaeaea;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f5f7fb;
+  color: var(--text-primary);
+}
+
+.dashboard-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.dashboard-header {
+  margin-bottom: 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.search-container {
+  position: relative;
+  width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  font-size: 14px;
+  background-color: var(--card-bg);
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+/* Card Styles */
+.dashboard-card, .stat-card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: none;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: var(--text-primary);
+}
+
+/* Stats Cards */
+.stats-cards {
+  margin-bottom: 10px;
+}
+
+.stat-card {
+  height: 100%;
+}
+
+.stat-card .card-body {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  position: relative;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border-radius: 12px;
+  margin-right: 15px;
+  color: var(--primary-color);
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+.stat-data {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.stat-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.stat-gauge {
+  width: 100%;
+  height: 4px;
+  background-color: #f0f0f0;
+  border-radius: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.stat-gauge-inner {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.stat-chart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+}
+
+/* Progress Card */
+.goal-progress-circle {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  margin: 0 auto 20px;
+}
+
+.inner-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-indicator {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-circle-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 15px solid #f0f0f0;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.progress-circle-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 15px solid transparent;
+  border-top: 15px solid var(--cardio-color);
+  border-right: 15px solid var(--strength-color);
+  border-bottom: 15px solid var(--yoga-color);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.training-stats {
+  margin-top: 20px;
+}
+
+.training-stat {
+  margin-bottom: 15px;
+}
+
+.training-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.cardio-dot {
+  background-color: var(--cardio-color);
+}
+
+.strength-dot {
+  background-color: var(--strength-color);
+}
+
+.yoga-dot {
+  background-color: var(--yoga-color);
+}
+
+.training-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.training-percent {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.training-details {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: 20px;
+  margin-top: 2px;
+}
+
+/* Activity Card */
+.date-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.daily-stats {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.daily-stat {
+  margin-right: 25px;
+}
+
+.daily-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.daily-stat-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.activity-chart {
+  height: 180px;
+  margin-bottom: 15px;
+}
+
+.date-selector {
+  margin-top: 15px;
+}
+
+.date-range {
+  font-size: 14px;
+  flex: 1;
+}
+
+.date-arrows {
+  display: flex;
+  align-items: center;
+}
+
+.date-arrows svg {
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+/* Today's Activity */
+.activity-type-btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.activity-details {
+  display: flex;
+  margin-top: 15px;
+}
+
+.map-container {
+  width: 40%;
+  padding-right: 20px;
+}
+
+.activity-map {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.activity-info {
+  flex: 1;
+}
+
+.activity-time {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.activity-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.activity-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.activity-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.activity-stat-value {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* My Classes */
+.see-all-link {
+  font-size: 14px;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.class-list {
+  margin-top: 15px;
+}
+
+.class-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  margin-bottom: 15px;
+}
+
+.class-icon-container {
+  margin-right: 15px;
+}
+
+.class-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.cardio-bg {
+  background-color: var(--cardio-color);
+}
+
+.strength-bg {
+  background-color: var(--strength-color);
+}
+
+.yoga-bg {
+  background-color: var(--yoga-color);
+}
+
+.class-info {
+  flex: 1;
+}
+
+.class-type {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.class-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.class-instructor {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.class-details {
+  text-align: right;
+  margin-right: 15px;
+}
+
+.class-videos {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.class-duration {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.class-level {
+  margin-right: 15px;
+}
+
+.level-badge {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.beginner {
+  background-color: #e6f7ff;
+  color: #0095ff;
+}
+
+.intermediate {
+  background-color: #fff7e6;
+  color: #fa8c16;
+}
+
+.advanced {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.class-actions {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Profile Card */
+.profile-container {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.profile-image-container {
+  margin-right: 15px;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.profile-level {
+  display: flex;
+  align-items: center;
+}
+
+.level-label {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background-color: #f6ffed;
+  color: #52c41a;
+  margin-right: 10px;
+}
+
+.profile-points {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.profile-stat {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Calendar */
+.calendar-container {
+  margin-top: 20px;
+}
+
+.calendar-header {
+  margin-bottom: 15px;
+}
+
+.calendar-header h5 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+}
+
+.calendar-controls svg {
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-day {
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.calendar-day:hover {
+  background-color: #f0f0f0;
+}
+
+.day-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.date-number {
+  font-size: 12px;
+}
+
+.other-month {
+  opacity: 0.4;
+}
+
+.selected {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.selected .day-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.today {
+  border: 1px solid var(--primary-color);
+}
+
+/* Schedule Card */
+.add-schedule-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.schedule-date {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.schedule-activities {
+  margin-top: 15px;
+}
+
+.schedule-activity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.completed-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  z-index: 1;
+}
+
+.activity-icon-container {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 12px;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-time {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.activity-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 2px 0;
+}
+
+.activity-description, .activity-details {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.activity-actions {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Recent Activity Card */
+.recent-activities {
+  margin-top: 15px;
+}
+
+.recent-activity {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+/* Time Filter Button */
+.time-filter-btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .activity-details {
+    flex-direction: column;
+  }
+  
+  .map-container {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  .activity-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .class-item {
+    flex-wrap: wrap;
+  }
+  
+  .class-details, .class-level {
+    margin-top: 10px;
+    text-align: left;
+  }
+  
+  .calendar-grid {
+    gap: 4px;
+  }
+  
+  .profile-stats {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-stat {
+    margin-bottom: 10px;
+  }
+}

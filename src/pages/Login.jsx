@@ -18,28 +18,12 @@ const Login = () => {
 
   // Force the form to be visible immediately
   useEffect(() => {
-    console.log("Login component mounted");
-
-    // Force form to be visible with inline style
+    // Apply styles to the form using the ref
     if (formRef.current) {
-      console.log("Form ref exists, applying styles");
       formRef.current.style.opacity = "1";
       formRef.current.style.transform = "translateY(0)";
       formRef.current.style.visibility = "visible";
-    } else {
-      console.log("Form ref does not exist yet");
-    }
-
-    // Fallback method using querySelector
-    const form = document.querySelector('.animated-form');
-    if (form) {
-      console.log("Form found via querySelector, applying styles");
-      form.style.opacity = "1";
-      form.style.transform = "translateY(0)";
-      form.style.visibility = "visible";
-      form.classList.add('form-loaded');
-    } else {
-      console.log("Form not found via querySelector");
+      formRef.current.classList.add('form-loaded');
     }
   }, []);
 
@@ -148,7 +132,7 @@ const Login = () => {
                   className="btn btn-link forgot-password p-0"
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log('Forgot password clicked');
+                    // Forgot password functionality would go here
                   }}
                 >
                   Forgot password?
@@ -180,7 +164,7 @@ const Login = () => {
                     className="btn btn-outline-primary social-btn"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log('Facebook login clicked');
+                      // Facebook login functionality would go here
                     }}
                   >
                     <i className="fab fa-facebook-f"></i>
@@ -190,7 +174,7 @@ const Login = () => {
                     className="btn btn-outline-danger social-btn"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log('Google login clicked');
+                      // Google login functionality would go here
                     }}
                   >
                     <i className="fab fa-google"></i>
@@ -200,7 +184,7 @@ const Login = () => {
                     className="btn btn-outline-dark social-btn"
                     onClick={(e) => {
                       e.preventDefault();
-                      console.log('Apple login clicked');
+                      // Apple login functionality would go here
                     }}
                   >
                     <i className="fab fa-apple"></i>

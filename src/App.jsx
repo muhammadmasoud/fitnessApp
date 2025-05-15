@@ -33,7 +33,7 @@ import OrderTracking from './pages/OrderTracking.jsx';
 import TrackOrderPublic from './pages/TrackOrderPublic.jsx';
 import Wishlist from './pages/Wishlist.jsx';
 
-import ToastTest from './components/ToastTest.jsx';
+
 import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 import { WishlistProvider } from './context/WishlistContext.jsx';
@@ -210,7 +210,6 @@ const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
                 </ProtectedRoute>
               } />
 
-              <Route path="/toast-test" element={<ToastTest />} />
             </Routes>
           </PageTransition>
         </Layout>

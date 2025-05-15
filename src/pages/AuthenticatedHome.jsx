@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -10,6 +10,34 @@ const AuthenticatedHome = () => {
   const { currentUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const statsSectionRef = useRef(null);
+  const statsValueRefs = useRef([]);
+
+  // Initialize fitness stats animation
+  const animateValue = (obj, start, end, duration) => {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const currentValue = Math.floor(progress * (end - start) + start);
+
+      // Create a span with black text color and set its content
+      const span = document.createElement('span');
+      span.style.color = 'black';
+      span.textContent = currentValue;
+
+      // Clear the element and append the span
+      if (obj && obj.innerHTML !== undefined) {
+        obj.innerHTML = '';
+        obj.appendChild(span);
+      }
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  };
 
   useEffect(() => {
     AOS.init({
@@ -19,48 +47,30 @@ const AuthenticatedHome = () => {
       easing: 'ease-in-out'
     });
 
-    // Initialize fitness stats animation
-    const animateValue = (obj, start, end, duration) => {
-      let startTimestamp = null;
-      const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const currentValue = Math.floor(progress * (end - start) + start);
-
-        // Create a span with black text color and set its content
-        const span = document.createElement('span');
-        span.style.color = 'black';
-        span.textContent = currentValue;
-
-        // Clear the element and append the span
-        obj.innerHTML = '';
-        obj.appendChild(span);
-
-        if (progress < 1) {
-          window.requestAnimationFrame(step);
-        }
-      };
-      window.requestAnimationFrame(step);
-    };
-
     // Animate stats when they come into view
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const statsElements = document.querySelectorAll('.stat-value');
-          statsElements.forEach(el => {
-            const finalValue = parseInt(el.getAttribute('data-value'));
-            animateValue(el, 0, finalValue, 2000);
+          // Use the refs array to access the stat elements
+          statsValueRefs.current.forEach(el => {
+            if (el) {
+              const finalValue = parseInt(el.getAttribute('data-value'));
+              animateValue(el, 0, finalValue, 2000);
+            }
           });
           observer.disconnect();
         }
       });
     }, { threshold: 0.5 });
 
-    const statsSection = document.querySelector('.stats-section');
-    if (statsSection) {
-      observer.observe(statsSection);
+    // Observe the stats section using the ref
+    if (statsSectionRef.current) {
+      observer.observe(statsSectionRef.current);
     }
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
 
@@ -106,7 +116,7 @@ const AuthenticatedHome = () => {
       </section>
 
       {/* Quick Stats Section */}
-      <section className="stats-section" style={{backgroundColor: 'white', padding: '5rem 0', textAlign: 'center'}}>
+      <section ref={statsSectionRef} className="stats-section" style={{backgroundColor: 'white', padding: '5rem 0', textAlign: 'center'}}>
         <div className="fitness-journey-title animated-title" data-aos="zoom-in">YOUR FITNESS JOURNEY</div>
         <div className="fitness-journey-underline" data-aos="fade-up" data-aos-delay="300"></div>
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '1.5rem', width: '100%', margin: '0 auto', padding: '1rem 0'}}>
@@ -115,7 +125,12 @@ const AuthenticatedHome = () => {
               <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-fire"></i>
               </div>
-              <div className="stat-value" data-value="1250" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>1250</div>
+              <div
+                ref={el => statsValueRefs.current[0] = el}
+                className="stat-value"
+                data-value="1250"
+                style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+              >1250</div>
               <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>CALORIES BURNED</div>
             </div>
           </div>
@@ -124,7 +139,12 @@ const AuthenticatedHome = () => {
               <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-running"></i>
               </div>
-              <div className="stat-value" data-value="12" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>12</div>
+              <div
+                ref={el => statsValueRefs.current[1] = el}
+                className="stat-value"
+                data-value="12"
+                style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+              >12</div>
               <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>WORKOUTS COMPLETED</div>
             </div>
           </div>
@@ -133,7 +153,12 @@ const AuthenticatedHome = () => {
               <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-stopwatch"></i>
               </div>
-              <div className="stat-value" data-value="320" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>320</div>
+              <div
+                ref={el => statsValueRefs.current[2] = el}
+                className="stat-value"
+                data-value="320"
+                style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+              >320</div>
               <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>MINUTES ACTIVE</div>
             </div>
           </div>
@@ -142,7 +167,12 @@ const AuthenticatedHome = () => {
               <div style={{fontSize: '2.5rem', color: '#0088ff', marginBottom: '1rem'}}>
                 <i className="fas fa-medal"></i>
               </div>
-              <div className="stat-value" data-value="5" style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>5</div>
+              <div
+                ref={el => statsValueRefs.current[3] = el}
+                className="stat-value"
+                data-value="5"
+                style={{fontSize: '3.5rem', fontWeight: 700, color: 'black', marginBottom: '0.5rem', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+              >5</div>
               <div style={{fontSize: '1rem', color: 'black', textTransform: 'uppercase', letterSpacing: '1px', textAlign: 'center', width: '100%', display: 'block', lineHeight: '1.2', marginTop: '0.5rem', fontWeight: 500}}>ACHIEVEMENTS</div>
             </div>
           </div>
