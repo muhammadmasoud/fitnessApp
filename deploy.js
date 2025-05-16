@@ -13,31 +13,26 @@ if (!fs.existsSync(buildDir)) {
   process.exit(1);
 }
 
-// Files to copy from public to build
-const filesToCopy = [
-  '_redirects',
-  '404.html',
-  'favicon.ico',
-  'logo192.png',
-  'logo512.png',
-  'manifest.json'
-];
+// Copy _redirects file to build directory
+const redirectsSource = path.join(__dirname, 'public', '_redirects');
+const redirectsTarget = path.join(buildDir, '_redirects');
 
-// Copy each file
-filesToCopy.forEach(file => {
-  const source = path.join(__dirname, 'public', file);
-  const target = path.join(buildDir, file);
+try {
+  fs.copyFileSync(redirectsSource, redirectsTarget);
+  console.log('Successfully copied _redirects file to build directory');
+} catch (err) {
+  console.error('Error copying _redirects file:', err);
+}
 
-  try {
-    if (fs.existsSync(source)) {
-      fs.copyFileSync(source, target);
-      console.log(`Successfully copied ${file} to build directory`);
-    } else {
-      console.warn(`Warning: ${file} does not exist in public directory`);
-    }
-  } catch (err) {
-    console.error(`Error copying ${file}:`, err);
-  }
-});
+// Copy 404.html file to build directory
+const notFoundSource = path.join(__dirname, 'public', '404.html');
+const notFoundTarget = path.join(buildDir, '404.html');
+
+try {
+  fs.copyFileSync(notFoundSource, notFoundTarget);
+  console.log('Successfully copied 404.html file to build directory');
+} catch (err) {
+  console.error('Error copying 404.html file:', err);
+}
 
 console.log('Deployment preparation complete. You can now deploy the build directory to Vercel.');
