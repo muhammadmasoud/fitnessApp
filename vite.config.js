@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
+    base: './',
     plugins: [
       react(),
       eslint({
@@ -39,6 +40,23 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'build', // Match the default CRA output directory
+      assetsDir: 'assets',
+      sourcemap: false,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'react-router-dom'],
+            ui: ['react-bootstrap', 'bootstrap'],
+          },
+        },
+      },
     },
     // Handle environment variables similar to CRA
     define: {
