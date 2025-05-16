@@ -1,9 +1,11 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { CartContext } from '../context/CartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
+import { addToCart, clearCart } from '../store/slices/cartSlice';
 import { toast, ToastContainer } from 'react-toastify';
-import SubscriptionConfirmModal from '../components/SubscriptionConfirmModal';
+import { useModal } from '../hooks/useModal';
+
 import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import '../components/SubscriptionConfirmModal.css';
@@ -12,15 +14,17 @@ import './Offers.css';
 const Offers = () => {
   const [loaded, setLoaded] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
-  const { currentUser } = useContext(AuthContext);
-  const { addToCart, clearCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
+  const { openSubscriptionModal } = useModal();
+
 
   // State for current subscription
   const [currentOffer, setCurrentOffer] = useState(null);
 
-  // State for confirmation modal
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  // State for pending offer - used when storing data before showing modal
+  // eslint-disable-next-line no-unused-vars
   const [pendingOffer, setPendingOffer] = useState({ name: '', price: 0 });
 
   useEffect(() => {
@@ -72,9 +76,16 @@ const Offers = () => {
 
     // Check if user is already subscribed to an offer
     if (currentOffer && currentOffer.name !== offerName) {
-      // Show confirmation modal
+      // Store pending offer data
       setPendingOffer({ name: offerName, price: price });
-      setShowConfirmModal(true);
+
+      // Use the Modal Context to show the confirmation modal
+      openSubscriptionModal(
+        offerName,
+        currentOffer.name,
+        true, // isOffer = true
+        () => proceedWithSubscription(offerName, price)
+      );
       return;
     }
 
@@ -86,7 +97,7 @@ const Offers = () => {
   const proceedWithSubscription = (offerName, price) => {
     try {
       // Clear the cart first to ensure only the subscription package is in it
-      clearCart();
+      dispatch(clearCart());
 
       // Create a subscription product object
       const subscriptionProduct = {
@@ -100,7 +111,7 @@ const Offers = () => {
       };
 
       // Add the subscription to the cart
-      addToCart(subscriptionProduct);
+      dispatch(addToCart(subscriptionProduct));
 
       // Show a toast notification
       toast.info(`Adding ${offerName} to cart...`);
@@ -231,19 +242,6 @@ const Offers = () => {
           <p className="subscription-policy">You can have one subscription plan and one special offer active at a time.</p>
         </div>
       </div>
-
-      {/* Confirmation Modal */}
-      <SubscriptionConfirmModal
-        show={showConfirmModal}
-        onHide={() => setShowConfirmModal(false)}
-        onConfirm={() => {
-          setShowConfirmModal(false);
-          proceedWithSubscription(pendingOffer.name, pendingOffer.price);
-        }}
-        packageName={pendingOffer.name}
-        currentPackage={currentOffer ? currentOffer.name : ''}
-        isOffer={true}
-      />
     </div>
   );
 };

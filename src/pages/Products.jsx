@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef, useContext, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../context/CartContext';
-import { AuthContext } from '../context/AuthContext';
-import { WishlistContext } from '../context/WishlistContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
+import { addToCart } from '../store/slices/cartSlice';
+import { addToWishlist, removeFromWishlist } from '../store/slices/wishlistSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,14 +47,17 @@ const Products = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(8); // 4x2 grid
+  const [wishlistItems, setWishlistItems] = useState([]);
   // No longer need showCategoryDropdown state since we're using CSS hover
   const productsRef = useRef(null);
   const titleRef = useRef(null);
   const dropdownRef = useRef(null);
-  const { addToCart } = useContext(CartContext);
-  const { currentUser } = useContext(AuthContext);
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useContext(WishlistContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const wishlistState = useSelector(state => state.wishlist.items);
   const navigate = useNavigate();
+
+
 
   // Product data
   const products = useMemo(() => [
@@ -365,6 +369,11 @@ const Products = () => {
     };
   }, [products, visibleProducts.length]);
 
+  // Update wishlistItems when wishlistState changes
+  useEffect(() => {
+    setWishlistItems(wishlistState);
+  }, [wishlistState]);
+
   // Format price to always show 2 decimal places
   const formatPrice = (price) => {
     return price.toFixed(2);
@@ -380,7 +389,7 @@ const Products = () => {
       return;
     }
 
-    addToCart(product);
+    dispatch(addToCart(product));
 
     // Show success toast
     CustomToast.success(`${product.name} added to cart!`);
@@ -449,11 +458,14 @@ const Products = () => {
       return;
     }
 
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
+    // Check if product is in wishlist using the state variable
+    const isProductInWishlist = wishlistItems.some(item => item.id === product.id);
+
+    if (isProductInWishlist) {
+      dispatch(removeFromWishlist(product.id));
       CustomToast.info(`${product.name} removed from wishlist!`);
     } else {
-      addToWishlist(product);
+      dispatch(addToWishlist(product));
       CustomToast.success(`${product.name} added to wishlist!`);
     }
   };
@@ -543,10 +555,10 @@ const Products = () => {
               )}
               {currentUser && (
                 <div
-                  className={`wishlist-star ${isInWishlist(product.id) ? 'active' : ''}`}
+                  className={`wishlist-star ${wishlistItems.some(item => item.id === product.id) ? 'active' : ''}`}
                   onClick={(e) => handleWishlistToggle(product, e)}
                 >
-                  <i className={`fas ${isInWishlist(product.id) ? 'fa-star' : 'fa-star'}`}></i>
+                  <i className={`fas ${wishlistItems.some(item => item.id === product.id) ? 'fa-star' : 'fa-star'}`}></i>
                 </div>
               )}
               <div className={`product-image-container ${

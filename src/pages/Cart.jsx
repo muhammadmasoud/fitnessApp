@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { CartContext } from '../context/CartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItems, selectTotalPrice, removeFromCart, updateQuantity, clearCart } from '../store/slices/cartSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import DynamicBackground from '../components/DynamicBackground';
@@ -12,7 +13,9 @@ import '../styles/toast-custom.css';
 import cartBg from '../assets/images/cart-bg.jpg';
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, clearCart, getTotalPrice } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+  const totalPrice = useSelector(selectTotalPrice);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   useEffect(() => {
@@ -28,20 +31,20 @@ const Cart = () => {
   // Handle quantity change
   const handleQuantityChange = (productId, newQuantity) => {
     if (newQuantity >= 1) {
-      updateQuantity(productId, newQuantity);
+      dispatch(updateQuantity({ productId, quantity: newQuantity }));
     }
   };
 
   // Handle remove item
   const handleRemoveItem = (productId, productName) => {
-    removeFromCart(productId);
+    dispatch(removeFromCart(productId));
     CustomToast.info(`${productName} removed from cart`);
   };
 
   // Handle clear cart
   const handleClearCart = () => {
     if (cartItems.length > 0) {
-      clearCart();
+      dispatch(clearCart());
       CustomToast.info('Cart cleared');
     }
   };
@@ -138,7 +141,7 @@ const Cart = () => {
                 <div className="cart-summary">
                   <div className="cart-summary-row">
                     <span>Subtotal:</span>
-                    <span>${formatPrice(getTotalPrice())}</span>
+                    <span>${formatPrice(totalPrice)}</span>
                   </div>
                   <div className="cart-summary-row">
                     <span>Shipping:</span>
@@ -146,7 +149,7 @@ const Cart = () => {
                   </div>
                   <div className="cart-summary-row total">
                     <span>Total:</span>
-                    <span>${formatPrice(getTotalPrice())}</span>
+                    <span>${formatPrice(totalPrice)}</span>
                   </div>
 
                   <div className="cart-actions">

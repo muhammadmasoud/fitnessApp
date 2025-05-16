@@ -1,11 +1,12 @@
-import { useContext, Fragment } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
 import LogoAnimation from './LogoAnimation';
 import './Footer.css';
 
 const Footer = () => {
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { CartContext } from '../context/CartContext';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItems, selectTotalPrice, clearCart } from '../store/slices/cartSlice';
+import { selectCurrentUser, updateUserProfile } from '../store/slices/authSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import PhoneInput from '../components/PhoneInput';
@@ -15,8 +16,10 @@ import checkoutBg from '../assets/images/checkout-bg.jpg';
 const Checkout = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cartItems, getTotalPrice, clearCart } = useContext(CartContext);
-  const { currentUser, updateProfile } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+  const totalPrice = useSelector(selectTotalPrice);
+  const currentUser = useSelector(selectCurrentUser);
   // State for subscription status
   const [, setHasSubscription] = useState(false);
   const [, setSubscriptionDetails] = useState(null);
@@ -195,7 +198,7 @@ const Checkout = () => {
 
   // Calculate tax (simplified as 8.5% of subtotal)
   const getTax = () => {
-    return getTotalPrice() * 0.085;
+    return totalPrice * 0.085;
   };
 
   // Calculate order total
@@ -203,7 +206,7 @@ const Checkout = () => {
     // Skip shipping costs for subscription-only orders
     const isSubscriptionOnly = cartItems.every(item => item.isSubscription);
     const shippingCost = isSubscriptionOnly ? 0 : getShippingCost();
-    return getTotalPrice() + shippingCost + getTax();
+    return totalPrice + shippingCost + getTax();
   };
 
   // Validation functions
@@ -1089,16 +1092,16 @@ const Checkout = () => {
           // Save the updated users array back to localStorage
           localStorage.setItem('users', JSON.stringify(users));
 
-          // Also update the profile using the context method
-          updateProfile({
+          // Also update the profile using Redux
+          dispatch(updateUserProfile({
             subscriptionStatus: true,
             subscriptionPackage: subscriptionItem.name,
             subscriptionDate: new Date().toISOString(),
             subscriptions: subscriptions
-          });
+          }));
 
           // Clear the cart immediately to prevent issues
-          clearCart();
+          dispatch(clearCart());
 
           // Store welcome message in sessionStorage to display on home page
           sessionStorage.setItem('welcomeMessage', JSON.stringify({
@@ -1117,7 +1120,7 @@ const Checkout = () => {
         CustomToast.success('Order placed successfully!');
 
         // Clear the cart immediately to prevent issues
-        clearCart();
+        dispatch(clearCart());
 
         // Force immediate hard redirect to tracking page for regular orders
         window.location.replace('/order-tracking');
@@ -1208,7 +1211,7 @@ const Checkout = () => {
                   <div className="order-summary-totals">
                     <div className="summary-row">
                       <span>Subtotal:</span>
-                      <span>${getTotalPrice().toFixed(2)}</span>
+                      <span>${totalPrice.toFixed(2)}</span>
                     </div>
                     <div className="summary-row">
                       <span>Shipping:</span>
@@ -2020,7 +2023,7 @@ const Checkout = () => {
                 <div className="order-summary-totals">
                   <div className="summary-row">
                     <span>Subtotal:</span>
-                    <span>${getTotalPrice().toFixed(2)}</span>
+                    <span>${totalPrice.toFixed(2)}</span>
                   </div>
                   {/* Only show shipping for physical products */}
                   {!cartItems.every(item => item.isSubscription) && (

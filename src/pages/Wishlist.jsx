@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { WishlistContext } from '../context/WishlistContext';
-import { CartContext } from '../context/CartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectWishlistItems, removeFromWishlist, clearWishlist } from '../store/slices/wishlistSlice';
+import { addToCart } from '../store/slices/cartSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,8 +14,8 @@ import wishlistBg from '../assets/images/wishlist-bg.jpg';
 
 const Wishlist = () => {
   const [loaded, setLoaded] = useState(false);
-  const { wishlistItems, removeFromWishlist, clearWishlist } = useContext(WishlistContext);
-  const { addToCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const wishlistItems = useSelector(selectWishlistItems);
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -37,21 +38,21 @@ const Wishlist = () => {
 
   // Handle remove item from wishlist
   const handleRemoveItem = (productId, productName) => {
-    removeFromWishlist(productId);
+    dispatch(removeFromWishlist(productId));
     CustomToast.info(`${productName} removed from wishlist`);
   };
 
   // Handle clear wishlist
   const handleClearWishlist = () => {
     if (wishlistItems.length > 0) {
-      clearWishlist();
+      dispatch(clearWishlist());
       CustomToast.info('Wishlist cleared');
     }
   };
 
   // Handle add to cart
   const handleAddToCart = (product) => {
-    addToCart(product);
+    dispatch(addToCart(product));
     CustomToast.success(`${product.name} added to cart!`);
   };
 

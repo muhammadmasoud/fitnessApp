@@ -1,26 +1,30 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { AuthContext } from '../context/AuthContext';
-import { CartContext } from '../context/CartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
+import { addToCart, clearCart } from '../store/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import SubscriptionConfirmModal from '../components/SubscriptionConfirmModal';
+import { useModal } from '../hooks/useModal';
+
 import 'react-toastify/dist/ReactToastify.css';
 import '../components/SubscriptionConfirmModal.css';
 import './Pricing.css';
 
 const Pricing = () => {
-  const { currentUser } = useContext(AuthContext);
-  const { addToCart, clearCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
+  const { openSubscriptionModal } = useModal();
+
 
   // State for current subscription
   const [currentSubscription, setCurrentSubscription] = useState(null);
 
-  // State for confirmation modal
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  // State for pending package - used when storing data before showing modal
+  // eslint-disable-next-line no-unused-vars
   const [pendingPackage, setPendingPackage] = useState({ name: '', price: 0 });
 
   useEffect(() => {
@@ -74,9 +78,16 @@ const Pricing = () => {
 
     // Check if user is already subscribed to a package
     if (currentSubscription && currentSubscription.name !== packageName) {
-      // Show confirmation modal
+      // Store pending package data
       setPendingPackage({ name: packageName, price: price });
-      setShowConfirmModal(true);
+
+      // Use the Modal Context to show the confirmation modal
+      openSubscriptionModal(
+        packageName,
+        currentSubscription.name,
+        false, // isOffer = false (this is a regular package)
+        () => proceedWithSubscription(packageName, price)
+      );
       return;
     }
 
@@ -88,7 +99,7 @@ const Pricing = () => {
   const proceedWithSubscription = (packageName, price) => {
     try {
       // Clear the cart first to ensure only the subscription package is in it
-      clearCart();
+      dispatch(clearCart());
 
       // Create a subscription product object
       const subscriptionProduct = {
@@ -102,7 +113,7 @@ const Pricing = () => {
       };
 
       // Add the subscription to the cart
-      addToCart(subscriptionProduct);
+      dispatch(addToCart(subscriptionProduct));
 
       // Show a toast notification
       toast.info(`Adding ${packageName} to cart...`);
@@ -283,18 +294,6 @@ const Pricing = () => {
           </div>
         </div>
       </Container>
-
-      {/* Confirmation Modal */}
-      <SubscriptionConfirmModal
-        show={showConfirmModal}
-        onHide={() => setShowConfirmModal(false)}
-        onConfirm={() => {
-          setShowConfirmModal(false);
-          proceedWithSubscription(pendingPackage.name, pendingPackage.price);
-        }}
-        packageName={pendingPackage.name}
-        currentPackage={currentSubscription ? currentSubscription.name : ''}
-      />
     </section>
   );
 };

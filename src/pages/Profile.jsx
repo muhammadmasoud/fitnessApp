@@ -1,7 +1,8 @@
 
-import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Container, Row, Col, Form, Button, Alert, Modal, Tab, Nav } from 'react-bootstrap';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser, updateUserProfile, logout } from '../store/slices/authSlice';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
@@ -11,7 +12,8 @@ import '../styles/toast-custom.css';
 import profileBackground from '../assets/images/profile.jpg';
 
 const Profile = () => {
-  const { currentUser, updateProfile, logout } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -153,17 +155,17 @@ const Profile = () => {
         subscriptionDate: activeSubscriptions.length > 0 ? activeSubscriptions[0].date : ''
       }));
 
-      // Update profile using context method
-      await updateProfile({
+      // Update profile using Redux
+      await dispatch(updateUserProfile({
         subscriptions: activeSubscriptions,
         subscriptionStatus: activeSubscriptions.length > 0,
         subscriptionPackage: activeSubscriptions.length > 0 ? activeSubscriptions[0].name : '',
         subscriptionDate: activeSubscriptions.length > 0 ? activeSubscriptions[0].date : ''
-      });
+      }));
     }
 
     return activeSubscriptions;
-  }, [currentUser, updateProfile, isSubscriptionExpired, setProfileData]);
+  }, [currentUser, dispatch, isSubscriptionExpired, setProfileData]);
 
   // Get user data on component mount
   useEffect(() => {
@@ -300,8 +302,8 @@ const Profile = () => {
     setSuccess('');
 
     try {
-      // Update user profile
-      await updateProfile({
+      // Update user profile using Redux
+      const resultAction = await dispatch(updateUserProfile({
         fullName: profileData.fullName,
         bio: profileData.bio,
         age: profileData.age,
@@ -313,10 +315,15 @@ const Profile = () => {
         subscriptionStatus: profileData.subscriptionStatus,
         subscriptionPackage: profileData.subscriptionPackage,
         subscriptionDate: profileData.subscriptionDate
-      });
+      }));
 
-      setSuccess('Profile updated successfully!');
-      toast.success('Profile updated successfully!');
+      // Check if the update was successful
+      if (updateUserProfile.fulfilled.match(resultAction)) {
+        setSuccess('Profile updated successfully!');
+        toast.success('Profile updated successfully!');
+      } else {
+        throw new Error(resultAction.error.message || 'Failed to update profile');
+      }
     } catch (error) {
       setError(error.message || 'Failed to update profile. Please try again.');
       toast.error('Failed to update profile. Please try again.');
@@ -338,14 +345,14 @@ const Profile = () => {
         sub => sub.id !== selectedSubscription.id
       );
 
-      // Update user profile with the updated subscriptions array
-      await updateProfile({
+      // Update user profile with the updated subscriptions array using Redux
+      await dispatch(updateUserProfile({
         subscriptions: updatedSubscriptions,
         // Update legacy fields for backward compatibility
         subscriptionStatus: updatedSubscriptions.length > 0,
         subscriptionPackage: updatedSubscriptions.length > 0 ? updatedSubscriptions[0].name : '',
         subscriptionDate: updatedSubscriptions.length > 0 ? updatedSubscriptions[0].date : ''
-      });
+      }));
 
       // Update local state
       setProfileData(prev => ({
@@ -447,8 +454,8 @@ const Profile = () => {
       // Save to localStorage
       localStorage.setItem('users', JSON.stringify(updatedUsers));
 
-      // Logout user
-      logout();
+      // Logout user using Redux
+      dispatch(logout());
 
       toast.info('Your account has been deleted.');
     } catch (error) {

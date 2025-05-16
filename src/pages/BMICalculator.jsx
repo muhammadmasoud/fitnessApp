@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
 import 'animate.css';
 import './BMICalculator.css';
 
@@ -13,7 +14,7 @@ const BMICalculator = () => {
   const [bmiCategory, setBmiCategory] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
   useEffect(() => {

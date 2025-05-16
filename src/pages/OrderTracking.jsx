@@ -1,16 +1,17 @@
-import { useState, useEffect, useContext, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Container, Row, Col, ProgressBar, Button, Carousel, Nav, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
-import { AuthContext } from '../context/AuthContext';
 import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './OrderTracking.css';
 import ordertrackingBg from '../assets/images/order-tracking.jpg';
 
 const OrderTracking = () => {
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
   const carouselRef = useRef(null);
   const [orderDetails, setOrderDetails] = useState(null);
   const [trackingProgress, setTrackingProgress] = useState(35); // Initial progress (Processing)

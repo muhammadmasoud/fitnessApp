@@ -1,5 +1,6 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Navigation from './components/Navigation.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -9,38 +10,78 @@ import ScrollHandler from './components/ScrollHandler.jsx';
 import FireAnimation from './components/FireAnimation.jsx';
 import Home from './pages/Home.jsx';
 import AuthenticatedHome from './pages/AuthenticatedHome.jsx';
-import About from './pages/About.jsx';
-import Trainers from './pages/Trainers.jsx';
-import Pricing from './pages/Pricing.jsx';
-import Contact from './pages/Contact.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import Exercises from './pages/Exercises.jsx';
-import Classes from './pages/Classes.jsx';
-import Schedule from './pages/Schedule.jsx';
-import Nutrition from './pages/Nutrition.jsx';
-import BMICalculator from './pages/BMICalculator.jsx';
-import Goals from './pages/Goals.jsx';
-import Progress from './pages/Progress.jsx';
-import Profile from './pages/Profile.jsx';
-import Signup from './pages/Signup.jsx';
-import Login from './pages/Login.jsx';
-import Offers from './pages/Offers.jsx';
-import Programs from './pages/Programs.jsx';
-import Products from './pages/Products.jsx';
-import Cart from './pages/Cart.jsx';
-import Checkout from './pages/Checkout.jsx';
-import OrderTracking from './pages/OrderTracking.jsx';
-import TrackOrderPublic from './pages/TrackOrderPublic.jsx';
-import Wishlist from './pages/Wishlist.jsx';
 
+// Lazy load all other page components
+const About = lazy(() => import('./pages/About.jsx'));
+const Trainers = lazy(() => import('./pages/Trainers.jsx'));
+const Pricing = lazy(() => import('./pages/Pricing.jsx'));
+const Contact = lazy(() => import('./pages/Contact.jsx'));
+const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
+const Exercises = lazy(() => import('./pages/Exercises.jsx'));
+const Classes = lazy(() => import('./pages/Classes.jsx'));
+const Schedule = lazy(() => import('./pages/Schedule.jsx'));
+const Nutrition = lazy(() => import('./pages/Nutrition.jsx'));
+const BMICalculator = lazy(() => import('./pages/BMICalculator.jsx'));
+const Goals = lazy(() => import('./pages/Goals.jsx'));
+const Progress = lazy(() => import('./pages/Progress.jsx'));
+const Profile = lazy(() => import('./pages/Profile.jsx'));
+const Signup = lazy(() => import('./pages/Signup.jsx'));
+const Login = lazy(() => import('./pages/Login.jsx'));
+const Offers = lazy(() => import('./pages/Offers.jsx'));
+const Programs = lazy(() => import('./pages/Programs.jsx'));
+const Products = lazy(() => import('./pages/Products.jsx'));
+const Cart = lazy(() => import('./pages/Cart.jsx'));
+const Checkout = lazy(() => import('./pages/Checkout.jsx'));
+const OrderTracking = lazy(() => import('./pages/OrderTracking.jsx'));
+const TrackOrderPublic = lazy(() => import('./pages/TrackOrderPublic.jsx'));
+const Wishlist = lazy(() => import('./pages/Wishlist.jsx'));
 
-import { AuthProvider, AuthContext } from './context/AuthContext.jsx';
-import { CartProvider } from './context/CartContext.jsx';
-import { WishlistProvider } from './context/WishlistContext.jsx';
+// Import Redux actions and selectors
+import { initializeAuth, selectCurrentUser } from './store/slices/authSlice';
+import { initializeCart } from './store/slices/cartSlice';
+import { initializeWishlist } from './store/slices/wishlistSlice';
+
 import './App.css';
 import './styles/navbar-override.css';
 
+// Loading component for Suspense fallback
+const LoadingFallback = () => {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      color: 'white',
+      fontSize: '1.5rem',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      zIndex: 9999
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <div className="spinner-border text-light" role="status" style={{ width: '3rem', height: '3rem' }}>
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p style={{ marginTop: '1rem' }}>Loading...</p>
+      </div>
+    </div>
+  );
+};
+
 function App() {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+
+  // Initialize Redux state from localStorage on app load
+  useEffect(() => {
+    dispatch(initializeAuth());
+    dispatch(initializeCart());
+    dispatch(initializeWishlist());
+  }, [dispatch]);
+
   const appStyle = {
     margin: 0,
     padding: 0,
@@ -59,13 +100,14 @@ function App() {
     left: 0,
     right: 0,
     zIndex: 1000,
-    transition: 'transform 0.3s ease'
+    transition: 'transform 0.3s ease',
+    transform: 'translateY(0)'
   };
 
   const mainStyle = {
     flex: 1,
     margin: 0,
-    padding: '100px 0 0 0', // Add padding to account for fixed header
+    padding: '100px 0 0 0',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column'
@@ -76,26 +118,6 @@ function App() {
     position: 'relative',
     zIndex: 10
   };
-
-  return (
-    <AuthProvider>
-      <CartProvider>
-        <WishlistProvider>
-          <AppContent
-            appStyle={appStyle}
-            headerStyle={headerStyle}
-            mainStyle={mainStyle}
-            footerStyle={footerStyle}
-          />
-        </WishlistProvider>
-      </CartProvider>
-    </AuthProvider>
-  );
-}
-
-// Create a component that will use the AuthContext
-const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
-  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="app" style={appStyle}>
@@ -128,88 +150,156 @@ const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
         <Layout>
           <PageTransition>
             <Routes>
+              {/* Home and AuthenticatedHome are not lazy loaded for better performance */}
               <Route path="/" element={<Home />} />
               <Route path="/authenticated-home" element={
                 <ProtectedRoute>
                   <AuthenticatedHome />
                 </ProtectedRoute>
               } />
-              <Route path="/about" element={<About />} />
-              <Route path="/trainers" element={<Trainers />} />
-              <Route path="/offers" element={<Offers />} />
-              <Route path="/programs" element={<Programs />} />
-              <Route path="/products" element={<Products />} />
+
+              {/* All other routes are lazy loaded with individual Suspense wrappers */}
+              <Route path="/about" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <About />
+                </Suspense>
+              } />
+              <Route path="/trainers" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Trainers />
+                </Suspense>
+              } />
+              <Route path="/offers" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Offers />
+                </Suspense>
+              } />
+              <Route path="/programs" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Programs />
+                </Suspense>
+              } />
+              <Route path="/products" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Products />
+                </Suspense>
+              } />
               <Route path="/cart" element={
                 <ProtectedRoute>
-                  <Cart />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Cart />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/checkout" element={
                 <ProtectedRoute>
-                  <Checkout />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Checkout />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/order-tracking" element={
                 <ProtectedRoute>
-                  <OrderTracking />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <OrderTracking />
+                  </Suspense>
                 </ProtectedRoute>
               } />
-              <Route path="/track-order" element={<TrackOrderPublic />} />
+              <Route path="/track-order" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <TrackOrderPublic />
+                </Suspense>
+              } />
               <Route path="/wishlist" element={
                 <ProtectedRoute>
-                  <Wishlist />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Wishlist />
+                  </Suspense>
                 </ProtectedRoute>
               } />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/pricing" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Pricing />
+                </Suspense>
+              } />
+              <Route path="/contact" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Contact />
+                </Suspense>
+              } />
+              <Route path="/signup" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Signup />
+                </Suspense>
+              } />
+              <Route path="/login" element={
+                <Suspense fallback={<LoadingFallback />}>
+                  <Login />
+                </Suspense>
+              } />
               <Route path="/dashboard" element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Dashboard />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/exercises" element={
                 <ProtectedRoute>
-                  <Exercises />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Exercises />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/classes" element={
                 <ProtectedRoute>
-                  <Classes />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Classes />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/schedule" element={
                 <ProtectedRoute>
-                  <Schedule />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Schedule />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/nutrition" element={
                 <ProtectedRoute>
-                  <Nutrition />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Nutrition />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/bmi-calculator" element={
                 <ProtectedRoute>
-                  <BMICalculator />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <BMICalculator />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/goals" element={
                 <ProtectedRoute>
-                  <Goals />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Goals />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/progress" element={
                 <ProtectedRoute>
-                  <Progress />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Progress />
+                  </Suspense>
                 </ProtectedRoute>
               } />
               <Route path="/profile" element={
                 <ProtectedRoute>
-                  <Profile />
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Profile />
+                  </Suspense>
                 </ProtectedRoute>
               } />
-
             </Routes>
           </PageTransition>
         </Layout>
@@ -219,6 +309,6 @@ const AppContent = ({ appStyle, headerStyle, mainStyle, footerStyle }) => {
       </footer>
     </div>
   );
-};
+}
 
 export default App;

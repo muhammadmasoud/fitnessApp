@@ -1,6 +1,7 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
 import './HoverDropdown.css';
 
 const HoverDropdown = ({ title, items, isActive }) => {
@@ -8,7 +9,7 @@ const HoverDropdown = ({ title, items, isActive }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const dropdownRef = useRef(null);
   const isMobile = window.innerWidth < 992;
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
 
   const handleMouseEnter = () => {

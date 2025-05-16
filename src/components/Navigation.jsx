@@ -1,8 +1,9 @@
-import { useState, useContext, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { CartContext } from '../context/CartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser, logout } from '../store/slices/authSlice';
+import { selectCartCount } from '../store/slices/cartSlice';
 import './Navigation.css';
 import '../pages/DarkNavbar.css';
 import HoverDropdown from './HoverDropdown';
@@ -12,30 +13,37 @@ import LogoAnimation from './LogoAnimation';
 const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentUser, logout } = useContext(AuthContext);
-  const { getCartCount } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const cartCount = useSelector(selectCartCount);
+
   const pagesWithDarkNav = ['/pricing', '/about', '/gallery', '/services', '/offers', '/programs', '/products', '/contact', '/cart', '/checkout', '/wishlist', '/exercises', '/dashboard', '/classes', '/schedule', '/nutrition', '/bmi-calculator'];
   const needsDarkNav = pagesWithDarkNav.includes(location.pathname);
   const [expanded, setExpanded] = useState(false);
 
-  const cartCount = getCartCount();
-
   const handleLogout = () => {
-    logout();
+    dispatch(logout());
     navigate('/');
   };
 
   return (
     <Navbar expand="lg" className={`navbar-custom ${needsDarkNav ? 'pricing-navbar' : ''}`} expanded={expanded} onToggle={(e) => setExpanded(e)}>
       <Container>
+        {/* Logo Section */}
         <Navbar.Brand as={Link} to={currentUser ? "/authenticated-home" : "/"} className="logo">
           <div className="brand-logo">
             <LogoAnimation width={150} height={150} style={{ marginRight: '10px' }} />
             <span className="brand-text">FITNESS</span>
           </div>
         </Navbar.Brand>
+
+        {/* Toggle Button for Mobile */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
+
+
+
+        {/* Main Navigation Links */}
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
             <Nav.Link
               as={Link}
@@ -111,7 +119,11 @@ const Navigation = () => {
               Contact
             </Nav.Link>
           </Nav>
+
+
         </Navbar.Collapse>
+
+        {/* Right Side Actions */}
         <div className="nav-actions">
           {currentUser && (
             <div className="cart-icon-container">

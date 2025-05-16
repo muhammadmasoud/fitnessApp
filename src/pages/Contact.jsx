@@ -1,19 +1,34 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/slices/authSlice';
+import { useForm } from '../hooks/useForm';
+import { useNotification } from '../hooks/useNotification';
+
 import 'animate.css';
 import './Contact.css';
 
 const Contact = () => {
   const [loaded, setLoaded] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
+
+  const {
+    forms,
+    errors,
+    submitting,
+    updateFormField,
+    validateForm,
+    resetForm,
+    setFormSubmitting
+  } = useForm();
+  const { success, error } = useNotification();
+
+  // Get the contact form data from the form context
+  const contactForm = forms.contact;
+  const contactErrors = errors.contact;
+  const isSubmitting = submitting.contact;
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -27,24 +42,35 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    updateFormField('contact', name, value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
-    // Show success message or redirect
-    alert('Thank you for your message! We will get back to you soon.');
+
+    // Validate the form
+    if (!validateForm('contact')) {
+      error('Please fill in all required fields correctly.');
+      return;
+    }
+
+    // Set submitting state
+    setFormSubmitting('contact', true);
+
+    // Simulate API call
+    setTimeout(() => {
+      // Handle form submission logic here
+      console.log('Form submitted:', contactForm);
+
+      // Reset form after submission
+      resetForm('contact');
+
+      // Show success message
+      success('Thank you for your message! We will get back to you soon.');
+
+      // Reset submitting state
+      setFormSubmitting('contact', false);
+    }, 1500);
   };
 
   // Function to handle home link click
@@ -113,36 +139,64 @@ const Contact = () => {
           {/* Right Side - Contact Form */}
           <div className="contact-form-container animate__animated animate__fadeInRight">
             <Form onSubmit={handleSubmit}>
-              <Form.Control
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={contactForm.name}
+                  onChange={handleChange}
+                  isInvalid={!!contactErrors.name}
+                  disabled={isSubmitting}
+                />
+                {contactErrors.name && (
+                  <Form.Control.Feedback type="invalid">
+                    {contactErrors.name}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
 
-              <Form.Control
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={contactForm.email}
+                  onChange={handleChange}
+                  isInvalid={!!contactErrors.email}
+                  disabled={isSubmitting}
+                />
+                {contactErrors.email && (
+                  <Form.Control.Feedback type="invalid">
+                    {contactErrors.email}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
 
-              <Form.Control
-                as="textarea"
-                name="message"
-                placeholder="Message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className="message-textarea"
-              />
+              <Form.Group className="mb-3">
+                <Form.Control
+                  as="textarea"
+                  name="message"
+                  placeholder="Message"
+                  value={contactForm.message}
+                  onChange={handleChange}
+                  isInvalid={!!contactErrors.message}
+                  disabled={isSubmitting}
+                  className="message-textarea"
+                />
+                {contactErrors.message && (
+                  <Form.Control.Feedback type="invalid">
+                    {contactErrors.message}
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
 
-              <Button type="submit" className="submit-btn">
-                Send Message
+              <Button
+                type="submit"
+                className="submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </Form>
           </div>

@@ -1,13 +1,15 @@
-import { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser, logout } from '../store/slices/authSlice';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './AuthenticatedHome.css';
 
 const AuthenticatedHome = () => {
-  const { currentUser, logout } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const statsSectionRef = useRef(null);
@@ -75,7 +77,7 @@ const AuthenticatedHome = () => {
 
 
   const confirmLogout = () => {
-    logout();
+    dispatch(logout());
     navigate('/');
   };
 

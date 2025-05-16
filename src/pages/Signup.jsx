@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Container, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser, selectAuthError, setError } from '../store/slices/authSlice';
 import 'animate.css';
 import './Signup.css';
 
@@ -14,10 +15,10 @@ const Signup = () => {
     agreeTerms: false
   });
   const [validated, setValidated] = useState(false);
-  const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
-  const { register } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const error = useSelector(selectAuthError);
   const navigate = useNavigate();
 
   // Force the form to be visible immediately
@@ -50,25 +51,26 @@ const Signup = () => {
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match. Please try again.');
+      // Use the setError action to set the error message
+      dispatch(setError('Passwords do not match. Please try again.'));
       return;
     }
 
     setIsSubmitting(true);
-    setError('');
 
     try {
-      // Register the user
-      await register({
+      // Register the user using Redux
+      const resultAction = await dispatch(registerUser({
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password
-      });
+      }));
 
-      // Redirect to login page after successful registration
-      navigate('/login');
-    } catch (error) {
-      setError(error.message || 'Failed to register. Please try again.');
+      // Check if registration was successful
+      if (registerUser.fulfilled.match(resultAction)) {
+        // Redirect to login page after successful registration
+        navigate('/login');
+      }
     } finally {
       setIsSubmitting(false);
     }

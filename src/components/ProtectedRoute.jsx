@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { selectCurrentUser, selectAuthLoading } from '../store/slices/authSlice';
 
 const ProtectedRoute = ({ children }) => {
-  const { currentUser, loading } = useContext(AuthContext);
+  const currentUser = useSelector(selectCurrentUser);
+  const loading = useSelector(selectAuthLoading);
 
   // If still loading, show nothing or a loading spinner
   if (loading) {
