@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Nav } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
+import DynamicBackground from '../components/DynamicBackground';
+import 'animate.css';
 import './Schedule.css';
+import scheduleBg from '../assets/images/schedule-bg.jpg';
 
 const Schedule = () => {
   const [loaded, setLoaded] = useState(false);
@@ -13,7 +17,11 @@ const Schedule = () => {
     // Set loaded state after a short delay for animations
     setTimeout(() => {
       setLoaded(true);
-    }, 300);
+    }, 100);
+
+    // Preload the background image
+    const img = new Image();
+    img.src = scheduleBg;
   }, []);
 
   const scheduleData = {
@@ -71,19 +79,12 @@ const Schedule = () => {
   };
 
   return (
-    <div className={`schedule-page ${loaded ? 'loaded' : ''}`}>
-      <div className="schedule-hero">
-        <div className="schedule-hero-content">
-          <h1 className="schedule-title">Class Schedule</h1>
-          <p className="schedule-subtitle">
-            Plan your week with our comprehensive class schedule
-          </p>
-        </div>
-      </div>
-
+    <DynamicBackground imageUrl={scheduleBg} className="schedule-page">
+      <ToastContainer />
       <Container className="schedule-container">
-        <Row className="schedule-description-row">
-          <Col md={12}>
+        <div className="schedule-content">
+          <h1 className="schedule-title animate__animated animate__fadeInDown">CLASS SCHEDULE</h1>
+          <div className="schedule-items-section">
             <div className="schedule-description">
               <h2>Weekly Class Schedule</h2>
               <p>
@@ -91,25 +92,23 @@ const Schedule = () => {
                 We offer a variety of classes throughout the day to accommodate your busy lifestyle.
               </p>
             </div>
-          </Col>
-        </Row>
 
-        <Row className="schedule-content">
-          <Col md={12}>
-            <Nav variant="tabs" className="schedule-tabs">
-              {Object.keys(scheduleData).map((day) => (
-                <Nav.Item key={day}>
-                  <Nav.Link
-                    className={activeDay === day ? 'active' : ''}
-                    onClick={() => setActiveDay(day)}
-                  >
-                    {day.charAt(0).toUpperCase() + day.slice(1)}
-                  </Nav.Link>
-                </Nav.Item>
-              ))}
-            </Nav>
+            <div className="schedule-tabs-container">
+              <Nav variant="tabs" className="schedule-tabs">
+                {Object.keys(scheduleData).map((day) => (
+                  <Nav.Item key={day}>
+                    <Nav.Link
+                      className={activeDay === day ? 'active' : ''}
+                      onClick={() => setActiveDay(day)}
+                    >
+                      {day.charAt(0).toUpperCase() + day.slice(1)}
+                    </Nav.Link>
+                  </Nav.Item>
+                ))}
+              </Nav>
+            </div>
 
-            <div className="schedule-table-container">
+            <div className="schedule-table-container animate__animated animate__fadeIn">
               <Table responsive className="schedule-table">
                 <thead>
                   <tr>
@@ -135,10 +134,10 @@ const Schedule = () => {
                 </tbody>
               </Table>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Container>
-    </div>
+    </DynamicBackground>
   );
 };
 

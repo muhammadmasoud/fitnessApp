@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
+import DynamicBackground from '../components/DynamicBackground';
+import 'animate.css';
 import './Classes.css';
+import classesBg from '../assets/images/classes-bg.jpg';
 
 const Classes = () => {
   const [loaded, setLoaded] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -12,7 +17,19 @@ const Classes = () => {
     // Set loaded state after a short delay for animations
     setTimeout(() => {
       setLoaded(true);
-    }, 300);
+    }, 100);
+
+    // Preload the background image
+    const img = new Image();
+    img.src = classesBg;
+
+    // Add window resize listener
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const classesData = [
@@ -66,60 +83,83 @@ const Classes = () => {
     }
   ];
 
+  // Determine padding based on screen size
+  const getPadding = () => {
+    if (windowWidth <= 768) {
+      return {
+        paddingTop: '250px !important',
+        paddingBottom: '250px !important'
+      };
+    } else if (windowWidth <= 992) {
+      return {
+        paddingTop: '280px !important',
+        paddingBottom: '280px !important'
+      };
+    } else {
+      return {
+        paddingTop: '300px !important',
+        paddingBottom: '300px !important'
+      };
+    }
+  };
+
   return (
-    <div className={`classes-page ${loaded ? 'loaded' : ''}`}>
-      <div className="classes-hero">
-        <div className="classes-hero-content">
-          <h1 className="classes-title">Our Classes</h1>
-          <p className="classes-subtitle">
-            Join our diverse range of fitness classes led by expert instructors
-          </p>
+    <DynamicBackground
+      imageUrl={classesBg}
+      className="classes-page"
+      style={{
+        ...getPadding(),
+        justifyContent: 'flex-start !important',
+        alignItems: 'center !important'
+      }}
+    >
+      <ToastContainer />
+      <div className="classes-spacing-wrapper">
+        <Container className="classes-container">
+          <div className="classes-content">
+            <h1 className="classes-title animate__animated animate__fadeInDown">OUR CLASSES</h1>
+            <div className="classes-items-section">
+              <div className="classes-description">
+                <h2>Find Your Perfect Class</h2>
+                <p>
+                  Whether you&apos;re looking to build strength, improve flexibility, or boost your cardio fitness,
+                  we have a class that&apos;s perfect for you. Our expert instructors will guide you through each
+                  session, ensuring proper form and maximum results.
+                </p>
+              </div>
+
+            <Row className="classes-grid">
+              {classesData.map((fitnessClass) => (
+                <Col key={fitnessClass.id} lg={4} md={6} sm={12} className="class-col animate__animated animate__fadeIn">
+                  <Card className="class-card">
+                    <Card.Body>
+                      <Card.Title className="class-name">{fitnessClass.name}</Card.Title>
+                      <Card.Text className="class-description">{fitnessClass.description}</Card.Text>
+                      <div className="class-details">
+                        <div className="detail-item">
+                          <span className="detail-label">Duration:</span>
+                          <span className="detail-value">{fitnessClass.duration}</span>
+                        </div>
+                        <div className="detail-item">
+                          <span className="detail-label">Intensity:</span>
+                          <span className="detail-value">{fitnessClass.intensity}</span>
+                        </div>
+                        <div className="detail-item">
+                          <span className="detail-label">Instructor:</span>
+                          <span className="detail-value">{fitnessClass.instructor}</span>
+                        </div>
+                      </div>
+                      <button className="book-class-btn">Book Class</button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
         </div>
-      </div>
-
-      <Container className="classes-container">
-        <Row className="classes-description-row">
-          <Col md={12}>
-            <div className="classes-description">
-              <h2>Find Your Perfect Class</h2>
-              <p>
-                Whether you&apos;re looking to build strength, improve flexibility, or boost your cardio fitness,
-                we have a class that&apos;s perfect for you. Our expert instructors will guide you through each
-                session, ensuring proper form and maximum results.
-              </p>
-            </div>
-          </Col>
-        </Row>
-
-        <Row className="classes-grid">
-          {classesData.map((fitnessClass) => (
-            <Col key={fitnessClass.id} lg={4} md={6} sm={12} className="class-col">
-              <Card className="class-card">
-                <Card.Body>
-                  <Card.Title className="class-name">{fitnessClass.name}</Card.Title>
-                  <Card.Text className="class-description">{fitnessClass.description}</Card.Text>
-                  <div className="class-details">
-                    <div className="detail-item">
-                      <span className="detail-label">Duration:</span>
-                      <span className="detail-value">{fitnessClass.duration}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Intensity:</span>
-                      <span className="detail-value">{fitnessClass.intensity}</span>
-                    </div>
-                    <div className="detail-item">
-                      <span className="detail-label">Instructor:</span>
-                      <span className="detail-value">{fitnessClass.instructor}</span>
-                    </div>
-                  </div>
-                  <button className="book-class-btn">Book Class</button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
       </Container>
-    </div>
+      </div>
+    </DynamicBackground>
   );
 };
 

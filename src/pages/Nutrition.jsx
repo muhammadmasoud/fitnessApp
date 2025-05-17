@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Accordion } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
+import DynamicBackground from '../components/DynamicBackground';
+import 'animate.css';
 import './Nutrition.css';
+import nutritionBg from '../assets/images/nutrition-bg.jpg';
 
 const Nutrition = () => {
   const [loaded, setLoaded] = useState(false);
@@ -12,7 +16,11 @@ const Nutrition = () => {
     // Set loaded state after a short delay for animations
     setTimeout(() => {
       setLoaded(true);
-    }, 300);
+    }, 100);
+
+    // Preload the background image
+    const img = new Image();
+    img.src = nutritionBg;
   }, []);
 
   const nutritionTips = [
@@ -84,19 +92,19 @@ const Nutrition = () => {
   ];
 
   return (
-    <div className={`nutrition-page ${loaded ? 'loaded' : ''}`}>
-      <div className="nutrition-hero">
-        <div className="nutrition-hero-content">
-          <h1 className="nutrition-title">Nutrition Guidance</h1>
-          <p className="nutrition-subtitle">
-            Fuel your body with the right nutrients to maximize your fitness results
-          </p>
-        </div>
-      </div>
-
+    <DynamicBackground
+      imageUrl={nutritionBg}
+      className="nutrition-page"
+      style={{
+        paddingTop: '160px',
+        paddingBottom: '100px',
+        justifyContent: 'flex-start'
+      }}>
+      <ToastContainer />
       <Container className="nutrition-container">
-        <Row className="nutrition-description-row">
-          <Col md={12}>
+        <div className="nutrition-content">
+          <h1 className="nutrition-title animate__animated animate__fadeInDown">NUTRITION GUIDANCE</h1>
+          <div className="nutrition-items-section">
             <div className="nutrition-description">
               <h2>Nutrition is Key to Fitness Success</h2>
               <p>
@@ -105,62 +113,58 @@ const Nutrition = () => {
                 and tools to make informed dietary choices that complement your fitness routine.
               </p>
             </div>
-          </Col>
-        </Row>
 
-        <Row className="nutrition-tips-row">
-          <Col md={12}>
-            <h3 className="section-title">Nutrition Tips</h3>
-            <Accordion defaultActiveKey="0" className="nutrition-accordion">
-              {nutritionTips.map((tip, index) => (
-                <Accordion.Item eventKey={index.toString()} key={tip.id}>
-                  <Accordion.Header>{tip.title}</Accordion.Header>
-                  <Accordion.Body>{tip.content}</Accordion.Body>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </Col>
-        </Row>
-
-        <Row className="meal-plans-row">
-          <Col md={12}>
-            <h3 className="section-title">Sample Meal Plans</h3>
-          </Col>
-          {mealPlans.map((plan) => (
-            <Col lg={4} md={6} sm={12} key={plan.id} className="meal-plan-col">
-              <Card className="meal-plan-card">
-                <Card.Body>
-                  <Card.Title className="meal-plan-title">{plan.title}</Card.Title>
-                  <Card.Text className="meal-plan-description">{plan.description}</Card.Text>
-                  <div className="meal-list">
-                    {plan.meals.map((meal, index) => (
-                      <div key={index} className="meal-item">
-                        <div className="meal-time">{meal.time}</div>
-                        <div className="meal-description">{meal.description}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <button className="get-plan-btn">Get Full Plan</button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        <Row className="nutrition-consultation-row">
-          <Col md={12}>
-            <div className="consultation-card">
-              <h3>Need Personalized Nutrition Advice?</h3>
-              <p>
-                Book a consultation with one of our nutrition experts to get a customized meal plan
-                tailored to your specific goals, preferences, and dietary requirements.
-              </p>
-              <button className="consultation-btn">Book Consultation</button>
+            <div className="nutrition-tips-container animate__animated animate__fadeIn">
+              <h3 className="section-title">Nutrition Tips</h3>
+              <Accordion defaultActiveKey="0" className="nutrition-accordion">
+                {nutritionTips.map((tip, index) => (
+                  <Accordion.Item eventKey={index.toString()} key={tip.id}>
+                    <Accordion.Header>{tip.title}</Accordion.Header>
+                    <Accordion.Body>{tip.content}</Accordion.Body>
+                  </Accordion.Item>
+                ))}
+              </Accordion>
             </div>
-          </Col>
-        </Row>
+
+            <div className="meal-plans-container">
+              <h3 className="section-title">Sample Meal Plans</h3>
+              <Row className="meal-plans-row">
+                {mealPlans.map((plan) => (
+                  <Col lg={4} md={6} sm={12} key={plan.id} className="meal-plan-col animate__animated animate__fadeIn">
+                    <Card className="meal-plan-card">
+                      <Card.Body>
+                        <Card.Title className="meal-plan-title">{plan.title}</Card.Title>
+                        <Card.Text className="meal-plan-description">{plan.description}</Card.Text>
+                        <div className="meal-list">
+                          {plan.meals.map((meal, index) => (
+                            <div key={index} className="meal-item">
+                              <div className="meal-time">{meal.time}</div>
+                              <div className="meal-description">{meal.description}</div>
+                            </div>
+                          ))}
+                        </div>
+                        <button className="get-plan-btn">Get Full Plan</button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+
+            <div className="consultation-container animate__animated animate__fadeIn">
+              <div className="consultation-card">
+                <h3>Need Personalized Nutrition Advice?</h3>
+                <p>
+                  Book a consultation with one of our nutrition experts to get a customized meal plan
+                  tailored to your specific goals, preferences, and dietary requirements.
+                </p>
+                <button className="consultation-btn">Book Consultation</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
-    </div>
+    </DynamicBackground>
   );
 };
 
