@@ -1,14 +1,14 @@
-.offers-page {
+.offers-page { transform: translateZ(0);
   padding: 120px 0 60px;
   min-height: 100vh;
   background-image: url('../assets/images/offers.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
   position: relative;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: transform; transform: translateY(20px);
+  will-change: transform; transition: opacity 0.5s ease, transform 0.5s ease;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@
 
 .offers-page.loaded {
   opacity: 1;
-  transform: translateY(0);
+  will-change: transform; transform: translateY(0);
 }
 
 .offers-header {
@@ -99,16 +99,16 @@
   transform-style: preserve-3d; /* Ensure 3D effects are preserved */
 }
 
-.special-offer-card {
+.special-offer-card { will-change: transform; transform: translateZ(0);
   background: white;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 30px;
   width: 350px;
   position: relative;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform; transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   opacity: 0;
-  animation: cardFadeIn 0.5s ease forwards;
+  will-change: transform; animation: cardFadeIn 0.5s ease forwards;
   animation-delay: calc(var(--card-index, 0) * 0.2s);
   display: flex;
   flex-direction: column;
@@ -125,14 +125,14 @@
 .special-offer-card:nth-child(3) { --card-index: 3; }
 
 .special-offer-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 116, 217, 0.2);
+  will-change: transform; transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-color: rgba(0, 116, 217, 0.3);
 }
 
 .card-hovered {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 116, 217, 0.2);
+  will-change: transform; transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-color: rgba(0, 116, 217, 0.3);
 }
 
@@ -140,11 +140,11 @@
   position: relative;
   opacity: 0.8;
   border: 2px solid #0074D9;
-  transform: none;
+  will-change: transform; transform: none;
 }
 
 .special-offer-card.current-offer:hover {
-  transform: translateY(-5px);
+  will-change: transform; transform: translateY(-5px);
 }
 
 .current-offer-badge {
@@ -158,10 +158,10 @@
   font-size: 12px;
   font-weight: bold;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.card-glow {
+.card-glow { will-change: transform; transform: translateZ(0);
   position: absolute;
   top: -50%;
   left: -50%;
@@ -173,19 +173,19 @@
     rgba(0, 116, 217, 0) 70%
   );
   opacity: 0;
-  transition: opacity 0.5s ease;
+  will-change: transform; transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: -1;
 }
 
-.special-offer-card:hover .card-glow {
+.special-offer-card:hover .card-glow { will-change: transform; transform: translateZ(0);
   opacity: 1;
-  animation: pulse-glow 2s infinite;
+  will-change: transform; will-change: transform; animation: pulse-glow 2s infinite;
 }
 
-.card-hovered .card-glow {
+.card-hovered .card-glow { will-change: transform; transform: translateZ(0);
   opacity: 1;
-  animation: pulse-glow 2s infinite;
+  will-change: transform; will-change: transform; animation: pulse-glow 2s infinite;
 }
 
 .special-offer-badge {
@@ -198,20 +198,20 @@
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: bold;
-  box-shadow: 0 5px 15px rgba(0, 86, 179, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   z-index: 10;
 }
 
-.special-offer-heading {
+.special-offer-heading { transform: translateZ(0);
   font-size: 1.8rem;
   margin-bottom: 15px;
   color: #1a365d;
   position: static;
-  transform: none;
+  will-change: transform; transform: none;
   min-height: 60px; /* Ensure consistent height for headings */
   display: flex;
   align-items: center;
-  transition: color 0.3s ease;
+  will-change: transform; transition: color 0.3s ease;
 }
 
 .special-offer-card:hover .special-offer-heading {
@@ -224,12 +224,12 @@
   text-shadow: 0 0 1px rgba(0, 86, 179, 0.2);
 }
 
-.special-offer-description {
+.special-offer-description { will-change: transform; transform: translateZ(0);
   color: #666;
   margin-bottom: 20px;
   line-height: 1.6;
   min-height: 80px; /* Ensure consistent height for descriptions */
-  transition: color 0.3s ease;
+  will-change: transform; transition: color 0.3s ease;
 }
 
 .special-offer-price {
@@ -240,26 +240,26 @@
   min-height: 50px; /* Ensure consistent height for price section */
 }
 
-.original-price {
+.original-price { will-change: transform; transform: translateZ(0);
   text-decoration: line-through;
   color: #999;
   font-size: 1.1rem;
-  transition: transform 0.3s ease;
+  will-change: transform; transition: transform 0.3s ease;
 }
 
 .special-offer-card:hover .original-price {
-  transform: scale(0.95);
+  will-change: transform; transform: scale(0.95);
 }
 
 .card-hovered .original-price {
-  transform: scale(0.95);
+  will-change: transform; transform: scale(0.95);
 }
 
-.discounted-price {
+.discounted-price { will-change: transform; transform: translateZ(0);
   font-size: 1.8rem;
   font-weight: bold;
   color: #0056b3;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   position: relative;
 }
 
@@ -275,7 +275,7 @@
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, #0056b3, #00a0ff);
-  transition: width 0.3s ease;
+  will-change: transform; transition: width 0.3s ease;
 }
 
 .special-offer-card:hover .price-animation::before {
@@ -287,18 +287,18 @@
 }
 
 .special-offer-card:hover .discounted-price {
-  transform: scale(1.05);
+  will-change: transform; transform: scale(1.05);
   color: #0074d9;
   text-shadow: 0 0 10px rgba(0, 116, 217, 0.3);
 }
 
 .card-hovered .discounted-price {
-  transform: scale(1.05);
+  will-change: transform; transform: scale(1.05);
   color: #0074d9;
   text-shadow: 0 0 10px rgba(0, 116, 217, 0.3);
 }
 
-.special-offer-button {
+.special-offer-button { will-change: transform; transform: translateZ(0);
   width: 100%;
   padding: 12px;
   background: linear-gradient(135deg, #0056b3, #0074d9);
@@ -307,20 +307,20 @@
   border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   margin-top: auto; /* Push button to bottom of flex container */
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 
-.button-text {
+.button-text { will-change: transform; transform: translateZ(0);
   position: relative;
   z-index: 2;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
-.button-shine {
+.button-shine { will-change: transform; transform: translateZ(0);
   position: absolute;
   top: 0;
   left: -100%;
@@ -332,18 +332,18 @@
     rgba(255, 255, 255, 0.3) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   z-index: 1;
 }
 
 .special-offer-button:hover {
   background: linear-gradient(135deg, #003d82, #0056b3);
-  box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  will-change: transform; transform: translateY(-2px);
 }
 
-.special-offer-button:hover .button-shine {
-  animation: shine 1.5s infinite;
+.special-offer-button:hover .button-shine { will-change: transform; transform: translateZ(0);
+  will-change: transform; will-change: transform; animation: shine 1.5s infinite;
 }
 
 .offers-footer {
@@ -366,7 +366,7 @@
 @keyframes titleFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    will-change: transform; transform: translateY(20px);
   }
   100% {
     opacity: 1;
@@ -377,7 +377,7 @@
 @keyframes cardFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(30px) rotateX(10deg);
+    will-change: transform; transform: translateY(30px) rotateX(10deg);
   }
   100% {
     opacity: 1;
@@ -400,7 +400,7 @@
 @keyframes pulse-glow {
   0% {
     opacity: 0.3;
-    transform: scale(0.95);
+    will-change: transform; transform: scale(0.95);
   }
   50% {
     opacity: 0.5;
@@ -414,7 +414,7 @@
 
 @keyframes float {
   0% {
-    transform: translateY(0);
+    will-change: transform; transform: translateY(0);
   }
   50% {
     transform: translateY(-5px);

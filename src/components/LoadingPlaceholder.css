@@ -17,7 +17,7 @@
   margin-bottom: 10px;
 }
 
-.loading-shimmer {
+.loading-shimmer { will-change: transform; transform: translateZ(0);
   position: absolute;
   top: 0;
   left: 0;
@@ -29,12 +29,12 @@
     rgba(255, 255, 255, 0.05) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  animation: shimmer 1.5s infinite;
+  will-change: transform; will-change: transform; animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
   0% {
-    transform: translateX(-100%);
+    will-change: transform; transform: translateX(-100%);
   }
   100% {
     transform: translateX(100%);

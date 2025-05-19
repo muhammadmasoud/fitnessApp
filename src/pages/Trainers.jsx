@@ -4,11 +4,11 @@ import './Trainers.css';
 import LoadingPlaceholder from '../components/LoadingPlaceholder';
 
 // Import images normally to avoid issues with lazy loading images
-import swimminginstructor from '../assets/images/swimming-instructor.jpg';
-import yogainstructor from '../assets/images/yoga-instructor.jpg';
-import crossfit from '../assets/images/crossfit-coach.jpg';
-import nutrition from '../assets/images/nutrition-coach.jpg';
-import Pilates from '../assets/images/Pilates-Instructor.jpg';
+import swimminginstructor from '../assets/optimized/swimming-instructor.jpg';
+import yogainstructor from '../assets/optimized/yoga-instructor.jpg';
+import crossfit from '../assets/optimized/crossfit-coach.jpg';
+import nutrition from '../assets/optimized/nutrition-coach.jpg';
+import Pilates from '../assets/optimized/Pilates-Instructor.jpg';
 
 const Trainers = () => {
   const [loaded, setLoaded] = useState(false);

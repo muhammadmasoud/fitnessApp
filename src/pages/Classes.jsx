@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './Classes.css';
-import classesBg from '../assets/images/classes-bg.jpg';
+import classesBg from '../assets/optimized/classes-bg.jpg';
 
 const Classes = () => {
   const [loaded, setLoaded] = useState(false);

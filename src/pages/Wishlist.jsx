@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import './Wishlist.css';
 import '../styles/toast-custom.css';
-import wishlistBg from '../assets/images/wishlist-bg.jpg';
+import wishlistBg from '../assets/optimized/wishlist-bg.jpg';
 
 const Wishlist = () => {
   const [loaded, setLoaded] = useState(false);

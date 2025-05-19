@@ -1,28 +1,23 @@
-/* Dashboard Main Styles */
+/* Dashboard.css */
 :root {
-  --primary-color: #4F46E5;
-  --secondary-color: #818CF8;
-  --cardio-color: #FFD700;
-  --strength-color: #90EE90;
-  --yoga-color: #87CEFA;
-  --text-primary: #333;
-  --text-secondary: #777;
-  --text-muted: #999;
-  --bg-light: #f8f9fa;
-  --card-bg: #ffffff;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --border-radius: 12px;
-  --border-color: #eaeaea;
-  --gradient-blue: linear-gradient(90deg, rgba(0, 116, 217, 0.8), rgba(127, 219, 255, 0.8));
+  --primary-color: #7b68ee;
+  --secondary-color: #6c757d;
+  --accent-color: #ff6b6b;
+  --dark-bg: #1a1a1a;
+  --light-bg: #f8f9fa;
+  --dashboard-bg: #1e1e2f;
+  --card-bg: #27293d;
+  --card-border: #2c2c43;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --chart-primary: #7b68ee;
+  --chart-secondary: #00f2c3;
+  --chart-tertiary: #fd5d93;
+  --chart-quaternary: #00d6b4;
+  --progress-primary: #e14eca;
+  --progress-secondary: #00f2c3;
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: #f5f7fb;
-  color: var(--text-primary);
-}
-
-/* Dashboard Page Styles */
 .dashboard-page {
   min-height: 100vh;
   position: relative;
@@ -31,613 +26,326 @@ body {
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  padding: 120px 0 60px;
+  opacity: 1; /* Start visible for better performance */
+  background-color: var(--dashboard-bg);
+  color: var(--text-primary);
+  /* Use will-change to optimize rendering */
+  will-change: transform;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
 }
 
-.dashboard-page.loaded {
-  opacity: 1;
+/* Only use transition when JavaScript explicitly adds the loaded class */
+.dashboard-page:not(.loaded) {
+  opacity: 0;
+}
+
+.dashboard-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('../assets/images/dashboard.jpg');
+  background-size: cover;
+  background-position: center;
+  /* Remove fixed attachment for better performance */
+  background-attachment: scroll;
+  z-index: -1;
+  /* Use will-change to optimize rendering */
+  will-change: transform;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
 }
 
 .dashboard-container {
-  padding: 20px;
+  width: 100%;
   max-width: 1400px;
+  padding: 20px;
   margin: 0 auto;
-  position: relative;
-  z-index: 10;
 }
 
-/* Header Styles */
-.dashboard-header {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.dashboard-header h1 {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: white;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-}
-
-.dashboard-header p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 16px;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Grid Layout System */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
   gap: 20px;
-  width: 100%;
+  margin-top: 20px;
 }
 
-/* Grid Sections */
-.grid-section {
-  margin-bottom: 30px;
-}
-
-.welcome-stats-section {
-  grid-column: span 5;
-}
-
-.activity-progress-section {
-  grid-column: span 7;
-}
-
-/* Section Container Styles (like Cart page) */
-.section-container {
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
+.dashboard-card {
+  background-color: var(--card-bg);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.section-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: var(--gradient-blue);
-}
-
-.cart-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-  text-align: center;
-  position: relative;
-  z-index: 20;
-  background: linear-gradient(90deg, rgba(0, 116, 217, 0.8), rgba(127, 219, 255, 0.8));
-  padding: 0.5rem 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  width: fit-content;
-  white-space: nowrap;
-  margin-top: 0;
-  margin-bottom: 2rem;
-}
-
-.section-content {
-  width: 100%;
-}
-
-/* Welcome & Quick Stats Section */
-.welcome-stats-section {
-  margin-bottom: 20px;
-}
-
-/* Compact Container for Quick Stats */
-.compact-container {
-  padding: 1.5rem !important;
-  width: 100% !important;
-  height: 100%;
-}
-
-/* Using cart-title instead */
-
-.compact-stats-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-}
-
-/* Activity Progress Section */
-.activity-progress-section {
-  margin-bottom: 20px;
-}
-
-/* Card Styles */
-.stat-card {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  width: 100%;
-}
-
-/* Calories Card Styles */
-.calories-card {
-  background-color: white;
-  border-radius: 25px;
-  border: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  color: #333;
-  width: 100%;
-  height: 100%;
+  /* Simplify box-shadow for better performance */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Use will-change to optimize rendering */
+  will-change: transform;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
 }
 
-.calories-header {
+.dashboard-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.calories-date {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-}
-
-.calories-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
-
-.calories-circle-container {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  margin: 0 auto 25px;
-}
-
-.calories-circle-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.calories-circle-bg {
-  fill: none;
-  stroke: #e0e0e0;
-  stroke-width: 12;
-}
-
-.calories-circle-value {
-  fill: none;
-  stroke: #90EE90;
-  stroke-width: 12;
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: center;
-  transition: stroke-dashoffset 0.5s ease;
-}
-
-.calories-circle-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.calories-value {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.calories-label {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
-  margin-top: 5px;
-}
-
-.nutrition-bars {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 15px;
-  padding: 0;
-  width: 100%;
-}
-
-.nutrition-item {
-  flex: 0 0 auto;
-  text-align: center;
-  width: 60px;
-  margin: 0 auto;
-}
-
-.nutrition-label {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nutrition-value {
-  font-size: 12px;
-  color: #999;
-  margin-left: 5px;
-  font-weight: normal;
-}
-
-.nutrition-progress {
-  height: 6px;
-  background-color: #e0e0e0;
-  border-radius: 3px;
-  margin-top: 5px;
-  position: relative;
-  width: 45px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.nutrition-progress-value {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background-color: #90EE90;
-  border-radius: 3px;
-}
-
-.stat-card .card-body {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  position: relative;
-}
-
-.stat-icon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  border-radius: 12px;
-  margin-right: 15px;
-  color: white;
-  background-color: rgba(79, 70, 229, 0.3);
-}
-
-.stat-data {
-  flex: 1;
-}
-
-.stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 2px;
-  display: flex;
-  align-items: center;
-  color: white;
-}
-
-.stat-unit {
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
-  margin-left: 5px;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.stat-gauge {
-  width: 100%;
-  height: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-.stat-gauge-inner {
-  height: 100%;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-}
-
-.stat-chart {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-}
-
-/* Activity Progress Styles */
-.card-title {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 0;
-  color: white;
-}
-
-.date-label {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.daily-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.daily-stat {
-  width: 100%;
-}
-
-.daily-stat-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 5px;
-}
-
-.daily-stat-value {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: white;
-}
-
-.progress-bar-container {
-  width: 100%;
-  margin-top: 5px;
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 8px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background-color: var(--primary-color);
-  border-radius: 4px;
-}
-
-.activity-chart {
-  height: 180px;
   margin-bottom: 15px;
 }
 
-.date-selector {
-  margin-top: 15px;
+.dashboard-card-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
-.date-range {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+.dashboard-card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
 }
 
-.date-arrows {
+.dashboard-card-content {
+  flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.date-arrows svg {
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.7);
-  transition: color 0.2s;
+/* Card sizes */
+.card-today-activity {
+  grid-column: span 1;
+  grid-row: span 1;
 }
 
-.date-arrows svg:hover {
-  color: white;
+.card-water-balance {
+  grid-column: span 1;
+  grid-row: span 1;
 }
 
-/* Stats Cards */
-.stats-cards {
-  margin-bottom: 10px;
+.card-sleep {
+  grid-column: span 1;
+  grid-row: span 1;
 }
 
-.stat-card {
+.card-weight {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.card-steps-activity {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.card-gym {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.card-stretching {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.card-meal {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.card-calories {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.card-meditation {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+/* Chart containers */
+.chart-container {
+  width: 100%;
   height: 100%;
-  background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  border: none;
-  box-shadow: var(--card-shadow);
-  margin-bottom: 20px;
-  overflow: hidden;
+  min-height: 100px;
+  position: relative;
+  /* Use will-change to optimize rendering */
+  will-change: transform;
+  /* Use hardware acceleration */
+  transform: translateZ(0);
 }
 
-.stat-card .card-body {
+/* Progress circles */
+.progress-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.progress-circle-value {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.progress-circle-label {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Workout list */
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.workout-item {
   display: flex;
   align-items: center;
-  padding: 15px;
-  position: relative;
+  gap: 10px;
 }
 
-.stat-icon {
+.workout-icon {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  border-radius: 12px;
-  margin-right: 15px;
-  color: var(--primary-color);
-  background-color: rgba(79, 70, 229, 0.1);
+  background-color: rgba(123, 104, 238, 0.2);
 }
 
-.stat-data {
+.workout-details {
   flex: 1;
 }
 
-.stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 2px;
+.workout-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.workout-calories {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Meal list */
+.meal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meal-name {
+  font-size: 0.9rem;
+}
+
+.meal-amount {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.meal-calories {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--chart-tertiary);
+}
+
+/* Meditation list */
+.meditation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.meditation-item {
   display: flex;
   align-items: center;
+  gap: 10px;
+  padding: 8px 0;
 }
 
-.stat-unit {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text-muted);
-  margin-left: 5px;
+.meditation-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(253, 93, 147, 0.2);
+  color: var(--chart-tertiary);
 }
 
-.stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
+.meditation-details {
+  flex: 1;
 }
 
-.stat-gauge {
-  width: 100%;
-  height: 4px;
-  background-color: #f0f0f0;
-  border-radius: 2px;
-  margin-top: 10px;
-  overflow: hidden;
+.meditation-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
 }
 
-.stat-gauge-inner {
-  height: 100%;
-  background-color: var(--primary-color);
-  border-radius: 2px;
+.meditation-duration {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
-.stat-chart {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
+.play-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--chart-tertiary);
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .dashboard-grid {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 992px) {
-  .cart-title {
-    font-size: 1.3rem;
-    padding: 0.4rem 1.5rem;
-  }
-
-  .compact-stats-cards {
-    gap: 8px;
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .welcome-stats-section,
-  .activity-progress-section {
-    grid-column: span 2;
-  }
-
-  .section-container {
-    padding: 1.5rem;
-  }
-
-  .compact-container {
-    padding: 1rem !important;
-  }
-
-  .cart-title {
-    font-size: 1.1rem;
-    padding: 0.3rem 1rem;
-  }
-
-  .compact-stats-cards {
-    gap: 10px;
-  }
-
-  .stat-card {
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .stat-card .card-body {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .stat-icon {
-    margin-right: 15px;
-    margin-bottom: 0;
-  }
-
-  .stat-chart {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-  }
-
-  .daily-stats {
-    gap: 10px;
-  }
-}
-
-@media (max-width: 576px) {
-  .dashboard-grid {
     grid-template-columns: 1fr;
   }
 
-  .welcome-stats-section,
-  .activity-progress-section {
+  .card-steps-activity,
+  .card-meal {
     grid-column: span 1;
-  }
-
-  .dashboard-container {
-    padding: 10px;
-  }
-
-  .section-container {
-    padding: 1rem;
-  }
-
-  .cart-title {
-    font-size: 1rem;
-    padding: 0.3rem 0.8rem;
   }
 }

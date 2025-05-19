@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './About.css';
-import fitness from '../assets/images/fitness.jpg';
+import fitness from '../assets/optimized/fitness.jpg';
 
 const About = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);

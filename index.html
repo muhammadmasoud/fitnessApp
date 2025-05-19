@@ -30,6 +30,27 @@
     <link rel="manifest" href="./manifest.json" />
     <!-- Add Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="./src/assets/images/logo.gif" as="image" type="image/gif">
+    <link rel="preload" href="./src/index.jsx" as="script" type="module">
+    <link rel="preload" href="./src/App.jsx" as="script" type="module">
+
+    <!-- Resource hints for external resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Prefetch common navigation paths -->
+    <link rel="prefetch" href="./src/pages/Dashboard.jsx" as="script" type="module">
+    <link rel="prefetch" href="./src/pages/Profile.jsx" as="script" type="module">
+    <link rel="prefetch" href="./src/pages/Classes.jsx" as="script" type="module">
+
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="./src/App.css" as="style">
+    <link rel="preload" href="./src/components/Navigation.css" as="style">
+
     <title>FITNESS</title>
   </head>
   <body>

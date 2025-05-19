@@ -5,6 +5,21 @@ import { Provider } from 'react-redux';
 import store from './store';
 import App from './App.jsx';
 
+// Service Worker Registration
+const registerServiceWorker = () => {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(error => {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
+};
+
 import { ModalProvider } from './contexts/ModalContext';
 import { FormProvider } from './contexts/FormContext';
 import { NotificationProvider } from './contexts/NotificationContext';
@@ -32,3 +47,8 @@ root.render(
     </BrowserRouter>
   </Provider>
 );
+
+// Register service worker for production
+if (process.env.NODE_ENV === 'production') {
+  registerServiceWorker();
+}

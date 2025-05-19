@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'animate.css';
 import './Cart.css';
 import '../styles/toast-custom.css';
-import cartBg from '../assets/images/cart-bg.jpg';
+import cartBg from '../assets/optimized/cart-bg.jpg';
 
 const Cart = () => {
   const dispatch = useDispatch();

@@ -9,7 +9,7 @@ import DynamicBackground from '../components/DynamicBackground';
 import './Profile.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/toast-custom.css';
-import profileBackground from '../assets/images/profile.jpg';
+import profileBackground from '../assets/optimized/profile.jpg';
 
 const Profile = () => {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ import { countryCodes } from '../data/countryCodes';
 import { validatePhoneForCountry, getPhoneLengthInfo } from '../utils/phoneValidation';
 import 'animate.css';
 import './Checkout.css';
-import checkoutBg from '../assets/images/checkout-bg.jpg';
+import checkoutBg from '../assets/optimized/checkout-bg.jpg';
 
 const Checkout = () => {
   const navigate = useNavigate();

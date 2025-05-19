@@ -25,22 +25,22 @@
 }
 
 /* Brand text color - using the same styling as home page */
-.pricing-navbar .brand-text {
+.pricing-navbar .brand-text { transform: translateZ(0);
   color: white !important;
   font-weight: 800 !important;
   font-size: 3rem !important;
-  text-transform: uppercase !important;
+  text-will-change: transform; transform: uppercase !important;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   letter-spacing: 2px !important;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 116, 217, 0.3) !important;
   position: relative !important;
-  animation: glow 2s ease-in-out infinite alternate !important;
+  will-change: transform; will-change: transform; animation: glow 2s ease-in-out infinite alternate !important;
   background: linear-gradient(90deg, #ffffff, #0074D9, #ffffff) !important;
   background-size: 200% auto !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
 }
 
 /* Define the glow animation for the brand text */
@@ -57,7 +57,7 @@
 
 /* Hover effect for brand text */
 .pricing-navbar .brand-logo:hover .brand-text {
-  transform: scale(1.05) !important;
+  will-change: transform; transform: scale(1.05) !important;
   letter-spacing: 2.5px !important;
 }
 
@@ -72,7 +72,7 @@
 
 .pricing-navbar .custom-dropdown .dropdown-toggle:hover {
   color: #ffffff !important;
-  transform: translateY(-3px) !important;
+  will-change: transform; transform: translateY(-3px) !important;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
 }
 
@@ -81,36 +81,36 @@
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
 }
 
-.pricing-navbar .custom-dropdown .dropdown-menu {
+.pricing-navbar .custom-dropdown .dropdown-menu { will-change: transform; transform: translateZ(0);
   background-color: rgba(0, 0, 0, 0.9) !important;
   border: none !important;
   border-radius: 8px !important;
   margin-top: 10px !important;
   padding: 0.5rem 0 !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
-  animation: fadeIn 0.3s ease !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  will-change: transform; animation: fadeIn 0.3s ease !important;
 }
 
-.pricing-navbar .custom-dropdown .dropdown-item {
+.pricing-navbar .custom-dropdown .dropdown-item { will-change: transform; transform: translateZ(0);
   color: white !important;
   padding: 0.5rem 1.5rem !important;
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
 }
 
 .pricing-navbar .custom-dropdown .dropdown-item:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
   color: #ffffff !important;
-  transform: translateX(5px) !important;
+  will-change: transform; transform: translateX(5px) !important;
 }
 
 /* Define fadeIn animation for dropdown menu */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    will-change: transform; transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    will-change: transform; transform: translateY(0);
   }
 }

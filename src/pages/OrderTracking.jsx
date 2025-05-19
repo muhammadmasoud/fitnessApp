@@ -8,7 +8,7 @@ import CustomToast from '../components/CustomToast';
 import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './OrderTracking.css';
-import ordertrackingBg from '../assets/images/order-tracking.jpg';
+import ordertrackingBg from '../assets/optimized/order-tracking.jpg';
 
 const OrderTracking = () => {
   const currentUser = useSelector(selectCurrentUser);

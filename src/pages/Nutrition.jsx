@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './Nutrition.css';
-import nutritionBg from '../assets/images/nutrition-bg.jpg';
+import nutritionBg from '../assets/optimized/nutrition-bg.jpg';
 
 const Nutrition = () => {
   const [loaded, setLoaded] = useState(false);

@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './Schedule.css';
-import scheduleBg from '../assets/images/schedule-bg.jpg';
+import scheduleBg from '../assets/optimized/schedule-bg.jpg';
 
 const Schedule = () => {
   const [loaded, setLoaded] = useState(false);

@@ -7,7 +7,7 @@ import DynamicBackground from '../components/DynamicBackground';
 import 'animate.css';
 import './OrderTracking.css';
 import './TrackOrderPublic.css';
-import trackingBg from '../assets/images/order-tracking.jpg';
+import trackingBg from '../assets/optimized/order-tracking.jpg';
 
 const TrackOrderPublic = () => {
   const carouselRef = useRef(null);

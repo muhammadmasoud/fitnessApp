@@ -3,7 +3,7 @@
   position: fixed !important;
   top: 50% !important;
   right: 20px !important;
-  transform: translateY(-50%) !important;
+  will-change: transform; transform: translateY(-50%) !important;
   width: 320px !important;
 }
 

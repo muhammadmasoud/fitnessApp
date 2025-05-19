@@ -33,7 +33,7 @@
   gap: 20px !important;
 }
 
-.announcement-social-icon {
+.announcement-social-icon { will-change: transform; transform: translateZ(0);
   color: white !important;
   text-decoration: none !important;
   display: flex !important;
@@ -43,7 +43,7 @@
   height: 40px !important;
   border-radius: 4px !important;
   background-color: transparent !important;
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
 }
 
 .announcement-social-icon:hover {

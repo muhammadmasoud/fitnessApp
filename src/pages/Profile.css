@@ -21,14 +21,14 @@
   opacity: 1;
 }
 
-.profile-page.loaded .profile-container {
-  animation: fadeInUp 0.8s ease-out forwards;
+.profile-page.loaded .profile-container { will-change: transform; transform: translateZ(0);
+  will-change: transform; animation: fadeInUp 0.8s ease-out forwards;
 }
 
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    will-change: transform; transform: translateY(30px);
   }
   100% {
     opacity: 1;
@@ -40,7 +40,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  text-transform: uppercase;
+  text-will-change: transform; transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
   text-align: center;
@@ -49,7 +49,7 @@
   background: linear-gradient(90deg, rgba(0, 116, 217, 0.8), rgba(127, 219, 255, 0.8));
   padding: 0.5rem 2rem;
   border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   width: fit-content;
   white-space: nowrap;
   margin-top: 0;
@@ -72,7 +72,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   position: relative;
   overflow: hidden;
@@ -117,7 +117,7 @@
   overflow: hidden;
   background-color: #f0f0f0;
   border: 4px solid white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .profile-image {
@@ -138,7 +138,7 @@
   background-color: #e9ecef;
 }
 
-.profile-image-overlay {
+.profile-image-overlay { will-change: transform; transform: translateZ(0);
   position: absolute;
   top: 0;
   left: 0;
@@ -150,7 +150,7 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  will-change: transform; transition: opacity 0.3s ease;
   color: white;
 }
 
@@ -217,12 +217,12 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.profile-tabs .nav-link {
+.profile-tabs .nav-link { will-change: transform; transform: translateZ(0);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
   border: none;
   padding: 10px 20px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .profile-tabs .nav-link:hover {
@@ -252,7 +252,7 @@
   background-color: rgba(0, 0, 0, 0.3);
   border-color: rgba(127, 219, 255, 0.5);
   color: white;
-  box-shadow: 0 0 0 0.25rem rgba(127, 219, 255, 0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .profile-form .form-control:disabled {
@@ -265,17 +265,17 @@
   font-weight: 500;
 }
 
-.profile-save-btn {
+.profile-save-btn { will-change: transform; transform: translateZ(0);
   padding: 12px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   background-color: rgba(0, 116, 217, 0.8);
   border: none;
 }
 
 .profile-save-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 116, 217, 1);
 }
 
@@ -284,7 +284,7 @@
   width: 100%;
 }
 
-.settings-card {
+.settings-card { will-change: transform; transform: translateZ(0);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -292,13 +292,13 @@
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .settings-card:hover {
   background-color: rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
   border-color: rgba(127, 219, 255, 0.3);
 }
 
@@ -367,16 +367,16 @@
   gap: 10px;
 }
 
-.empty-icon {
+.empty-icon { will-change: transform; transform: translateZ(0);
   font-size: 50px;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 20px;
-  animation: pulse 2s infinite;
+  will-change: transform; will-change: transform; animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
+    will-change: transform; transform: scale(1);
     opacity: 0.7;
   }
   50% {
@@ -455,18 +455,18 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.subscription-info-card {
+.subscription-info-card { will-change: transform; transform: translateZ(0);
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 25px;
   margin-bottom: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .subscription-info-card:hover {
   background-color: rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
   border-color: rgba(127, 219, 255, 0.3);
 }
 
@@ -479,7 +479,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.subscription-icon {
+.subscription-icon { will-change: transform; transform: translateZ(0);
   font-size: 24px;
   color: #FFD700;
   width: 50px;
@@ -489,16 +489,16 @@
   justify-content: center;
   background-color: rgba(255, 215, 0, 0.1);
   border-radius: 50%;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
-.special-offer-icon {
+.special-offer-icon { will-change: transform; transform: translateZ(0);
   color: #FF6B6B;
   background-color: rgba(255, 107, 107, 0.1);
-  animation: pulse 2s infinite;
+  will-change: transform; will-change: transform; animation: pulse 2s infinite;
 }
 
-.special-offer-badge {
+.special-offer-badge { will-change: transform; transform: translateZ(0);
   display: inline-block;
   font-size: 12px;
   font-weight: 600;
@@ -508,9 +508,9 @@
   border-radius: 10px;
   margin-left: 10px;
   vertical-align: middle;
-  box-shadow: 0 2px 5px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  will-change: transform; transition: opacity 0.3s ease;
 }
 
 /* Show badge when hovering over the entire subscription card */

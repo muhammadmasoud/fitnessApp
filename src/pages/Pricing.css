@@ -13,7 +13,7 @@
   background-image: url('../assets/images/pricing.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg);
+    will-change: transform; transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
@@ -67,7 +67,7 @@
   color: #0074D9;
 }
 
-.pricing-title {
+.pricing-title { transform: translateZ(0);
   font-size: 3.5rem;
   font-weight: 800;
   letter-spacing: 2px;
@@ -77,8 +77,8 @@
   position: relative;
   display: inline-block;
   opacity: 0;
-  transform: translateY(20px);
-  animation: titleFadeIn 1s ease-out forwards, titlePulse 3s ease-in-out infinite alternate;
+  will-change: transform; transform: translateY(20px);
+  will-change: transform; will-change: transform; animation: titleFadeIn 1s ease-out forwards, titlePulse 3s ease-in-out infinite alternate;
 }
 
 @keyframes titlePulse {
@@ -93,7 +93,7 @@
 @keyframes titleFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.9);
+    will-change: transform; transform: translateY(20px) scale(0.9);
     filter: blur(10px);
   }
   100% {
@@ -117,13 +117,13 @@
   position: absolute;
   bottom: -10px;
   left: 50%;
-  transform: translateX(-50%);
+  will-change: transform; transform: translateX(-50%);
   width: 0;
   height: 4px;
   background: linear-gradient(90deg, #fff, #0088ff, #fff);
   border-radius: 2px;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
-  animation: lineGrow 1.2s ease-out forwards 0.5s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  will-change: transform; animation: lineGrow 1.2s ease-out forwards 0.5s;
 }
 
 @keyframes lineGrow {
@@ -148,37 +148,37 @@
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   backdrop-filter: blur(5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.pricing-card {
+.pricing-card { transform: translateZ(0);
   flex: 1;
   min-width: 280px;
   max-width: 350px;
   background-color: var(--light-color);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.4s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  will-change: transform; transition: all 0.4s ease;
   position: relative;
   z-index: 1;
-  transform: translateY(0);
+  will-change: transform; transform: translateY(0);
 }
 
 .pricing-card:hover {
-  transform: translateY(-15px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  will-change: transform; transform: translateY(-15px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .pricing-card.featured {
   background-color: var(--dark-color);
   color: var(--light-color);
-  transform: translateY(-10px) scale(1.05);
+  will-change: transform; transform: translateY(-10px) scale(1.05);
   z-index: 2;
 }
 
 .pricing-card.featured:hover {
-  transform: translateY(-25px) scale(1.05);
+  will-change: transform; transform: translateY(-25px) scale(1.05);
 }
 
 .pricing-card.current-subscription {
@@ -198,7 +198,7 @@
   font-size: 12px;
   font-weight: bold;
   z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .pricing-card-header {
@@ -264,7 +264,7 @@
   color: var(--primary-color);
 }
 
-.pricing-btn {
+.pricing-btn { will-change: transform; transform: translateZ(0);
   display: block;
   width: 100%;
   padding: 12px;
@@ -276,14 +276,14 @@
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .pricing-btn:hover {
   background: linear-gradient(45deg, #0056b3, var(--primary-color));
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+  will-change: transform; transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .pricing-card.featured .pricing-btn {
@@ -293,24 +293,24 @@
 
 .pricing-card.featured .pricing-btn:hover {
   background: linear-gradient(45deg, #e6e6e6, #fff);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    will-change: transform; transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    will-change: transform; transform: translateY(0);
   }
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
+    will-change: transform; transform: scale(1);
   }
   50% {
     transform: scale(1.05);
@@ -331,7 +331,7 @@
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0);
+    will-change: transform; transform: translateY(0);
   }
   50% {
     transform: translateY(-10px);
@@ -340,7 +340,7 @@
 
 @keyframes checkmarkPop {
   0% {
-    transform: scale(0);
+    will-change: transform; transform: scale(0);
     opacity: 0;
   }
   70% {
@@ -352,8 +352,8 @@
   }
 }
 
-.pricing-card {
-  animation: fadeIn 0.6s ease-out forwards;
+.pricing-card { will-change: transform; transform: translateZ(0);
+  will-change: transform; animation: fadeIn 0.6s ease-out forwards;
 }
 
 .pricing-card:nth-child(1) {
@@ -368,22 +368,22 @@
   animation-delay: 0.6s;
 }
 
-.pricing-card.featured {
-  animation: fadeIn 0.6s ease-out forwards, float 2s ease-in-out infinite 1s;
+.pricing-card.featured { will-change: transform; transform: translateZ(0);
+  will-change: transform; will-change: transform; animation: fadeIn 0.6s ease-out forwards, float 2s ease-in-out infinite 1s;
 }
 
-.feature-icon {
+.feature-icon { will-change: transform; transform: translateZ(0);
   opacity: 0;
-  animation: checkmarkPop 0.5s ease forwards;
+  will-change: transform; animation: checkmarkPop 0.5s ease forwards;
 }
 
-.feature-item:nth-child(1) .feature-icon { animation-delay: 0.7s; }
-.feature-item:nth-child(2) .feature-icon { animation-delay: 0.8s; }
-.feature-item:nth-child(3) .feature-icon { animation-delay: 0.9s; }
-.feature-item:nth-child(4) .feature-icon { animation-delay: 1.0s; }
-.feature-item:nth-child(5) .feature-icon { animation-delay: 1.1s; }
-.feature-item:nth-child(6) .feature-icon { animation-delay: 1.2s; }
-.feature-item:nth-child(7) .feature-icon { animation-delay: 1.3s; }
+.feature-item:nth-child(1) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 0.7s; }
+.feature-item:nth-child(2) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 0.8s; }
+.feature-item:nth-child(3) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 0.9s; }
+.feature-item:nth-child(4) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 1.0s; }
+.feature-item:nth-child(5) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 1.1s; }
+.feature-item:nth-child(6) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 1.2s; }
+.feature-item:nth-child(7) .feature-icon { will-change: transform; transform: translateZ(0); animation-delay: 1.3s; }
 
 .pricing-btn {
   position: relative;
@@ -403,12 +403,12 @@
     rgba(255, 255, 255, 0.2),
     transparent
   );
-  transition: all 0.5s ease;
+  will-change: transform; transition: all 0.5s ease;
 }
 
 .pricing-btn:hover::before {
   left: 100%;
-  animation: shine 1.5s infinite;
+  will-change: transform; will-change: transform; animation: shine 1.5s infinite;
 }
 
 .featured .pricing-btn::before {
@@ -435,11 +435,11 @@
   }
 
   .pricing-card.featured {
-    transform: scale(1.05);
+    will-change: transform; transform: scale(1.05);
   }
 
   .pricing-card.featured:hover {
-    transform: translateY(-15px) scale(1.05);
+    will-change: transform; transform: translateY(-15px) scale(1.05);
   }
 
   .pricing-section {

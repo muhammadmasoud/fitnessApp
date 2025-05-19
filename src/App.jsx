@@ -1,4 +1,4 @@
-import { Fragment, useEffect, lazy, Suspense } from 'react';
+import { Fragment, useEffect, lazy, Suspense, useMemo, memo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Navigation from './components/Navigation.jsx';
@@ -8,6 +8,7 @@ import PageTransition from './components/PageTransition.jsx';
 import Layout from './components/Layout.jsx';
 import ScrollHandler from './components/ScrollHandler.jsx';
 import FireAnimation from './components/FireAnimation.jsx';
+import PerformanceMonitor from './components/PerformanceMonitor.jsx';
 import Home from './pages/Home.jsx';
 import AuthenticatedHome from './pages/AuthenticatedHome.jsx';
 
@@ -44,32 +45,51 @@ import { initializeWishlist } from './store/slices/wishlistSlice';
 import './App.css';
 import './styles/navbar-override.css';
 
-// Loading component for Suspense fallback
-const LoadingFallback = () => {
+// Loading component for Suspense fallback - memoized to prevent unnecessary re-renders
+const LoadingFallback = memo(function LoadingFallback() {
+  // Use memoized styles for better performance
+  const containerStyle = useMemo(() => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    color: 'white',
+    fontSize: '1.5rem',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    zIndex: 9999,
+    // Use hardware acceleration
+    transform: 'translateZ(0)',
+    willChange: 'opacity'
+  }), []);
+
+  const contentStyle = useMemo(() => ({
+    textAlign: 'center'
+  }), []);
+
+  const spinnerStyle = useMemo(() => ({
+    width: '3rem',
+    height: '3rem'
+  }), []);
+
+  const textStyle = useMemo(() => ({
+    marginTop: '1rem'
+  }), []);
+
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      width: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      color: 'white',
-      fontSize: '1.5rem',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      zIndex: 9999
-    }}>
-      <div style={{ textAlign: 'center' }}>
-        <div className="spinner-border text-light" role="status" style={{ width: '3rem', height: '3rem' }}>
+    <div style={containerStyle}>
+      <div style={contentStyle}>
+        <div className="spinner-border text-light" role="status" style={spinnerStyle}>
           <span className="visually-hidden">Loading...</span>
         </div>
-        <p style={{ marginTop: '1rem' }}>Loading...</p>
+        <p style={textStyle}>Loading...</p>
       </div>
     </div>
   );
-};
+});
 
 function App() {
   const dispatch = useDispatch();
@@ -82,16 +102,17 @@ function App() {
     dispatch(initializeWishlist());
   }, [dispatch]);
 
-  const appStyle = {
+  // Memoize styles to prevent recreation on each render
+  const appStyle = useMemo(() => ({
     margin: 0,
     padding: 0,
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
     position: 'relative'
-  };
+  }), []);
 
-  const headerStyle = {
+  const headerStyle = useMemo(() => ({
     margin: 0,
     padding: 0,
     width: '100%',
@@ -102,22 +123,22 @@ function App() {
     zIndex: 1000,
     transition: 'transform 0.3s ease',
     transform: 'translateY(0)'
-  };
+  }), []);
 
-  const mainStyle = {
+  const mainStyle = useMemo(() => ({
     flex: 1,
     margin: 0,
     padding: '100px 0 0 0',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column'
-  };
+  }), []);
 
-  const footerStyle = {
+  const footerStyle = useMemo(() => ({
     width: '100%',
     position: 'relative',
     zIndex: 10
-  };
+  }), []);
 
   return (
     <div className="app" style={appStyle}>
@@ -307,8 +328,12 @@ function App() {
       <footer style={footerStyle}>
         <Footer />
       </footer>
+
+      {/* Performance Monitor - only visible in development mode */}
+      <PerformanceMonitor />
     </div>
   );
 }
 
-export default App;
+// Export memoized component to prevent unnecessary re-renders
+export default memo(App);

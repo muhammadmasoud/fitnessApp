@@ -1,4 +1,4 @@
-.navbar-custom {
+.navbar-custom { will-change: transform; transform: translateZ(0);
   background-color: transparent !important;
   position: relative !important; /* Changed from absolute to relative since header is now fixed */
   top: -15px !important; /* Move the navbar up by 15px */
@@ -13,7 +13,7 @@
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
-  transition: transform 0.3s ease !important; /* Added transition for smooth hiding/showing */
+  will-change: transform; transition: transform 0.3s ease !important; /* Added transition for smooth hiding/showing */
 }
 
 
@@ -24,7 +24,7 @@
   margin: 0 !important; /* Reset margin */
   position: absolute !important; /* Position it absolutely */
   left: 50% !important; /* Center it horizontally */
-  transform: translateX(-50%) !important; /* Adjust for perfect centering */
+  will-change: transform; transform: translateX(-50%) !important; /* Adjust for perfect centering */
   max-width: 70% !important; /* Limit width to prevent overlap with buttons */
 }
 
@@ -66,23 +66,23 @@
   margin-top: 5px;
 }
 
-.brand-text {
+.brand-text { transform: translateZ(0);
   color: white;
   font-weight: 800;
   font-size: 3rem;
-  text-transform: uppercase;
+  text-will-change: transform; transform: uppercase;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-left: -15px; /* Adjusted margin to align with the logo animation */
   letter-spacing: 2px;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(0, 116, 217, 0.3);
   position: relative;
-  animation: glow 2s ease-in-out infinite alternate;
+  will-change: transform; will-change: transform; animation: glow 2s ease-in-out infinite alternate;
   background: linear-gradient(90deg, #ffffff, #0074D9, #ffffff);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 @keyframes glow {
@@ -97,7 +97,7 @@
 }
 
 .brand-logo:hover .brand-text {
-  transform: scale(1.05);
+  will-change: transform; transform: scale(1.05);
   letter-spacing: 2.5px;
 }
 
@@ -113,11 +113,11 @@
   align-items: center;
 }
 
-.nav-link {
+.nav-link { will-change: transform; transform: translateZ(0);
   color: white !important;
   font-weight: 600; /* Increased font weight from 500 to 600 for better visibility */
   padding: 0.5rem 0.4rem !important; /* Reduced horizontal padding from 0.5rem to 0.4rem */
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
   font-size: 1.4rem; /* Further increased font size from 1.25rem to 1.4rem */
   text-align: center !important;
   position: relative;
@@ -132,14 +132,14 @@
   bottom: 0;
   left: 50%;
   background-color: white;
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+  will-change: transform; transition: all 0.3s ease;
+  will-change: transform; transform: translateX(-50%);
   opacity: 0;
 }
 
 .nav-link:hover {
   color: #ffffff !important;
-  transform: translateY(-3px);
+  will-change: transform; transform: translateY(-3px);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
@@ -169,14 +169,14 @@
   border-right: 0.3em solid transparent;
   border-bottom: 0;
   border-left: 0.3em solid transparent;
-  transition: transform 0.3s ease;
+  will-change: transform; transition: transform 0.3s ease;
 }
 
-.custom-dropdown .dropdown-toggle {
+.custom-dropdown .dropdown-toggle { will-change: transform; transform: translateZ(0);
   color: white !important;
   font-weight: 600; /* Increased font weight from 500 to 600 for better visibility */
   padding: 0.5rem 0.4rem !important; /* Reduced horizontal padding from 0.5rem to 0.4rem */
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
   font-size: 1.4rem; /* Further increased font size from 1.25rem to 1.4rem */
   text-align: center !important;
   position: relative;
@@ -188,7 +188,7 @@
 }
 
 .custom-dropdown.show .dropdown-toggle::after {
-  transform: rotate(180deg);
+  will-change: transform; transform: rotate(180deg);
 }
 
 .custom-dropdown .dropdown-toggle::before {
@@ -199,14 +199,14 @@
   bottom: 0;
   left: 50%;
   background-color: white;
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+  will-change: transform; transition: all 0.3s ease;
+  will-change: transform; transform: translateX(-50%);
   opacity: 0;
 }
 
 .custom-dropdown .dropdown-toggle:hover {
   color: #ffffff !important;
-  transform: translateY(-3px);
+  will-change: transform; transform: translateY(-3px);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
@@ -225,20 +225,20 @@
   opacity: 1;
 }
 
-.custom-dropdown .dropdown-menu {
+.custom-dropdown .dropdown-menu { will-change: transform; transform: translateZ(0);
   background-color: rgba(0, 0, 0, 0.9);
   border: none;
   border-radius: 8px;
   margin-top: 10px;
   padding: 0.5rem 0;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  will-change: transform; animation: fadeIn 0.3s ease;
 }
 
-.custom-dropdown .dropdown-item {
+.custom-dropdown .dropdown-item { will-change: transform; transform: translateZ(0);
   color: white;
   padding: 0.5rem 1.5rem;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   font-size: 1.25rem; /* Increased font size to better match the navigation links */
   font-weight: 500; /* Added font weight for better visibility */
 }
@@ -246,17 +246,17 @@
 .custom-dropdown .dropdown-item:hover {
   background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  transform: translateX(5px);
+  will-change: transform; transform: translateX(5px);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    will-change: transform; transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    will-change: transform; transform: translateY(0);
   }
 }
 
@@ -274,23 +274,23 @@
   margin-right: 5px;
 }
 
-.cart-icon-link {
+.cart-icon-link { will-change: transform; transform: translateZ(0);
   color: white;
   font-size: 1.5rem; /* Increased font size from 1.3rem to 1.5rem */
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   position: relative;
 }
 
 .cart-icon-link:hover {
   color: #0074D9;
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
   text-shadow: 0 0 8px rgba(0, 116, 217, 0.5);
 }
 
-.cart-count {
+.cart-count { will-change: transform; transform: translateZ(0);
   position: absolute;
   top: -8px;
   right: -10px;
@@ -304,12 +304,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: cartBounce 0.5s ease;
+  will-change: transform; animation: cartBounce 0.5s ease;
 }
 
 @keyframes cartBounce {
   0% {
-    transform: scale(0);
+    will-change: transform; transform: scale(0);
   }
   50% {
     transform: scale(1.2);
@@ -333,12 +333,12 @@
   display: none !important;
 }
 
-.track-order-link {
+.track-order-link { will-change: transform; transform: translateZ(0);
   color: white;
   text-decoration: none;
   font-weight: 500;
   font-size: 1.1rem; /* Increased font size from 0.9rem to 1.1rem */
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 5px; /* Add gap between icon and text */
@@ -350,11 +350,11 @@
 
 .track-order-link:hover {
   color: #0074D9;
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
 }
 
 /* User dropdown styling */
-.user-dropdown {
+.user-dropdown { will-change: transform; transform: translateZ(0);
   background-color: #0074D9 !important;
   color: white !important;
   border: none !important;
@@ -362,7 +362,7 @@
   padding: 0.3rem 1.2rem !important;
   font-weight: 500;
   font-size: 0.9rem;
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
   min-width: 150px !important;
   height: 42px !important;
   display: flex !important;
@@ -375,11 +375,11 @@
 .user-dropdown:focus,
 .user-dropdown:active {
   background-color: #0066c0 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.login-btn {
+.login-btn { will-change: transform; transform: translateZ(0);
   background-color: #0074D9 !important;
   color: white !important;
   border: none !important;
@@ -387,7 +387,7 @@
   padding: 0.3rem 1.2rem !important;
   font-weight: 500;
   font-size: 1.1rem; /* Increased font size from 0.9rem to 1.1rem */
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
   min-width: 100px !important;
   height: 45px !important; /* Increased height from 42px to 45px */
   display: flex !important;
@@ -398,10 +398,10 @@
 
 .login-btn:hover {
   background-color: #0066c0 !important;
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
 }
 
-.sign-up-btn {
+.sign-up-btn { will-change: transform; transform: translateZ(0);
   background-color: white !important;
   color: #000 !important;
   border: none !important;
@@ -409,13 +409,13 @@
   padding: 0.5rem 1.2rem !important;
   font-weight: 500;
   font-size: 1.1rem; /* Increased font size from 0.9rem to 1.1rem */
-  transition: all 0.3s ease !important;
+  will-change: transform; transition: all 0.3s ease !important;
   height: 45px !important; /* Added height to match login button */
 }
 
 .sign-up-btn:hover {
   background-color: rgba(255, 255, 255, 0.9) !important;
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
 }
 
 .navbar-toggler {

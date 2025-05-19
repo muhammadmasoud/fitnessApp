@@ -55,7 +55,7 @@
 .footer-links a, .social-links a {
   color: #ccc;
   text-decoration: none;
-  transition: color 0.3s ease;
+  will-change: transform; transition: color 0.3s ease;
   display: inline-block;
   position: relative;
 }
@@ -68,7 +68,7 @@
   bottom: -2px;
   left: 0;
   background-color: #0074D9;
-  transition: width 0.3s ease;
+  will-change: transform; transition: width 0.3s ease;
 }
 
 .footer-links a:hover, .social-links a:hover {
@@ -90,26 +90,26 @@
   gap: 10px;
 }
 
-.newsletter-input {
+.newsletter-input { will-change: transform; transform: translateZ(0);
   padding: 12px 15px;
   border-radius: 30px;
   border: none;
   background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
   outline: none;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .newsletter-input:focus {
   background-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 2px rgba(0, 116, 217, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .newsletter-input::placeholder {
   color: #aaa;
 }
 
-.subscribe-btn {
+.subscribe-btn { will-change: transform; transform: translateZ(0);
   padding: 10px 20px;
   border-radius: 30px;
   border: none;
@@ -117,14 +117,14 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   align-self: flex-start;
 }
 
 .subscribe-btn:hover {
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -141,11 +141,11 @@
     rgba(255, 255, 255, 0.3) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  transition: all 0.5s ease;
+  will-change: transform; transition: all 0.5s ease;
 }
 
 .subscribe-btn:hover::before {
-  animation: btn-shine 1.5s infinite;
+  will-change: transform; will-change: transform; animation: btn-shine 1.5s infinite;
 }
 
 @keyframes btn-shine {

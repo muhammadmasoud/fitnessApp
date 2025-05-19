@@ -5,7 +5,7 @@
   border-radius: 10px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   align-self: flex-start;
   max-width: 600px;
@@ -32,20 +32,20 @@
   font-size: 1.1rem;
 }
 
-.tracking-input {
+.tracking-input { will-change: transform; transform: translateZ(0);
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   padding: 0.8rem 1rem;
   font-size: 1.1rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .tracking-input:focus {
   background-color: rgba(255, 255, 255, 0.15);
   border-color: #0074D9;
-  box-shadow: 0 0 0 0.25rem rgba(0, 116, 217, 0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   color: white;
 }
 
@@ -53,7 +53,7 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-.tracking-submit-btn {
+.tracking-submit-btn { will-change: transform; transform: translateZ(0);
   width: 100%;
   padding: 0.8rem;
   font-size: 1.1rem;
@@ -61,13 +61,13 @@
   margin-top: 1rem;
   background-color: #0074D9;
   border: none;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .tracking-submit-btn:hover:not(:disabled) {
   background-color: #0066c0;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .tracking-submit-btn:disabled {
@@ -85,7 +85,7 @@
 .tracking-form-footer a {
   color: #7FDBFF;
   text-decoration: none;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .tracking-form-footer a:hover {
@@ -104,10 +104,10 @@
   text-align: center;
 }
 
-.back-to-search-btn {
+.back-to-search-btn { will-change: transform; transform: translateZ(0);
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -117,7 +117,7 @@
 .back-to-search-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
 }
 
 .tracking-card-footer {
@@ -134,10 +134,10 @@
   gap: 15px;
 }
 
-.signup-btn {
+.signup-btn { will-change: transform; transform: translateZ(0);
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   background-color: #0074D9;
   color: white;
   border: none;
@@ -146,14 +146,14 @@
 
 .signup-btn:hover {
   background-color: #0066c0;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.login-btn-track {
+.login-btn-track { will-change: transform; transform: translateZ(0);
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   background-color: transparent;
   color: #0074D9;
   border: 1px solid #0074D9;
@@ -163,8 +163,8 @@
 .login-btn-track:hover {
   background-color: rgba(0, 116, 217, 0.1);
   color: #0074D9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive styles */

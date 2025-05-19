@@ -28,14 +28,14 @@ body.order-tracking-page {
   opacity: 1;
 }
 
-.tracking-page.loaded .tracking-container {
-  animation: fadeInUp 0.8s ease-out forwards;
+.tracking-page.loaded .tracking-container { will-change: transform; transform: translateZ(0);
+  will-change: transform; animation: fadeInUp 0.8s ease-out forwards;
 }
 
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    will-change: transform; transform: translateY(30px);
   }
   100% {
     opacity: 1;
@@ -61,7 +61,7 @@ body.order-tracking-page {
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 15px; /* Full rounded corners */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
@@ -94,7 +94,7 @@ body.order-tracking-page {
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
+  will-change: transform; transform: translateX(-50%);
   width: 200px;
   height: 3px;
   background: linear-gradient(to right, #0074D9, #7FDBFF);
@@ -108,7 +108,7 @@ body.order-tracking-page {
   border-radius: 10px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   align-self: flex-start;
   max-width: 600px;
@@ -135,20 +135,20 @@ body.order-tracking-page {
   font-size: 1.1rem;
 }
 
-.tracking-input {
+.tracking-input { will-change: transform; transform: translateZ(0);
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   padding: 0.8rem 1rem;
   font-size: 1.1rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .tracking-input:focus {
   background-color: rgba(255, 255, 255, 0.15);
   border-color: #0074D9;
-  box-shadow: 0 0 0 0.25rem rgba(0, 116, 217, 0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   color: white;
 }
 
@@ -156,7 +156,7 @@ body.order-tracking-page {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.tracking-submit-btn {
+.tracking-submit-btn { will-change: transform; transform: translateZ(0);
   width: 100%;
   padding: 0.8rem;
   font-size: 1.1rem;
@@ -164,13 +164,13 @@ body.order-tracking-page {
   margin-top: 1rem;
   background-color: #0074D9;
   border: none;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .tracking-submit-btn:hover:not(:disabled) {
   background-color: #0066c0;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .tracking-submit-btn:disabled {
@@ -188,7 +188,7 @@ body.order-tracking-page {
 .tracking-form-footer a {
   color: #7FDBFF;
   text-decoration: none;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .tracking-form-footer a:hover {
@@ -214,7 +214,7 @@ body.order-tracking-page {
   border-radius: 10px;
   padding: 3rem 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
@@ -253,50 +253,50 @@ body.order-tracking-page {
   margin-bottom: 1rem;
 }
 
-.shop-now-btn {
+.shop-now-btn { will-change: transform; transform: translateZ(0);
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
   font-weight: 500;
   background-color: #0074D9;
   border: none;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   display: flex;
   align-items: center;
 }
 
 .shop-now-btn:hover {
   background-color: #0066c0;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.manual-search-btn {
+.manual-search-btn { will-change: transform; transform: translateZ(0);
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
   font-weight: 500;
   background-color: transparent;
   border: 1px solid #0074D9;
   color: #0074D9;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   display: flex;
   align-items: center;
 }
 
 .manual-search-btn:hover {
   background-color: rgba(0, 116, 217, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.manual-tracking-form-container {
+.manual-tracking-form-container { will-change: transform; transform: translateZ(0);
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   padding: 1.5rem;
   margin-top: 1.5rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: fadeIn 0.5s ease-in-out;
+  will-change: transform; animation: fadeIn 0.5s ease-in-out;
 }
 
 .tracking-details {
@@ -305,7 +305,7 @@ body.order-tracking-page {
   border-radius: 10px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   align-self: flex-start;
 }
@@ -362,7 +362,7 @@ body.order-tracking-page {
   white-space: nowrap;
 }
 
-.order-tabs .nav-link {
+.order-tabs .nav-link { will-change: transform; transform: translateZ(0);
   color: rgba(255, 255, 255, 0.7);
   background-color: transparent;
   border: 1px solid transparent;
@@ -370,7 +370,7 @@ body.order-tracking-page {
   border-top-right-radius: 0.25rem;
   padding: 0.8rem 1.2rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   position: relative;
 }
 
@@ -450,12 +450,12 @@ body.order-tracking-page {
   height: 12px !important;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.2) !important;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .tracking-progress .progress-bar {
   background: linear-gradient(to right, #0074D9, #7FDBFF) !important;
-  box-shadow: 0 0 10px rgba(0, 116, 217, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   height: 12px !important;
   border-radius: 10px;
 }
@@ -474,27 +474,27 @@ body.order-tracking-page {
   padding: 0 10px;
 }
 
-.milestone {
+.milestone { will-change: transform; transform: translateZ(0);
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   width: 25%;
   color: rgba(255, 255, 255, 0.7);
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
 }
 
 .milestone.active {
   color: white;
 }
 
-.milestone-dot {
+.milestone-dot { will-change: transform; transform: translateZ(0);
   width: 35px;
   height: 35px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   margin-bottom: 10px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -505,19 +505,19 @@ body.order-tracking-page {
 
 .milestone.active .milestone-dot {
   background-color: #0074D9;
-  box-shadow: 0 0 15px rgba(0, 116, 217, 0.8);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
-  transform: scale(1.1);
+  will-change: transform; transform: scale(1.1);
 }
 
 /* Style for the current milestone dot */
 .milestone-dot.current {
   background-color: #7FDBFF !important;
-  box-shadow: 0 0 20px rgba(127, 219, 255, 1) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 2px solid white !important;
   color: white !important;
-  transform: scale(1.2) !important;
+  will-change: transform; transform: scale(1.2) !important;
   font-weight: bold !important;
 }
 
@@ -594,7 +594,7 @@ body.order-tracking-page {
   display: inline-block;
   padding-bottom: 10px;
   left: 50%;
-  transform: translateX(-50%);
+  will-change: transform; transform: translateX(-50%);
   color: white;
 }
 
@@ -613,7 +613,7 @@ body.order-tracking-page {
   margin-bottom: 2rem;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
   width: 100%;
@@ -641,12 +641,12 @@ body.order-tracking-page {
   background: rgba(127, 219, 255, 0.8);
 }
 
-.order-item {
+.order-item { will-change: transform; transform: translateZ(0);
   display: flex;
   align-items: center;
   padding: 1.5rem 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background-color 0.3s ease;
+  will-change: transform; transition: background-color 0.3s ease;
 }
 
 .order-item:hover {
@@ -677,7 +677,7 @@ body.order-tracking-page {
   height: 40px;
   width: 40px;
   top: 50%;
-  transform: translateY(-50%);
+  will-change: transform; transform: translateY(-50%);
 }
 
 .carousel-control-prev {
@@ -795,10 +795,10 @@ body.order-tracking-page {
   margin-top: 1.5rem;
 }
 
-.back-to-home-btn {
+.back-to-home-btn { will-change: transform; transform: translateZ(0);
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -808,23 +808,23 @@ body.order-tracking-page {
 .back-to-home-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+  will-change: transform; transform: translateY(-2px);
 }
 
-.continue-shopping-btn {
+.continue-shopping-btn { will-change: transform; transform: translateZ(0);
   padding: 0.6rem 1.5rem;
   background-color: rgba(0, 116, 217, 0.8);
   border: none;
   border-radius: 5px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  will-change: transform; transition: all 0.3s ease;
   color: white;
 }
 
 .continue-shopping-btn:hover {
   background-color: rgba(0, 116, 217, 1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 116, 217, 0.4);
+  will-change: transform; transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive styles */
