@@ -24,7 +24,6 @@ main {
   margin: 0 !important;
   padding: 0 !important;
   position: relative;
-  will-change: transform, opacity;
   flex: 1 0 auto; /* Ensures main takes up available space but allows footer to be at the bottom */
 }
 
@@ -69,16 +68,13 @@ footer {
   padding: 0;
 }
 
-/* Header styling for scroll behavior */
+/* Header styling */
 header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  will-change: transform; transition: transform 0.3s ease;
-  will-change: transform;
-  will-change: transform; transform: translateY(0); /* Ensure it starts visible */
   background-color: transparent;
 }
 
@@ -118,28 +114,11 @@ header {
   gap: 8px;
 }
 
-/* Rainbow text animation for the 20% discount */
-.rainbow-text { will-change: transform; transform: translateZ(0);
+/* Text styling for the 20% discount */
+.rainbow-text {
   display: inline-block;
   font-weight: bold;
-  will-change: transform; will-change: transform; animation: rainbow-color 3s linear infinite, pulse 2s ease-in-out infinite;
-}
-
-@keyframes rainbow-color {
-  0% { color: #ff0000; }
-  14% { color: #ff7f00; }
-  28% { color: #ffff00; }
-  42% { color: #00ff00; }
-  57% { color: #0000ff; }
-  71% { color: #4b0082; }
-  85% { color: #9400d3; }
-  100% { color: #ff0000; }
-}
-
-@keyframes pulse {
-  0% { will-change: transform; transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  color: #ff0000; /* Fixed red color instead of animation */
 }
 
 .announcement-social-icons {
@@ -147,7 +126,7 @@ header {
   gap: 20px;
 }
 
-.announcement-social-icon { will-change: transform; transform: translateZ(0);
+.announcement-social-icon {
   color: white;
   text-decoration: none;
   font-size: 1rem;
@@ -158,7 +137,6 @@ header {
   height: 40px;
   border-radius: 4px;
   background-color: transparent;
-  will-change: transform; transition: all 0.3s ease;
 }
 
 .announcement-social-icon:hover {
@@ -200,7 +178,7 @@ a.announcement-social-icon {
   text-decoration: none;
 }
 
-.main-content { will-change: transform; transform: translateZ(0);
+.main-content {
   flex: 1;
   padding: 210px 0 0 0; /* Add padding to account for fixed header (announcement bar + navbar height) */
   display: flex;
@@ -209,7 +187,6 @@ a.announcement-social-icon {
   min-height: 100vh;
   position: relative;
   z-index: 1;
-  will-change: transform; transition: padding 0.3s ease;
 }
 
 /* Class to adjust padding when announcement bar is not visible */
@@ -267,7 +244,7 @@ a.announcement-social-icon {
   font-weight: 300;
 }
 
-.cta-button { will-change: transform; transform: translateZ(0);
+.cta-button {
   padding: 15px 40px;
   font-size: 1.2rem;
   border: none;
@@ -275,14 +252,11 @@ a.announcement-social-icon {
   background-color: var(--primary-color);
   color: white;
   cursor: pointer;
-  will-change: transform; transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
 }
 
 .cta-button:hover {
-  will-change: transform; transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: #0056b3;
 }
 

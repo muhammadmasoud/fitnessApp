@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { Container, Modal, Button } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import './Home.css';
 
 const Home = () => {
@@ -12,13 +10,6 @@ const Home = () => {
   const [welcomePackage, setWelcomePackage] = useState('');
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-      mirror: true,
-      easing: 'ease-in-out'
-    });
-
     // Check for welcome message in sessionStorage
     const welcomeMessageJson = sessionStorage.getItem('welcomeMessage');
     if (welcomeMessageJson) {
@@ -106,12 +97,12 @@ const Home = () => {
           <div className="particle"></div>
           <div className="particle"></div>
         </div>
-        <div className="section-title-container" data-aos="fade-down">
+        <div className="section-title-container">
           <h2 className="section-title">Why Choose Us?</h2>
           <div className="title-underline"></div>
         </div>
         <div className="features-grid">
-          <div className="feature-card" data-aos="flip-left" data-aos-delay="100">
+          <div className="feature-card">
             <div className="feature-icon-container">
               <i className="fas fa-dumbbell"></i>
             </div>
@@ -119,7 +110,7 @@ const Home = () => {
             <p>Our certified trainers are here to guide you through your fitness journey with personalized attention.</p>
             <div className="feature-card-overlay"></div>
           </div>
-          <div className="feature-card" data-aos="flip-left" data-aos-delay="300">
+          <div className="feature-card">
             <div className="feature-icon-container">
               <i className="fas fa-heart"></i>
             </div>
@@ -127,7 +118,7 @@ const Home = () => {
             <p>Join thousands of satisfied members who have achieved their fitness goals with our programs.</p>
             <div className="feature-card-overlay"></div>
           </div>
-          <div className="feature-card" data-aos="flip-left" data-aos-delay="500">
+          <div className="feature-card">
             <div className="feature-icon-container">
               <i className="fas fa-clock"></i>
             </div>
@@ -145,10 +136,10 @@ const Home = () => {
           <div className="cta-shape shape3"></div>
         </div>
         <Container>
-          <div className="cta-content" data-aos="zoom-in">
+          <div className="cta-content">
             <h2 className="animated-heading">Ready to Start Your <span className="highlight">Fitness Journey</span>?</h2>
-            <p data-aos="fade-up" data-aos-delay="200">Transform your life with our comprehensive fitness tracking tools</p>
-            <Link to="/signup" className="cta-button pulse-button" data-aos="fade-up" data-aos-delay="400">
+            <p>Transform your life with our comprehensive fitness tracking tools</p>
+            <Link to="/signup" className="cta-button">
               <span className="button-text">Start Now</span>
               <span className="button-icon"><i className="fas fa-bolt"></i></span>
             </Link>

@@ -61,9 +61,7 @@ const LoadingFallback = memo(function LoadingFallback() {
     top: 0,
     left: 0,
     zIndex: 9999,
-    // Use hardware acceleration
-    transform: 'translateZ(0)',
-    willChange: 'opacity'
+    // Hardware acceleration removed
   }), []);
 
   const contentStyle = useMemo(() => ({
@@ -121,7 +119,7 @@ function App() {
     left: 0,
     right: 0,
     zIndex: 1000,
-    transition: 'transform 0.3s ease',
+
     transform: 'translateY(0)'
   }), []);
 

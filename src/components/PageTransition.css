@@ -1,4 +1,4 @@
-/* Basic container styles without animations */
+/* Basic container styles */
 .page-transition {
   position: relative;
   width: 100%;
@@ -7,7 +7,7 @@
   overflow-x: hidden;
 }
 
-/* Ensure content doesn't jump during transitions */
+/* Basic container for page content */
 .transition-container {
   position: relative;
   min-height: 100vh;

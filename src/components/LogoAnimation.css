@@ -1,13 +1,8 @@
-.logo-animation-container { will-change: transform; transform: translateZ(0);
+.logo-animation-container {
   overflow: hidden;
-  will-change: transform; transition: transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.logo-animation-container:hover {
-  will-change: transform; transform: scale(1.05);
 }
 
 .logo-image {

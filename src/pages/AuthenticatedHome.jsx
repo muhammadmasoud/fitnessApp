@@ -3,8 +3,6 @@ import { Container, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logout } from '../store/slices/authSlice';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import './AuthenticatedHome.css';
 
 const AuthenticatedHome = () => {
@@ -15,64 +13,25 @@ const AuthenticatedHome = () => {
   const statsSectionRef = useRef(null);
   const statsValueRefs = useRef([]);
 
-  // Initialize fitness stats animation
-  const animateValue = (obj, start, end, duration) => {
-    let startTimestamp = null;
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      const currentValue = Math.floor(progress * (end - start) + start);
-
-      // Create a span with black text color and set its content
-      const span = document.createElement('span');
-      span.style.color = 'black';
-      span.textContent = currentValue;
-
-      // Clear the element and append the span
-      if (obj && obj.innerHTML !== undefined) {
-        obj.innerHTML = '';
-        obj.appendChild(span);
-      }
-
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    window.requestAnimationFrame(step);
-  };
+  // Function removed as we're not using animations anymore
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-      mirror: true,
-      easing: 'ease-in-out'
-    });
+    // Set the stat values directly without animation
+    statsValueRefs.current.forEach(el => {
+      if (el) {
+        const finalValue = parseInt(el.getAttribute('data-value'));
+        // Create a span with black text color and set its content
+        const span = document.createElement('span');
+        span.style.color = 'black';
+        span.textContent = finalValue;
 
-    // Animate stats when they come into view
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Use the refs array to access the stat elements
-          statsValueRefs.current.forEach(el => {
-            if (el) {
-              const finalValue = parseInt(el.getAttribute('data-value'));
-              animateValue(el, 0, finalValue, 2000);
-            }
-          });
-          observer.disconnect();
+        // Clear the element and append the span
+        if (el && el.innerHTML !== undefined) {
+          el.innerHTML = '';
+          el.appendChild(span);
         }
-      });
-    }, { threshold: 0.5 });
-
-    // Observe the stats section using the ref
-    if (statsSectionRef.current) {
-      observer.observe(statsSectionRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
+      }
+    });
   }, []);
 
 
@@ -91,7 +50,7 @@ const AuthenticatedHome = () => {
       <section className="auth-hero-section">
         <div className="auth-hero-overlay"></div>
         <Container fluid className="d-flex justify-content-center align-items-center h-100">
-          <div className="auth-hero-content" data-aos="fade-up">
+          <div className="auth-hero-content">
             <h1 className="auth-hero-title">Welcome Back, {currentUser?.fullName || 'Fitness Enthusiast'}!</h1>
             <p className="auth-hero-subtitle">
               Your fitness journey continues. Let&apos;s crush those goals together!
@@ -119,8 +78,8 @@ const AuthenticatedHome = () => {
 
       {/* Quick Stats Section */}
       <section ref={statsSectionRef} className="stats-section" style={{backgroundColor: 'white', padding: '5rem 0', textAlign: 'center'}}>
-        <div className="fitness-journey-title animated-title" data-aos="zoom-in">YOUR FITNESS JOURNEY</div>
-        <div className="fitness-journey-underline" data-aos="fade-up" data-aos-delay="300"></div>
+        <div className="fitness-journey-title animated-title">YOUR FITNESS JOURNEY</div>
+        <div className="fitness-journey-underline"></div>
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '1.5rem', width: '100%', margin: '0 auto', padding: '1rem 0'}}>
           <div style={{background: 'white', borderRadius: '10px', padding: '1.5rem 1rem', textAlign: 'center', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)', width: '220px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '240px'}}>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
@@ -183,10 +142,10 @@ const AuthenticatedHome = () => {
 
       {/* Recommended Workouts Section */}
       <section className="workouts-section" style={{backgroundColor: '#474747', padding: '5rem 0', textAlign: 'center'}}>
-        <div className="recommended-title animated-title" data-aos="zoom-in">RECOMMENDED FOR YOU</div>
-        <div className="recommended-underline" data-aos="fade-up" data-aos-delay="300"></div>
+        <div className="recommended-title animated-title">RECOMMENDED FOR YOU</div>
+        <div className="recommended-underline"></div>
         <div className="workouts-grid">
-          <div className="workout-card" data-aos="flip-left" data-aos-delay="100">
+          <div className="workout-card">
             <div className="workout-card-image workout-1"></div>
             <div className="workout-card-content">
               <h3>HIIT Cardio Blast</h3>
@@ -194,7 +153,7 @@ const AuthenticatedHome = () => {
               <Link to="/exercises" className="workout-card-button">Start Workout</Link>
             </div>
           </div>
-          <div className="workout-card" data-aos="flip-left" data-aos-delay="200">
+          <div className="workout-card">
             <div className="workout-card-image workout-2"></div>
             <div className="workout-card-content">
               <h3>Core Strength</h3>
@@ -202,7 +161,7 @@ const AuthenticatedHome = () => {
               <Link to="/exercises" className="workout-card-button">Start Workout</Link>
             </div>
           </div>
-          <div className="workout-card" data-aos="flip-left" data-aos-delay="300">
+          <div className="workout-card">
             <div className="workout-card-image workout-3"></div>
             <div className="workout-card-content">
               <h3>Full Body Power</h3>
@@ -216,7 +175,7 @@ const AuthenticatedHome = () => {
       {/* Logout Confirmation Modal */}
       {showLogoutConfirm && (
         <div className="logout-modal-overlay">
-          <div className="logout-modal" data-aos="zoom-in">
+          <div className="logout-modal">
             <h3>Log Out</h3>
             <p>Are you sure you want to log out?</p>
             <div className="logout-modal-buttons">

@@ -40,13 +40,12 @@ const DynamicBackground = ({
 
   const containerStyle = {
     minHeight: '100vh',
-    opacity: loaded ? 1 : 0,
-    transition: 'opacity 0.5s ease',
+    opacity: 1, // Always visible
     position: 'relative',
     backgroundImage: `url(${imageUrl})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
+    backgroundAttachment: 'scroll', // Changed from fixed to scroll for better performance
     color: 'white',
     display: 'flex',
     flexDirection: 'column',
