@@ -1,9 +1,9 @@
 
 import './LogoAnimation.css';
-import logoGif from '../assets/images/logo.gif';
+import logoPng from '../assets/optimized/logo.png';
 
 /**
- * LogoAnimation component that displays the logo GIF
+ * LogoAnimation component that displays the logo
  * @param {Object} props - Component props
  * @param {number} props.width - Width of the container
  * @param {number} props.height - Height of the container
@@ -25,7 +25,7 @@ const LogoAnimation = ({
       }}
     >
       <img
-        src={logoGif}
+        src={logoPng}
         alt="FITNESS Logo"
         className="logo-image"
         style={{
