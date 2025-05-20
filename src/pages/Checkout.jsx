@@ -9,7 +9,7 @@ import CustomToast from '../components/CustomToast';
 import PhoneInput from '../components/PhoneInput';
 import { countryCodes } from '../data/countryCodes';
 import { validatePhoneForCountry, getPhoneLengthInfo } from '../utils/phoneValidation';
-import 'animate.css';
+
 import './Checkout.css';
 import checkoutBg from '../assets/optimized/checkout-bg.jpg';
 
@@ -1185,7 +1185,7 @@ const Checkout = () => {
         <div className="checkout-content">
           {/* Step 1: Order Summary */}
           {currentStep === 1 && (
-            <div className="order-summary animate__animated animate__fadeIn">
+            <div className="order-summary ">
               <h2 className="order-summary-title">Order Summary</h2>
 
               {cartItems.length > 0 ? (
@@ -1259,7 +1259,7 @@ const Checkout = () => {
 
           {/* Step 2: Shipping Information */}
           {currentStep === 2 && (
-            <div className="shipping-info-section animate__animated animate__fadeIn">
+            <div className="shipping-info-section ">
               <h2 className="form-section-title">Shipping Information</h2>
               <p className="mb-4">Please enter your shipping details</p>
 
@@ -1488,7 +1488,7 @@ const Checkout = () => {
 
           {/* Step 3: Payment Method */}
           {currentStep === 3 && (
-            <div className={`payment-section animate__animated animate__fadeIn ${paymentCompleted ? 'payment-section-completed' : ''}`}>
+            <div className={`payment-section  ${paymentCompleted ? 'payment-section-completed' : ''}`}>
               {paymentCompleted && (
                 <div className="payment-completed-indicator">
                   <i className="fas fa-check-circle"></i>
@@ -1995,7 +1995,7 @@ const Checkout = () => {
 
           {/* Step 4: Order Review */}
           {currentStep === 4 && (
-            <div className="review-section animate__animated animate__fadeIn">
+            <div className="review-section ">
               <h2 className="form-section-title">Order Review</h2>
               <p className="mb-4">Please review your order before placing it</p>
 

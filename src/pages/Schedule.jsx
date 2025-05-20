@@ -1,23 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Table, Nav } from 'react-bootstrap';
+import { Container, Table, Nav } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
-import 'animate.css';
 import './Schedule.css';
 import scheduleBg from '../assets/optimized/schedule-bg.jpg';
 
 const Schedule = () => {
-  const [loaded, setLoaded] = useState(false);
   const [activeDay, setActiveDay] = useState('monday');
 
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-
-    // Set loaded state after a short delay for animations
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
 
     // Preload the background image
     const img = new Image();
@@ -83,7 +76,7 @@ const Schedule = () => {
       <ToastContainer />
       <Container className="schedule-container">
         <div className="schedule-content">
-          <h1 className="schedule-title animate__animated animate__fadeInDown">CLASS SCHEDULE</h1>
+          <h1 className="schedule-title ">CLASS SCHEDULE</h1>
           <div className="schedule-items-section">
             <div className="schedule-description">
               <h2>Weekly Class Schedule</h2>
@@ -108,7 +101,7 @@ const Schedule = () => {
               </Nav>
             </div>
 
-            <div className="schedule-table-container animate__animated animate__fadeIn">
+            <div className="schedule-table-container ">
               <Table responsive className="schedule-table">
                 <thead>
                   <tr>

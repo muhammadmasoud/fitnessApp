@@ -21,19 +21,8 @@
   opacity: 1;
 }
 
-.profile-page.loaded .profile-container { will-change: transform; transform: translateZ(0);
-  will-change: transform; animation: fadeInUp 0.8s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    will-change: transform; transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.profile-page.loaded .profile-container {
+  opacity: 1;
 }
 
 .profile-title {
@@ -138,7 +127,7 @@
   background-color: #e9ecef;
 }
 
-.profile-image-overlay { will-change: transform; transform: translateZ(0);
+.profile-image-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -150,7 +139,6 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  will-change: transform; transition: opacity 0.3s ease;
   color: white;
 }
 
@@ -217,12 +205,11 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.profile-tabs .nav-link { will-change: transform; transform: translateZ(0);
+.profile-tabs .nav-link {
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
   border: none;
   padding: 10px 20px;
-  will-change: transform; transition: all 0.3s ease;
 }
 
 .profile-tabs .nav-link:hover {
@@ -265,16 +252,14 @@
   font-weight: 500;
 }
 
-.profile-save-btn { will-change: transform; transform: translateZ(0);
+.profile-save-btn {
   padding: 12px;
   font-weight: 600;
-  will-change: transform; transition: all 0.3s ease;
   background-color: rgba(0, 116, 217, 0.8);
   border: none;
 }
 
 .profile-save-btn:hover {
-  will-change: transform; transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 116, 217, 1);
 }
@@ -284,7 +269,7 @@
   width: 100%;
 }
 
-.settings-card { will-change: transform; transform: translateZ(0);
+.settings-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -292,13 +277,11 @@
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
-  will-change: transform; transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .settings-card:hover {
   background-color: rgba(0, 0, 0, 0.3);
-  will-change: transform; transform: translateY(-2px);
   border-color: rgba(127, 219, 255, 0.3);
 }
 
@@ -367,26 +350,10 @@
   gap: 10px;
 }
 
-.empty-icon { will-change: transform; transform: translateZ(0);
+.empty-icon {
   font-size: 50px;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 20px;
-  will-change: transform; will-change: transform; animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    will-change: transform; transform: scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
 }
 
 /* Modal styles */
@@ -455,18 +422,16 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.subscription-info-card { will-change: transform; transform: translateZ(0);
+.subscription-info-card {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 25px;
   margin-bottom: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  will-change: transform; transition: all 0.3s ease;
 }
 
 .subscription-info-card:hover {
   background-color: rgba(0, 0, 0, 0.3);
-  will-change: transform; transform: translateY(-2px);
   border-color: rgba(127, 219, 255, 0.3);
 }
 
@@ -479,7 +444,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.subscription-icon { will-change: transform; transform: translateZ(0);
+.subscription-icon {
   font-size: 24px;
   color: #FFD700;
   width: 50px;
@@ -489,16 +454,14 @@
   justify-content: center;
   background-color: rgba(255, 215, 0, 0.1);
   border-radius: 50%;
-  will-change: transform; transition: all 0.3s ease;
 }
 
-.special-offer-icon { will-change: transform; transform: translateZ(0);
+.special-offer-icon {
   color: #FF6B6B;
   background-color: rgba(255, 107, 107, 0.1);
-  will-change: transform; will-change: transform; animation: pulse 2s infinite;
 }
 
-.special-offer-badge { will-change: transform; transform: translateZ(0);
+.special-offer-badge {
   display: inline-block;
   font-size: 12px;
   font-weight: 600;
@@ -510,7 +473,6 @@
   vertical-align: middle;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   opacity: 0;
-  will-change: transform; transition: opacity 0.3s ease;
 }
 
 /* Show badge when hovering over the entire subscription card */

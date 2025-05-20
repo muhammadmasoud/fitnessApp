@@ -3,7 +3,7 @@
   opacity: 0;
   will-change: transform; transition: opacity 0.5s ease;
   position: relative;
-  background-image: url('../assets/images/wishlist-bg.jpg');
+  background-image: url('../assets/optimized/wishlist-bg.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: scroll;

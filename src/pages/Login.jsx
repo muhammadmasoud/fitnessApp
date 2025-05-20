@@ -6,7 +6,7 @@ import { loginUser, selectAuthError } from '../store/slices/authSlice';
 import { useForm } from '../hooks/useForm';
 import { useNotification } from '../hooks/useNotification';
 
-import 'animate.css';
+
 import './Login.css';
 
 const Login = () => {
@@ -93,12 +93,12 @@ const Login = () => {
       <Container>
         <div className="login-container">
           <div className="login-content">
-            <div className="login-header animate__animated animate__fadeInDown">
+            <div className="login-header">
               <h1>Welcome Back</h1>
               <p>Log in to continue your fitness journey</p>
             </div>
 
-            {authError && <Alert variant="danger" className="animate__animated animate__shakeX">{authError}</Alert>}
+            {authError && <Alert variant="danger">{authError}</Alert>}
 
             <Form
               ref={formRef}

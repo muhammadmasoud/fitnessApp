@@ -3,7 +3,7 @@ import { Container, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, selectAuthError, setError } from '../store/slices/authSlice';
-import 'animate.css';
+
 import './Signup.css';
 
 const Signup = () => {
@@ -88,12 +88,12 @@ const Signup = () => {
       <Container>
         <div className="signup-container">
           <div className="signup-content">
-            <div className="signup-header animate__animated animate__fadeInDown">
+            <div className="signup-header ">
               <h1>Create Account</h1>
               <p>Join our fitness community and start your journey</p>
             </div>
 
-            {error && <Alert variant="danger" className="animate__animated animate__shakeX">{error}</Alert>}
+            {error && <Alert variant="danger" className="">{error}</Alert>}
 
             <Form
               ref={formRef}

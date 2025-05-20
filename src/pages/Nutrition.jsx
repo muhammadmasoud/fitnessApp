@@ -1,22 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Container, Row, Col, Card, Accordion } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
-import 'animate.css';
 import './Nutrition.css';
 import nutritionBg from '../assets/optimized/nutrition-bg.jpg';
 
 const Nutrition = () => {
-  const [loaded, setLoaded] = useState(false);
-
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-
-    // Set loaded state after a short delay for animations
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
 
     // Preload the background image
     const img = new Image();
@@ -103,7 +95,7 @@ const Nutrition = () => {
       <ToastContainer />
       <Container className="nutrition-container">
         <div className="nutrition-content">
-          <h1 className="nutrition-title animate__animated animate__fadeInDown">NUTRITION GUIDANCE</h1>
+          <h1 className="nutrition-title ">NUTRITION GUIDANCE</h1>
           <div className="nutrition-items-section">
             <div className="nutrition-description">
               <h2>Nutrition is Key to Fitness Success</h2>
@@ -114,7 +106,7 @@ const Nutrition = () => {
               </p>
             </div>
 
-            <div className="nutrition-tips-container animate__animated animate__fadeIn">
+            <div className="nutrition-tips-container ">
               <h3 className="section-title">Nutrition Tips</h3>
               <Accordion defaultActiveKey="0" className="nutrition-accordion">
                 {nutritionTips.map((tip, index) => (
@@ -130,7 +122,7 @@ const Nutrition = () => {
               <h3 className="section-title">Sample Meal Plans</h3>
               <Row className="meal-plans-row">
                 {mealPlans.map((plan) => (
-                  <Col lg={4} md={6} sm={12} key={plan.id} className="meal-plan-col animate__animated animate__fadeIn">
+                  <Col lg={4} md={6} sm={12} key={plan.id} className="meal-plan-col ">
                     <Card className="meal-plan-card">
                       <Card.Body>
                         <Card.Title className="meal-plan-title">{plan.title}</Card.Title>
@@ -151,7 +143,7 @@ const Nutrition = () => {
               </Row>
             </div>
 
-            <div className="consultation-container animate__animated animate__fadeIn">
+            <div className="consultation-container ">
               <div className="consultation-card">
                 <h3>Need Personalized Nutrition Advice?</h3>
                 <p>

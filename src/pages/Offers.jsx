@@ -7,7 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useModal } from '../hooks/useModal';
 
 import 'react-toastify/dist/ReactToastify.css';
-import 'animate.css';
+
 import '../components/SubscriptionConfirmModal.css';
 import './Offers.css';
 
@@ -139,12 +139,12 @@ const Offers = () => {
       <ToastContainer />
       <div className="offers-content-wrapper">
         <div className="offers-header">
-          <h1 className="offers-title animate__animated animate__fadeInDown">Special Offers</h1>
-          <p className="offers-subtitle animate__animated animate__fadeIn animate__delay-1s">
+          <h1 className="offers-title ">Special Offers</h1>
+          <p className="offers-subtitle  animate__delay-1s">
             Exclusive deals to help you achieve your fitness goals
           </p>
           {currentOffer && (
-            <div className="current-offer-note animate__animated animate__fadeIn animate__delay-1s">
+            <div className="current-offer-note  animate__delay-1s">
               <i className="fas fa-info-circle me-2"></i>
               You are currently subscribed to <strong>{currentOffer.name}</strong>
             </div>
@@ -161,7 +161,7 @@ const Offers = () => {
               <div className="current-offer-badge">Current Offer</div>
             )}
             <div className="card-glow"></div>
-            <div className="special-offer-badge animate__animated animate__pulse animate__infinite">Limited Time</div>
+            <div className="special-offer-badge  animate__infinite">Limited Time</div>
             <h2 className="special-offer-heading">Summer Body Challenge</h2>
             <p className="special-offer-description">Join our 8-week transformation program and get ready for summer. Includes personalized workout plans and nutrition guidance.</p>
             <div className="special-offer-price">
@@ -189,7 +189,7 @@ const Offers = () => {
               <div className="current-offer-badge">Current Offer</div>
             )}
             <div className="card-glow"></div>
-            <div className="special-offer-badge animate__animated animate__pulse animate__infinite">Most Popular</div>
+            <div className="special-offer-badge  animate__infinite">Most Popular</div>
             <h2 className="special-offer-heading">Couple&apos;s Package</h2>
             <p className="special-offer-description">Train together, achieve together. Special package for couples with shared personal training sessions.</p>
             <div className="special-offer-price">
@@ -217,7 +217,7 @@ const Offers = () => {
               <div className="current-offer-badge">Current Offer</div>
             )}
             <div className="card-glow"></div>
-            <div className="special-offer-badge animate__animated animate__pulse animate__infinite">New Members</div>
+            <div className="special-offer-badge  animate__infinite">New Members</div>
             <h2 className="special-offer-heading">First Month Free</h2>
             <p className="special-offer-description">Sign up for a 12-month membership and get your first month absolutely free. Includes all premium facilities.</p>
             <div className="special-offer-price">
@@ -237,7 +237,7 @@ const Offers = () => {
           </div>
         </div>
 
-        <div className="offers-footer animate__animated animate__fadeIn animate__delay-2s">
+        <div className="offers-footer  animate__delay-2s">
           <p>All offers are subject to terms and conditions. Limited time only.</p>
           <p className="subscription-policy">You can have one subscription plan and one special offer active at a time.</p>
         </div>

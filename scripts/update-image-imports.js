@@ -11,29 +11,29 @@ const OPTIMIZED_IMAGES_PATH = '../assets/optimized/';
 
 // Convert GIF to WebP
 const GIF_TO_WEBP = {
-  'logo.gif': 'logo.webp'
+  // Keep logo.gif as is, don't convert to WebP
 };
 
 // Function to recursively find all JS and JSX files
 function findJsFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
-  
+
   files.forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
-    
+
     if (stat.isDirectory()) {
       findJsFiles(filePath, fileList);
     } else if (
-      file.endsWith('.js') || 
-      file.endsWith('.jsx') || 
-      file.endsWith('.ts') || 
+      file.endsWith('.js') ||
+      file.endsWith('.jsx') ||
+      file.endsWith('.ts') ||
       file.endsWith('.tsx')
     ) {
       fileList.push(filePath);
     }
   });
-  
+
   return fileList;
 }
 
@@ -47,29 +47,29 @@ let totalReplacements = 0;
 jsFiles.forEach(filePath => {
   let content = fs.readFileSync(filePath, 'utf8');
   let fileReplacements = 0;
-  
+
   // Look for image imports
   const importRegex = new RegExp(`import\\s+([\\w{}\\s,]+)\\s+from\\s+['"]${ORIGINAL_IMAGES_PATH.replace(/\//g, '\\/')}([\\w.-]+)['"]`, 'g');
-  
-  content = content.replace(importRegex, (match, importName, imageName) => {
+
+  content = content.replace(importRegex, (_, importName, imageName) => {
     // Check if we need to convert GIF to WebP
     const targetImageName = GIF_TO_WEBP[imageName] || imageName;
-    
+
     fileReplacements++;
     return `import ${importName} from '${OPTIMIZED_IMAGES_PATH}${targetImageName}'`;
   });
-  
+
   // Look for direct references to images in src attributes or style objects
   const srcRegex = new RegExp(`(['"])${ORIGINAL_IMAGES_PATH.replace(/\//g, '\\/')}([\\w.-]+)(['"])`, 'g');
-  
-  content = content.replace(srcRegex, (match, quote1, imageName, quote2) => {
+
+  content = content.replace(srcRegex, (_, quote1, imageName, quote2) => {
     // Check if we need to convert GIF to WebP
     const targetImageName = GIF_TO_WEBP[imageName] || imageName;
-    
+
     fileReplacements++;
     return `${quote1}${OPTIMIZED_IMAGES_PATH}${targetImageName}${quote2}`;
   });
-  
+
   // Only write the file if changes were made
   if (fileReplacements > 0) {
     fs.writeFileSync(filePath, content, 'utf8');

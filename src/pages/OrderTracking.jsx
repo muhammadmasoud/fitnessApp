@@ -6,7 +6,7 @@ import { selectCurrentUser } from '../store/slices/authSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import DynamicBackground from '../components/DynamicBackground';
-import 'animate.css';
+
 import './OrderTracking.css';
 import ordertrackingBg from '../assets/optimized/order-tracking.jpg';
 
@@ -450,14 +450,14 @@ const OrderTracking = () => {
 
       <Container fluid className="tracking-container">
         <div className="tracking-content">
-          <h1 className="tracking-title animate__animated animate__fadeInDown">
+          <h1 className="tracking-title ">
             Track Your Order
           </h1>
 
           {/* Tracking form for non-logged-in users removed */}
 
           {currentUser && !orderDetails && (
-            <div className="no-orders-container animate__animated animate__fadeIn">
+            <div className="no-orders-container ">
               <div className="no-orders-icon">
                 <i className="fas fa-box-open"></i>
               </div>
@@ -485,7 +485,7 @@ const OrderTracking = () => {
               </div>
 
               {showManualSearch && (
-                <div className="manual-tracking-form-container animate__animated animate__fadeIn mt-4">
+                <div className="manual-tracking-form-container  mt-4">
                   <p className="tracking-form-intro">
                     Can&apos;t find your order? Enter your order number to track it manually
                   </p>
@@ -524,7 +524,7 @@ const OrderTracking = () => {
           )}
 
           {orderDetails && (
-            <div className="tracking-details animate__animated animate__fadeIn">
+            <div className="tracking-details ">
               {/* Order Navigation Tabs - Only show if there are multiple orders */}
               {allOrders.length > 1 && (
                 <div className="order-navigation">

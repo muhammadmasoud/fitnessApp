@@ -22,25 +22,24 @@ const VirtualList = ({
 }) => {
   const containerRef = useRef(null);
   const [scrollTop, setScrollTop] = useState(0);
-  
-  // Calculate which items should be visible
-  const visibleItemCount = Math.ceil(height / itemHeight);
+
+  // Calculate total height for the container
   const totalHeight = items.length * itemHeight;
-  
+
   // Calculate the range of visible items
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
   const endIndex = Math.min(
     items.length - 1,
     Math.floor((scrollTop + height) / itemHeight) + overscan
   );
-  
+
   // Handle scroll events
   const handleScroll = useCallback(() => {
     if (containerRef.current) {
       setScrollTop(containerRef.current.scrollTop);
     }
   }, []);
-  
+
   // Add scroll event listener
   useEffect(() => {
     const container = containerRef.current;
@@ -49,7 +48,7 @@ const VirtualList = ({
       return () => container.removeEventListener('scroll', handleScroll);
     }
   }, [handleScroll]);
-  
+
   // Render only the visible items
   const visibleItems = [];
   for (let i = startIndex; i <= endIndex; i++) {
@@ -67,7 +66,7 @@ const VirtualList = ({
       </div>
     );
   }
-  
+
   return (
     <div
       ref={containerRef}

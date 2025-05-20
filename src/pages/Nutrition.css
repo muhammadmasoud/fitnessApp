@@ -21,19 +21,8 @@
   justify-content: flex-start !important;
 }
 
-.nutrition-page.loaded .nutrition-container { will-change: transform; transform: translateZ(0);
-  will-change: transform; animation: fadeInUp 0.8s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    will-change: transform; transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.nutrition-page.loaded .nutrition-container {
+  opacity: 1;
 }
 
 .nutrition-title {
@@ -219,18 +208,16 @@
   margin-bottom: 2rem;
 }
 
-.meal-plan-card { will-change: transform; transform: translateZ(0);
+.meal-plan-card {
   height: 100%;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  will-change: transform; transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
 .meal-plan-card:hover {
-  will-change: transform; transform: translateY(-10px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   background-color: rgba(255, 255, 255, 0.1);
 }
@@ -278,7 +265,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.get-plan-btn { will-change: transform; transform: translateZ(0);
+.get-plan-btn {
   width: 100%;
   padding: 0.75rem;
   background-color: #0074D9;
@@ -287,13 +274,11 @@
   border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
-  will-change: transform; transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .get-plan-btn:hover {
   background-color: #0066c0;
-  will-change: transform; transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -326,7 +311,7 @@
   margin: 0 auto 2rem;
 }
 
-.consultation-btn { will-change: transform; transform: translateZ(0);
+.consultation-btn {
   padding: 1rem 2.5rem;
   background-color: #0074D9;
   color: white;
@@ -335,13 +320,11 @@
   font-weight: 600;
   font-size: 1.1rem;
   cursor: pointer;
-  will-change: transform; transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .consultation-btn:hover {
   background-color: #0066c0;
-  will-change: transform; transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 

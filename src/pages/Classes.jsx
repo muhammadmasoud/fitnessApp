@@ -2,22 +2,16 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import DynamicBackground from '../components/DynamicBackground';
-import 'animate.css';
 import './Classes.css';
 import classesBg from '../assets/optimized/classes-bg.jpg';
 
 const Classes = () => {
-  const [loaded, setLoaded] = useState(false);
+  // State for window width to handle responsive design
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-
-    // Set loaded state after a short delay for animations
-    setTimeout(() => {
-      setLoaded(true);
-    }, 100);
 
     // Preload the background image
     const img = new Image();
@@ -117,7 +111,7 @@ const Classes = () => {
       <div className="classes-spacing-wrapper">
         <Container className="classes-container">
           <div className="classes-content">
-            <h1 className="classes-title animate__animated animate__fadeInDown">OUR CLASSES</h1>
+            <h1 className="classes-title ">OUR CLASSES</h1>
             <div className="classes-items-section">
               <div className="classes-description">
                 <h2>Find Your Perfect Class</h2>
@@ -130,7 +124,7 @@ const Classes = () => {
 
             <Row className="classes-grid">
               {classesData.map((fitnessClass) => (
-                <Col key={fitnessClass.id} lg={4} md={6} sm={12} className="class-col animate__animated animate__fadeIn">
+                <Col key={fitnessClass.id} lg={4} md={6} sm={12} className="class-col ">
                   <Card className="class-card">
                     <Card.Body>
                       <Card.Title className="class-name">{fitnessClass.name}</Card.Title>

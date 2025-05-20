@@ -7,7 +7,7 @@
 /* Hero Section */
 .about-hero-section {
   position: relative;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/images/about1.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/optimized/about1.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -28,7 +28,7 @@
   height: 100%;
   background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 35%),
               radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 35%);
-  will-change: transform; will-change: transform; animation: pulse-bg 8s infinite alternate;
+  opacity: 0.2;
   z-index: 1;
 }
 
@@ -41,29 +41,10 @@
   bottom: -50%;
   background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.1) 100%);
   opacity: 0.4;
-  will-change: transform; will-change: transform; animation: rotate-bg 30s linear infinite;
   z-index: 1;
 }
 
-@keyframes pulse-bg {
-  0% {
-    opacity: 0.15;
-    will-change: transform; transform: scale(1);
-  }
-  100% {
-    opacity: 0.25;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes rotate-bg {
-  0% {
-    will-change: transform; transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+/* Animations removed */
 
 .about-hero-content {
   z-index: 2;
@@ -76,19 +57,17 @@
   justify-content: center;
 }
 
-.about-hero-title { transform: translateZ(0);
+.about-hero-title {
   font-size: 3.8rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  text-will-change: transform; transform: uppercase;
+  text-transform: uppercase;
   letter-spacing: 2px;
   font-family: 'Arial', sans-serif;
   text-align: center;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
   position: relative;
-  will-change: transform; will-change: transform; animation: glowText 3s infinite alternate;
   color: white;
-  will-change: transform; transition: all 0.3s ease;
 }
 
 .about-hero-subtitle {
@@ -114,25 +93,7 @@
   }
 }
 
-@keyframes glowText {
-  0% {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  }
-  100% {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    will-change: transform; transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animations removed */
 
 /* Testimonials Section - Dark grey gradient background with white cards */
 .testimonials-section {
@@ -187,7 +148,7 @@
 }
 
 /* Keep testimonial cards white */
-.testimonial-card { will-change: transform; transform: translateZ(0);
+.testimonial-card {
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -197,11 +158,9 @@
   gap: 40px;
   position: relative;
   overflow: hidden;
-  will-change: transform; transition: all 0.5s ease;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  will-change: transform; animation: fadeIn 0.5s ease-in-out;
 }
 
 .testimonial-card::before {
@@ -269,7 +228,7 @@
 }
 
 /* Update control buttons for better visibility on dark background */
-.testimonial-control-btn { will-change: transform; transform: translateZ(0);
+.testimonial-control-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -280,14 +239,12 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  will-change: transform; transition: all 0.3s ease;
   color: #0088ff;
 }
 
 .testimonial-control-btn:hover {
   background-color: #0088ff;
   color: white;
-  will-change: transform; transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -297,19 +254,17 @@
 }
 
 /* Update indicator colors for better visibility on dark background */
-.testimonial-indicator { will-change: transform; transform: translateZ(0);
+.testimonial-indicator {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.3);
   border: none;
   cursor: pointer;
-  will-change: transform; transition: all 0.3s ease;
 }
 
 .testimonial-indicator.active {
   background-color: white;
-  will-change: transform; transform: scale(1.2);
 }
 
 /* Responsive Adjustments */
@@ -394,7 +349,7 @@
   width: 80%;
   height: 200%;
   background: linear-gradient(135deg, transparent 0%, transparent 49.9%, rgba(160, 170, 190, 0.15) 50%, rgba(160, 170, 190, 0.15) 50.1%, transparent 51%, transparent 100%);
-  will-change: transform; transform: rotate(10deg);
+  transform: rotate(10deg);
   z-index: -1;
   border-radius: 50%;
   filter: blur(1px);
@@ -408,7 +363,7 @@
   width: 70%;
   height: 180%;
   background: linear-gradient(135deg, transparent 0%, transparent 49.9%, rgba(180, 190, 210, 0.15) 50%, rgba(180, 190, 210, 0.15) 50.1%, transparent 51%, transparent 100%);
-  will-change: transform; transform: rotate(-5deg);
+  transform: rotate(-5deg);
   z-index: -1;
   border-radius: 40%;
   filter: blur(1px);

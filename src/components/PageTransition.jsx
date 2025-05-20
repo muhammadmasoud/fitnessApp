@@ -10,14 +10,11 @@ const PageTransition = ({ children }) => {
     window.scrollTo(0, 0);
   }, [location]);
 
+  // Simplified version without transition effects
   return (
-    <div className="transition-container">
-      <div className="page-transition">
-        <Fragment>
-          {children}
-        </Fragment>
-      </div>
-    </div>
+    <Fragment>
+      {children}
+    </Fragment>
   );
 };
 

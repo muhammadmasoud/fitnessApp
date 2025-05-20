@@ -5,7 +5,6 @@ import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 // This comment is needed for vite-plugin-eslint to recognize this as a valid ESLint config
-// eslint-disable-next-line
 
 export default [
   // Base ESLint recommended rules

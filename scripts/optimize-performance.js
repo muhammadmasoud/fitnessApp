@@ -10,18 +10,18 @@ const SRC_DIR = path.join(__dirname, '../src');
 // Function to recursively find all CSS files
 function findCssFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
-  
+
   files.forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
-    
+
     if (stat.isDirectory()) {
       findCssFiles(filePath, fileList);
     } else if (file.endsWith('.css')) {
       fileList.push(filePath);
     }
   });
-  
+
   return fileList;
 }
 
@@ -35,7 +35,7 @@ let totalOptimizations = 0;
 cssFiles.forEach(filePath => {
   let content = fs.readFileSync(filePath, 'utf8');
   let fileOptimizations = 0;
-  
+
   // 1. Replace expensive animations with more performant ones
   const animationRegex = /animation\s*:\s*([^;]+)/g;
   content = content.replace(animationRegex, (match, animationValue) => {
@@ -47,7 +47,7 @@ cssFiles.forEach(filePath => {
     }
     return match;
   });
-  
+
   // 2. Add will-change property to elements with transitions
   const transitionRegex = /transition\s*:\s*([^;]+)/g;
   content = content.replace(transitionRegex, (match) => {
@@ -55,7 +55,7 @@ cssFiles.forEach(filePath => {
     // Add will-change property to optimize rendering
     return `will-change: transform; ${match}`;
   });
-  
+
   // 3. Optimize box-shadows
   const boxShadowRegex = /box-shadow\s*:\s*([^;]+)/g;
   content = content.replace(boxShadowRegex, (match, shadowValue) => {
@@ -67,24 +67,24 @@ cssFiles.forEach(filePath => {
     }
     return match;
   });
-  
+
   // 4. Replace fixed backgrounds with scroll for better performance
   const backgroundAttachmentRegex = /background-attachment\s*:\s*fixed/g;
   content = content.replace(backgroundAttachmentRegex, () => {
     fileOptimizations++;
     return 'background-attachment: scroll';
   });
-  
+
   // 5. Add transform: translateZ(0) to elements with animations or transitions
   const animatedElementRegex = /(\.[\w-]+)\s*{[^}]*(animation|transition)[^}]*}/g;
-  content = content.replace(animatedElementRegex, (match, selector, property) => {
+  content = content.replace(animatedElementRegex, (match) => {
     if (!match.includes('transform: translateZ(0)')) {
       fileOptimizations++;
       return match.replace('{', '{ transform: translateZ(0);');
     }
     return match;
   });
-  
+
   // Only write the file if changes were made
   if (fileOptimizations > 0) {
     fs.writeFileSync(filePath, content, 'utf8');
@@ -99,22 +99,22 @@ console.log('CSS performance optimizations completed successfully!');
 // Now optimize JavaScript files for performance
 function findJsFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
-  
+
   files.forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
-    
+
     if (stat.isDirectory()) {
       findJsFiles(filePath, fileList);
     } else if (
-      (file.endsWith('.js') || file.endsWith('.jsx')) && 
+      (file.endsWith('.js') || file.endsWith('.jsx')) &&
       !file.includes('.config.') &&
       !file.includes('vite-env.d.ts')
     ) {
       fileList.push(filePath);
     }
   });
-  
+
   return fileList;
 }
 
@@ -128,11 +128,11 @@ let totalJsOptimizations = 0;
 jsFiles.forEach(filePath => {
   let content = fs.readFileSync(filePath, 'utf8');
   let fileOptimizations = 0;
-  
+
   // Check for missing React.memo
   if (
-    content.includes('export default') && 
-    !content.includes('memo') && 
+    content.includes('export default') &&
+    !content.includes('memo') &&
     content.includes('return (') &&
     content.includes('import React') &&
     !content.includes('class ') // Skip class components
@@ -140,10 +140,10 @@ jsFiles.forEach(filePath => {
     console.log(`⚠️ Component in ${path.relative(__dirname, filePath)} might benefit from React.memo`);
     fileOptimizations++;
   }
-  
+
   // Check for missing useMemo/useCallback
   if (
-    content.includes('useState') && 
+    content.includes('useState') &&
     content.includes('useEffect') &&
     !content.includes('useMemo') &&
     !content.includes('useCallback') &&
@@ -152,7 +152,7 @@ jsFiles.forEach(filePath => {
     console.log(`⚠️ Component in ${path.relative(__dirname, filePath)} might benefit from useMemo/useCallback for array operations`);
     fileOptimizations++;
   }
-  
+
   totalJsOptimizations += fileOptimizations;
 });
 

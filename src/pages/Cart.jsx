@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import DynamicBackground from '../components/DynamicBackground';
 import 'react-toastify/dist/ReactToastify.css';
-import 'animate.css';
+
 import './Cart.css';
 import '../styles/toast-custom.css';
 import cartBg from '../assets/optimized/cart-bg.jpg';
@@ -72,7 +72,7 @@ const Cart = () => {
       <ToastContainer />
       <Container className="cart-container">
         <div className="cart-content">
-          <h1 className="cart-title animate__animated animate__fadeInDown">YOUR CART</h1>
+          <h1 className="cart-title ">YOUR CART</h1>
           <div className="cart-items-section">
 
             {cartItems.length === 0 ? (
@@ -99,7 +99,7 @@ const Cart = () => {
 
                   <div className="cart-items-container">
                     {cartItems.map(item => (
-                      <div key={item.id} className="cart-item animate__animated animate__fadeIn">
+                      <div key={item.id} className="cart-item ">
                         <div className="cart-item-product">
                           <img src={item.image} alt={item.name} className="cart-item-image" />
                           <div className="cart-item-details">

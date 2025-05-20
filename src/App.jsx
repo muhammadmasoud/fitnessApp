@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import Navigation from './components/Navigation.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import PageTransition from './components/PageTransition.jsx';
-import Layout from './components/Layout.jsx';
 import ScrollHandler from './components/ScrollHandler.jsx';
 import FireAnimation from './components/FireAnimation.jsx';
 import PerformanceMonitor from './components/PerformanceMonitor.jsx';
@@ -166,8 +164,6 @@ function App() {
         <Navigation />
       </header>
       <main className="main-content" style={mainStyle}>
-        <Layout>
-          <PageTransition>
             <Routes>
               {/* Home and AuthenticatedHome are not lazy loaded for better performance */}
               <Route path="/" element={<Home />} />
@@ -319,9 +315,8 @@ function App() {
                   </Suspense>
                 </ProtectedRoute>
               } />
+
             </Routes>
-          </PageTransition>
-        </Layout>
       </main>
       <footer style={footerStyle}>
         <Footer />

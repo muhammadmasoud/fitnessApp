@@ -3,7 +3,7 @@
   opacity: 0;
   will-change: transform; transition: opacity 0.5s ease;
   position: relative;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/images/checkout-bg.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/optimized/checkout-bg.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: scroll;

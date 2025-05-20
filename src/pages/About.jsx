@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
 import { Container } from 'react-bootstrap';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import './About.css';
 import fitness from '../assets/optimized/fitness.jpg';
 
@@ -9,7 +7,6 @@ const About = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const statsRef = useRef(null);
-  const statsObserved = useRef(false);
   // Store a reference to the observer for cleanup
   const observerRef = useRef(null);
 
@@ -80,48 +77,22 @@ const About = () => {
   ];
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-      mirror: true,
-      easing: 'ease-in-out'
-    });
-
     // Auto-rotate testimonials
     const interval = setInterval(() => {
       setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
     }, 5000);
 
-    // Stats counter observer
-    observerRef.current = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting && !statsObserved.current) {
-        startCounters();
-        statsObserved.current = true;
-      }
-    }, { threshold: 0.1 });
-
-    if (statsRef.current) {
-      observerRef.current.observe(statsRef.current);
-    }
-
-    // Store a reference to the current statsRef value for cleanup
+    // Store a reference to the current statsRef and observerRef values for cleanup
     const currentStatsRef = statsRef.current;
+    const currentObserver = observerRef.current;
 
     return () => {
       clearInterval(interval);
-      if (currentStatsRef && observerRef.current) {
-        observerRef.current.unobserve(currentStatsRef);
+      if (currentStatsRef && currentObserver) {
+        currentObserver.unobserve(currentStatsRef);
       }
     };
   }, [testimonials.length]);
-
-
-
-  const startCounters = () => {
-    // Animation is handled by CSS now
-    // We don't need to manually update state counters
-  };
 
   const nextTestimonial = () => {
     setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
@@ -135,23 +106,14 @@ const About = () => {
     setCurrentTestimonial(index);
   };
 
-  // Add animation reset when testimonial changes
-  useEffect(() => {
-    const testimonialCard = document.querySelector('.testimonial-card');
-    if (testimonialCard) {
-      testimonialCard.style.animation = 'none';
-      setTimeout(() => {
-        testimonialCard.style.animation = 'fadeIn 0.5s ease-in-out';
-      }, 10);
-    }
-  }, [currentTestimonial]);
+  // Animation removed for better performance
 
   return (
     <div className="about-page">
       <section className="about-hero-section">
         <div className="about-hero-content">
-          <h1 className="about-hero-title" data-aos="fade-up">ABOUT US</h1>
-          <p className="about-hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+          <h1 className="about-hero-title">ABOUT US</h1>
+          <p className="about-hero-subtitle">
             Our mission is to empower individuals in our community to lead healthier, stronger,<br />
             and more confident lives. We believe fitness is not just about physical strength —<br />
             it&apos;s about building self-concern, cultivating self-love, and creating a positive mindset<br />
@@ -164,10 +126,10 @@ const About = () => {
       <section className="expertise-section">
         <div className="expertise-container">
           <div className="expertise-main">
-            <div className="expertise-image" data-aos="fade-right">
+            <div className="expertise-image">
               <img src={fitness} alt="Fitness trainer" />
             </div>
-            <div className="expertise-content" data-aos="fade-left">
+            <div className="expertise-content">
               <div className="expertise-subtitle">INFORMATION ABOUT US</div>
               <h2 className="expertise-title"><span>FITNESS</span> WORKOUT<br />TRAINING CENTER</h2>
               <p className="expertise-description">
@@ -220,13 +182,13 @@ const About = () => {
       </section>
 
       <section className="testimonials-section">
-        <div className="section-header" data-aos="fade-up">
+        <div className="section-header">
           <h2 className="section-title">WHAT OUR COMMUNITY SAYS</h2>
           <div className="section-divider"></div>
         </div>
 
         <Container>
-          <div className="testimonials-container" data-aos="fade-up" data-aos-delay="200">
+          <div className="testimonials-container">
             <div className="testimonial-card">
               <div className="testimonial-image-container">
                 <img

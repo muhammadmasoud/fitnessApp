@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react';
-import 'animate.css';
 import './Trainers.css';
 import LoadingPlaceholder from '../components/LoadingPlaceholder';
 

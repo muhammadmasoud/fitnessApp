@@ -80,6 +80,14 @@ const Home = () => {
               <span>Get Started</span>
               <i className="fas fa-arrow-right"></i>
             </Link>
+            <div style={{ marginTop: '20px' }}>
+              <Link to="/about" style={{ color: 'white', textDecoration: 'underline', marginRight: '20px' }}>
+                Go to About Page
+              </Link>
+              <Link to="/trainers" style={{ color: 'white', textDecoration: 'underline' }}>
+                Go to Trainers Page
+              </Link>
+            </div>
           </div>
         </Container>
       </section>

@@ -9,14 +9,11 @@ import './Layout.css';
  * Uses Fragment when possible to reduce DOM nesting
  */
 const Layout = ({ children }) => {
-  // If we need the wrapper div for styling, use it
-  // Otherwise, just return the children in a Fragment
+  // Simplified version to rule out layout issues
   return (
-    <div className="page-content-wrapper">
-      <Fragment>
-        {children}
-      </Fragment>
-    </div>
+    <Fragment>
+      {children}
+    </Fragment>
   );
 };
 

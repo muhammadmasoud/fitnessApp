@@ -7,7 +7,7 @@ import { addToWishlist, removeFromWishlist } from '../store/slices/wishlistSlice
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import 'react-toastify/dist/ReactToastify.css';
-import 'animate.css';
+
 import './Products.css';
 import '../styles/toast-custom.css';
 
@@ -497,9 +497,9 @@ const Products = () => {
         </div>
         <div className="hero-glow"></div>
         <div className="products-hero-content">
-          <h1 ref={titleRef} className="products-title animate__animated animate__fadeInDown">OUR PRODUCTS</h1>
-          <p className="products-subtitle animate__animated animate__fadeIn animate__delay-1s">Premium supplements to fuel your fitness journey</p>
-          <div className="hero-cta animate__animated animate__fadeInUp animate__delay-2s">
+          <h1 ref={titleRef} className="products-title ">OUR PRODUCTS</h1>
+          <p className="products-subtitle  animate__delay-1s">Premium supplements to fuel your fitness journey</p>
+          <div className="hero-cta  animate__delay-2s">
             <button className="browse-btn" onClick={showAllProducts}>
               <span className="btn-text">Browse All</span>
               <span className="btn-shine"></span>
@@ -533,7 +533,7 @@ const Products = () => {
       </div>
 
       <section className="products-section" ref={productsRef}>
-        <div className="section-header animate__animated animate__fadeInUp">
+        <div className="section-header ">
           <h2 className="section-title">Featured Products</h2>
           <div className="section-divider"></div>
         </div>
@@ -545,11 +545,11 @@ const Products = () => {
             <div
               key={product.id}
               data-id={product.id}
-              className={`product-card ${visibleProducts.includes(product.id) ? 'visible animate__animated animate__zoomIn' : ''}`}
+              className={`product-card ${visibleProducts.includes(product.id) ? 'visible ' : ''}`}
             >
               <div className="card-glow"></div>
               {product.bestSeller && (
-                <div className="best-seller-badge animate__animated animate__heartBeat animate__infinite animate__slower">
+                <div className="best-seller-badge  animate__infinite animate__slower">
                   Best seller
                 </div>
               )}

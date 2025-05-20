@@ -8,7 +8,7 @@ The `DynamicBackground` component is a reusable component that applies a backgro
 
 ```jsx
 import DynamicBackground from '../components/DynamicBackground';
-import myBackgroundImage from '../assets/images/my-background.jpg';
+import myBackgroundImage from '../assets/optimized/my-background.jpg';
 
 const MyPage = () => {
   return (
@@ -38,12 +38,12 @@ const MyPage = () => {
 
 ```jsx
 import DynamicBackground from '../components/DynamicBackground';
-import heroImage from '../assets/images/hero.jpg';
+import heroImage from '../assets/optimized/hero.jpg';
 
 const HomePage = () => {
   return (
-    <DynamicBackground 
-      imageUrl={heroImage} 
+    <DynamicBackground
+      imageUrl={heroImage}
       className="home-page"
       overlayStyle={{ background: 'rgba(0, 0, 0, 0.5)' }}
       style={{ padding: '50px 0' }}
@@ -70,7 +70,7 @@ const HomePage = () => {
 
 1. Always import the image at the top of your file:
    ```jsx
-   import myBackgroundImage from '../assets/images/my-background.jpg';
+   import myBackgroundImage from '../assets/optimized/my-background.jpg';
    ```
 
 2. Pass the imported image directly to the `imageUrl` prop:
@@ -85,16 +85,16 @@ const HomePage = () => {
 
 4. If you need to customize the overlay, use the `overlayStyle` prop:
    ```jsx
-   <DynamicBackground 
-     imageUrl={myBackgroundImage} 
+   <DynamicBackground
+     imageUrl={myBackgroundImage}
      overlayStyle={{ background: 'rgba(0, 0, 0, 0.3)' }}
    >
    ```
 
 5. For additional container styles, use the `style` prop:
    ```jsx
-   <DynamicBackground 
-     imageUrl={myBackgroundImage} 
+   <DynamicBackground
+     imageUrl={myBackgroundImage}
      style={{ minHeight: '80vh' }}
    >
    ```

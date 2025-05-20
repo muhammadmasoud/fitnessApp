@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import DynamicBackground from '../components/DynamicBackground';
-import 'animate.css';
+
 import './OrderTracking.css';
 import './TrackOrderPublic.css';
 import trackingBg from '../assets/optimized/order-tracking.jpg';
@@ -147,13 +147,13 @@ const TrackOrderPublic = () => {
 
       <Container className="tracking-container">
         <div className="tracking-content">
-          <h1 className="tracking-title animate__animated animate__fadeInDown">
+          <h1 className="tracking-title ">
             Track Your Order
           </h1>
 
           {/* Tracking form for non-logged-in users */}
           {!orderDetails && (
-            <div className="tracking-form-container animate__animated animate__fadeIn">
+            <div className="tracking-form-container ">
               <p className="tracking-form-intro">
                 Enter your order number to track your shipment
               </p>
@@ -193,7 +193,7 @@ const TrackOrderPublic = () => {
           )}
 
           {orderDetails && (
-            <div className="tracking-details animate__animated animate__fadeIn">
+            <div className="tracking-details ">
               <div className="tracking-card-header">
                 <h2>Order #{orderDetails.trackingNumber}</h2>
                 <span className="order-date">

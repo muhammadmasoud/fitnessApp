@@ -15,19 +15,8 @@
   opacity: 1;
 }
 
-.schedule-page.loaded .schedule-container { will-change: transform; transform: translateZ(0);
-  will-change: transform; animation: fadeInUp 0.8s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    will-change: transform; transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.schedule-page.loaded .schedule-container {
+  opacity: 1;
 }
 
 .schedule-title {
@@ -151,13 +140,12 @@
   margin: 0 0.5rem;
 }
 
-.schedule-tabs .nav-link { will-change: transform; transform: translateZ(0);
+.schedule-tabs .nav-link {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 30px;
   color: white;
   font-weight: 600;
-  will-change: transform; transition: all 0.3s ease;
   background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -205,14 +193,14 @@
 }
 
 .schedule-table tbody tr {
-  will-change: transform; transition: background-color 0.3s ease;
+  /* Transition removed */
 }
 
 .schedule-table tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.book-btn { will-change: transform; transform: translateZ(0);
+.book-btn {
   padding: 0.5rem 1.5rem;
   background-color: #0074D9;
   color: white;
@@ -220,13 +208,11 @@
   border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
-  will-change: transform; transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .book-btn:hover {
   background-color: #0066c0;
-  will-change: transform; transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 

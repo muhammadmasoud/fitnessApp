@@ -7,7 +7,7 @@ import { addToCart } from '../store/slices/cartSlice';
 import { ToastContainer } from 'react-toastify';
 import CustomToast from '../components/CustomToast';
 import 'react-toastify/dist/ReactToastify.css';
-import 'animate.css';
+
 import './Wishlist.css';
 import '../styles/toast-custom.css';
 import wishlistBg from '../assets/optimized/wishlist-bg.jpg';
@@ -63,7 +63,7 @@ const Wishlist = () => {
 
       <Container className="wishlist-container">
         <div className="wishlist-content">
-          <h1 className="wishlist-title animate__animated animate__fadeInDown">YOUR WISHLIST</h1>
+          <h1 className="wishlist-title ">YOUR WISHLIST</h1>
           <div className="wishlist-items-section">
 
             {wishlistItems.length === 0 ? (
@@ -88,7 +88,7 @@ const Wishlist = () => {
 
                   <div className="wishlist-items-container">
                     {wishlistItems.map(item => (
-                      <div key={item.id} className="wishlist-item animate__animated animate__fadeIn">
+                      <div key={item.id} className="wishlist-item ">
                         <div className="wishlist-item-product">
                           <img src={item.image} alt={item.name} className="wishlist-item-image" />
                           <div className="wishlist-item-details">

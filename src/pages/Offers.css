@@ -1,7 +1,7 @@
 .offers-page { transform: translateZ(0);
   padding: 120px 0 60px;
   min-height: 100vh;
-  background-image: url('../assets/images/offers.jpg');
+  background-image: url('../assets/optimized/offers.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: scroll;

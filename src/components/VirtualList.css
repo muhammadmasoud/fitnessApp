@@ -1,6 +1,4 @@
 .virtual-list-container {
-  will-change: transform;
-  transform: translateZ(0);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import 'animate.css';
+
 import './Programs.css';
 
 const Programs = () => {

@@ -3,7 +3,6 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../store/slices/authSlice';
-import 'animate.css';
 import './BMICalculator.css';
 
 const BMICalculator = () => {
@@ -101,8 +100,8 @@ const BMICalculator = () => {
 
       {/* BMI Calculator Header */}
       <div className="bmi-header">
-        <h1 className="bmi-title animate__animated animate__fadeInDown">BMI Calculator</h1>
-        <div className="bmi-breadcrumb animate__animated animate__fadeIn animate__delay-1s">
+        <h1 className="bmi-title ">BMI Calculator</h1>
+        <div className="bmi-breadcrumb  animate__delay-1s">
           <a href="#" onClick={handleHomeClick}>Home</a>
           <span>→</span>
           <span>BMI Calculator</span>
@@ -112,7 +111,7 @@ const BMICalculator = () => {
       <Container className="main-container">
         <div className="bmi-container">
           {/* Left Side - BMI Info */}
-          <div className="bmi-info animate__animated animate__fadeInLeft">
+          <div className="bmi-info ">
             <div className="bmi-info-content">
               <h3 className="bmi-info-title">What is BMI?</h3>
               <p className="bmi-info-text">
@@ -149,7 +148,7 @@ const BMICalculator = () => {
           </div>
 
           {/* Right Side - BMI Calculator Form */}
-          <div className="bmi-form-container animate__animated animate__fadeInRight">
+          <div className="bmi-form-container ">
             {!showResult ? (
               <Form onSubmit={calculateBMI}>
                 <Form.Control

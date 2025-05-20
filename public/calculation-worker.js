@@ -1,26 +1,29 @@
 // Web Worker for heavy calculations
 self.addEventListener('message', (event) => {
   const { type, data } = event.data;
-  
+
   switch (type) {
-    case 'calculateBMI':
+    case 'calculateBMI': {
       const { weight, height } = data;
       const bmi = calculateBMI(weight, height);
       self.postMessage({ type: 'bmiResult', data: bmi });
       break;
-      
-    case 'calculateCalories':
+    }
+
+    case 'calculateCalories': {
       const { age, gender, weight: userWeight, height: userHeight, activityLevel } = data;
       const calories = calculateCalories(age, gender, userWeight, userHeight, activityLevel);
       self.postMessage({ type: 'caloriesResult', data: calories });
       break;
-      
-    case 'calculateWorkoutStats':
+    }
+
+    case 'calculateWorkoutStats': {
       const { workouts } = data;
       const stats = calculateWorkoutStats(workouts);
       self.postMessage({ type: 'workoutStatsResult', data: stats });
       break;
-      
+    }
+
     default:
       self.postMessage({ type: 'error', data: 'Unknown calculation type' });
   }
@@ -30,10 +33,10 @@ self.addEventListener('message', (event) => {
 function calculateBMI(weight, height) {
   // Convert height from cm to m
   const heightInMeters = height / 100;
-  
+
   // Calculate BMI
   const bmi = weight / (heightInMeters * heightInMeters);
-  
+
   // Determine BMI category
   let category;
   if (bmi < 18.5) {
@@ -45,7 +48,7 @@ function calculateBMI(weight, height) {
   } else {
     category = 'Obese';
   }
-  
+
   return {
     bmi: bmi.toFixed(1),
     category
@@ -61,7 +64,7 @@ function calculateCalories(age, gender, weight, height, activityLevel) {
   } else {
     bmr = 10 * weight + 6.25 * height - 5 * age - 161;
   }
-  
+
   // Apply activity multiplier
   let activityMultiplier;
   switch (activityLevel) {
@@ -83,9 +86,9 @@ function calculateCalories(age, gender, weight, height, activityLevel) {
     default:
       activityMultiplier = 1.2;
   }
-  
+
   const maintenanceCalories = Math.round(bmr * activityMultiplier);
-  
+
   return {
     maintenance: maintenanceCalories,
     weightLoss: Math.round(maintenanceCalories * 0.8), // 20% deficit
@@ -105,38 +108,38 @@ function calculateWorkoutStats(workouts) {
       mostFrequentType: 'None'
     };
   }
-  
+
   // Calculate total duration and calories
   let totalDuration = 0;
   let totalCalories = 0;
-  
+
   // Count workout types
   const workoutTypes = {};
-  
+
   workouts.forEach(workout => {
     // Extract duration in minutes
     const durationMatch = workout.duration.match(/(\d+)/);
     const duration = durationMatch ? parseInt(durationMatch[1]) : 0;
-    
+
     totalDuration += duration;
     totalCalories += workout.calories || 0;
-    
+
     // Count workout type
     const type = workout.title;
     workoutTypes[type] = (workoutTypes[type] || 0) + 1;
   });
-  
+
   // Find most frequent workout type
   let mostFrequentType = 'None';
   let maxCount = 0;
-  
+
   Object.entries(workoutTypes).forEach(([type, count]) => {
     if (count > maxCount) {
       mostFrequentType = type;
       maxCount = count;
     }
   });
-  
+
   return {
     totalWorkouts: workouts.length,
     totalDuration,
