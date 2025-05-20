@@ -6,7 +6,6 @@ import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ScrollHandler from './components/ScrollHandler.jsx';
 import FireAnimation from './components/FireAnimation.jsx';
-import PerformanceMonitor from './components/PerformanceMonitor.jsx';
 import Home from './pages/Home.jsx';
 import AuthenticatedHome from './pages/AuthenticatedHome.jsx';
 
@@ -20,7 +19,7 @@ const Exercises = lazy(() => import('./pages/Exercises.jsx'));
 const Classes = lazy(() => import('./pages/Classes.jsx'));
 const Schedule = lazy(() => import('./pages/Schedule.jsx'));
 const Nutrition = lazy(() => import('./pages/Nutrition.jsx'));
-const BMICalculator = lazy(() => import('./pages/BMICalculator.jsx'));
+
 const Goals = lazy(() => import('./pages/Goals.jsx'));
 const Progress = lazy(() => import('./pages/Progress.jsx'));
 const Profile = lazy(() => import('./pages/Profile.jsx'));
@@ -287,13 +286,7 @@ function App() {
                   </Suspense>
                 </ProtectedRoute>
               } />
-              <Route path="/bmi-calculator" element={
-                <ProtectedRoute>
-                  <Suspense fallback={<LoadingFallback />}>
-                    <BMICalculator />
-                  </Suspense>
-                </ProtectedRoute>
-              } />
+
               <Route path="/goals" element={
                 <ProtectedRoute>
                   <Suspense fallback={<LoadingFallback />}>
@@ -322,8 +315,7 @@ function App() {
         <Footer />
       </footer>
 
-      {/* Performance Monitor - only visible in development mode */}
-      <PerformanceMonitor />
+
     </div>
   );
 }

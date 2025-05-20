@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logout } from '../store/slices/authSlice';
 import { selectCartCount } from '../store/slices/cartSlice';
 import './Navigation.css';
-import '../pages/DarkNavbar.css';
 import HoverDropdown from './HoverDropdown';
 import UserDropdown from './UserDropdown';
 import LogoAnimation from './LogoAnimation';
@@ -17,8 +16,7 @@ const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const cartCount = useSelector(selectCartCount);
 
-  const pagesWithDarkNav = ['/pricing', '/about', '/gallery', '/services', '/offers', '/programs', '/products', '/contact', '/cart', '/checkout', '/wishlist', '/exercises', '/dashboard', '/classes', '/schedule', '/nutrition', '/bmi-calculator'];
-  const needsDarkNav = pagesWithDarkNav.includes(location.pathname);
+
   const [expanded, setExpanded] = useState(false);
 
   const handleLogout = () => {
@@ -27,7 +25,7 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar expand="lg" className={`navbar-custom ${needsDarkNav ? 'pricing-navbar' : ''}`} expanded={expanded} onToggle={(e) => setExpanded(e)}>
+    <Navbar expand="lg" className="navbar-custom" expanded={expanded} onToggle={(e) => setExpanded(e)}>
       <Container>
         {/* Logo Section */}
         <Navbar.Brand as={Link} to={currentUser ? "/authenticated-home" : "/"} className="logo">
@@ -141,7 +139,6 @@ const Navigation = () => {
                   username={currentUser.fullName}
                   items={[
                     { label: 'Dashboard', path: '/dashboard' },
-                    { label: 'BMI Calculator', path: '/bmi-calculator' },
                     { label: 'Profile', path: '/profile' },
                     { label: 'Track Your Order', path: '/order-tracking' }
                   ]}
